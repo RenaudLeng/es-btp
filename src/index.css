@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-heading: 'Barlow', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: #0F172A;
+    background-color: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom architectural accents and subtle focus rings */
+*:focus-visible {
+  outline: 2px solid #FAB005;
+  outline-offset: 2px;
+}
+
+/* ============================================================ */
+/* SYSTÈME DE RÉVÉLATION ARCHITECTURALE FLUIDE & MULTI-MOUVEMENTS */
+/* Performance 60/120fps : Transform 3D & Opacity uniquement   */
+/* ============================================================ */
+
+/* Base commune */
+.reveal-item {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotate(0deg);
+}
+
+/* 1. Mouvement : Émergence par le bas (Fade Up classique & net) */
+.reveal-up {
+  transform: translate3d(0, 28px, 0);
+}
+
+/* 2. Mouvement : Glissement latéral gauche vers droite */
+.reveal-right {
+  transform: translate3d(-32px, 0, 0);
+}
+
+/* 3. Mouvement : Glissement latéral droite vers gauche */
+.reveal-left {
+  transform: translate3d(32px, 0, 0);
+}
+
+/* 4. Mouvement : Zoom-In architectural (agrandissement subtil) */
+.reveal-zoom-in {
+  transform: scale3d(0.94, 0.94, 1);
+}
+
+/* 5. Mouvement : Zoom-Out focal (effet objectif drone / focalisation optique) */
+.reveal-zoom-out {
+  transform: scale3d(1.06, 1.06, 1);
+}
+
+/* 6. Mouvement : Émergence avec légère inclinaison gauche */
+.reveal-rotate-left {
+  transform: translate3d(-18px, 20px, 0) rotate(-1deg);
+}
+
+/* 7. Mouvement : Émergence avec légère inclinaison droite */
+.reveal-rotate-right {
+  transform: translate3d(18px, 20px, 0) rotate(1deg);
+}
+
+/* 8. Rétrocompatibilité avec l'ancienne classe .reveal (version optimisée sans flou lourd) */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Respect de la sensibilité au mouvement (Accessibilité WCAG AA) */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item,
+  .reveal-up,
+  .reveal-right,
+  .reveal-left,
+  .reveal-zoom-in,
+  .reveal-zoom-out,
+  .reveal-rotate-left,
+  .reveal-rotate-right,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Reflet lumineux subtil sur les photos (Sheen sweep architectural) */
+@keyframes sheenSweep {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+.img-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  transform: translateX(-120%) skewX(-20deg);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.img-sheen.is-revealed::after {
+  animation: sheenSweep 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s 1 forwards;
+}
+
+/* ============================================================ */
+/* ANIMATIONS DE MOUVEMENT CONTINU & DYNAMIQUE (VALEURS EN MOUVEMENT) */
+/* ============================================================ */
+@keyframes marqueeFlow {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-flow {
+  display: inline-flex;
+  width: max-content;
+  animation: marqueeFlow 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-flow:hover {
+  animation-play-state: paused;
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float-gentle {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+/* ============================================================ */
+/* LUEUR SUBTILE ET DESIGN AUTOUR DU LOGO ES-BTP                */
+/* ============================================================ */
+@keyframes logoAuraPulse {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(1);
+    filter: blur(14px);
+  }
+  50% {
+    opacity: 0.88;
+    transform: scale(1.03);
+    filter: blur(18px);
+  }
+}
+
+.animate-logo-aura {
+  animation: logoAuraPulse 5s ease-in-out infinite;
+  will-change: transform, opacity, filter;
+}
+
+/* Utilitaires pour défilement horizontal fluide sans barre grise */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+

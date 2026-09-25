@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" width="320" height="100" fill="none">
+  <defs>
+    <linearGradient id="mikaGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="mikaDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <filter id="mikaShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Dynamic Construction & Logistics Geometric M Emblem -->
+  <g transform="translate(10, 10)">
+    <!-- Base Chevron / Road Dynamics -->
+    <path d="M 0 65 L 18 15 L 34 50 L 50 15 L 68 65 L 52 65 L 42 34 L 34 52 L 26 34 L 16 65 Z" fill="url(#mikaGold)" filter="url(#mikaShadow)" />
+    <!-- Secondary Dynamic Stripe representing Public Works & Roads -->
+    <path d="M 12 73 L 56 73 L 52 79 L 8 79 Z" fill="#F59E0B" />
+    <path d="M 28 65 L 40 65 L 34 55 Z" fill="#0F172A" />
+  </g>
+
+  <!-- Typography: MIKA SERVICES -->
+  <g transform="translate(90, 20)">
+    <text x="0" y="32" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" letter-spacing="1.5">
+      MIKA
+    </text>
+    <text x="92" y="32" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="28" fill="#F59E0B" letter-spacing="1.5">
+      SERVICES
+    </text>
+    <!-- Subtitle: BTP & LOGISTIQUE GABON -->
+    <text x="2" y="52" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-weight="700" font-size="9.5" fill="#94A3B8" letter-spacing="2.8">
+      GRANDS TRAVAUX & LOGISTIQUE
+    </text>
+    <line x1="2" y1="58" x2="210" y2="58" stroke="#F59E0B" stroke-width="1.5" stroke-opacity="0.7" />
+  </g>
+</svg>

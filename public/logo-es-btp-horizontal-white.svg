@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 110" width="480" height="110">
+  <defs>
+    <!-- Architectural Facets Gradients: Brightened for high contrast on dark backgrounds -->
+    <linearGradient id="whBldgDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E40AF" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="whBldgBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="whBldgLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7DD3FC" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+    <linearGradient id="whMonogramE" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E40AF" />
+      <stop offset="50%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="whRoadway" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="50%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#64748B" />
+    </linearGradient>
+    <linearGradient id="whSRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7DD3FC" />
+      <stop offset="35%" stop-color="#38BDF8" />
+      <stop offset="70%" stop-color="#0EA5E9" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+    <linearGradient id="whYRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDD00" />
+      <stop offset="50%" stop-color="#FAB005" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+    <!-- Lueur subtile et design pour le logo -->
+    <filter id="whGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.5" result="glowBlur" />
+      <feFlood flood-color="#FAB005" flood-opacity="0.5" result="goldColor" />
+      <feComposite in="goldColor" in2="glowBlur" operator="in" result="goldGlow" />
+      <feDropShadow in="SourceGraphic" dx="0" dy="1.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.4" result="dropShadow" />
+      <feMerge>
+        <feMergeNode in="goldGlow" />
+        <feMergeNode in="dropShadow" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- EMBLEM ON THE LEFT -->
+  <g transform="translate(-15, -2) scale(0.48)">
+    <!-- Tower Crane with clear high-contrast lines -->
+    <g stroke="#FF7A00" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="240" y1="28" x2="240" y2="105" />
+      <line x1="246" y1="28" x2="246" y2="105" />
+      <line x1="240" y1="36" x2="246" y2="44" />
+      <line x1="246" y1="44" x2="240" y2="52" />
+      <line x1="240" y1="52" x2="246" y2="60" />
+      <line x1="246" y1="60" x2="240" y2="68" />
+      <line x1="185" y1="28" x2="350" y2="28" stroke-width="3.2" />
+      <line x1="185" y1="34" x2="340" y2="34" stroke-width="2" />
+      <polygon points="243,14 238,28 248,28" fill="#FF7A00" stroke="#FFD8B2" stroke-width="0.8" />
+      <line x1="243" y1="14" x2="195" y2="28" stroke-width="1.8" />
+      <line x1="243" y1="14" x2="325" y2="28" stroke-width="1.8" />
+      <rect x="187" y="29" width="16" height="12" fill="#FF7A00" stroke="#FFD8B2" stroke-width="0.8" rx="1" />
+      <rect x="318" y="27" width="10" height="6" fill="#FF7A00" stroke="#FFD8B2" stroke-width="0.8" rx="1" />
+      <line x1="323" y1="33" x2="323" y2="60" stroke="#FF7A00" stroke-width="2.2" />
+      <path d="M323,60 C323,70 314,70 314,64 C314,60 318,60 319,62" fill="none" stroke="#FAB005" stroke-width="3.4" stroke-linecap="round" />
+    </g>
+
+    <!-- Buildings: Visible architectural facets with luminous edge delineation -->
+    <polygon points="120,80 156,50 156,155 120,165" fill="url(#whBldgDark)" stroke="#60A5FA" stroke-width="1.4" />
+    <polygon points="156,50 178,35 178,145 156,155" fill="url(#whBldgBlue)" stroke="#93C5FD" stroke-width="1.4" />
+    <polygon points="156,50 178,35 160,28 140,40" fill="url(#whBldgLight)" stroke="#BAE6FD" stroke-width="1" />
+
+    <polygon points="172,75 208,30 208,150 172,156" fill="url(#whBldgDark)" stroke="#60A5FA" stroke-width="1.4" />
+    <polygon points="208,30 236,15 236,140 208,150" fill="url(#whBldgBlue)" stroke="#93C5FD" stroke-width="1.4" />
+    <polygon points="208,30 236,15 220,10 192,22" fill="url(#whBldgLight)" stroke="#BAE6FD" stroke-width="1" />
+    <line x1="216" y1="35" x2="216" y2="135" stroke="#BAE6FD" stroke-width="1.8" opacity="0.9" />
+    <line x1="226" y1="28" x2="226" y2="130" stroke="#BAE6FD" stroke-width="1.8" opacity="0.9" />
+
+    <polygon points="230,75 264,55 264,130 230,135" fill="url(#whBldgDark)" stroke="#60A5FA" stroke-width="1.4" />
+    <polygon points="264,55 284,45 284,120 264,130" fill="url(#whBldgBlue)" stroke="#93C5FD" stroke-width="1.4" />
+
+    <!-- Road & Golden Ribbon: Roadway is brightened with visible asphalt gradient and crisp borders -->
+    <path d="M102,185 C145,160 190,140 235,120 C258,110 276,104 290,100" fill="none" stroke="url(#whYRibbon)" stroke-width="14" stroke-linecap="round" />
+    <path d="M125,200 C175,170 215,148 250,130 C272,118 290,111 306,105 L324,113 C302,123 278,135 250,150 C205,175 160,205 136,215 Z" fill="url(#whRoadway)" stroke="#94A3B8" stroke-width="1.8" stroke-linejoin="round" />
+    <path d="M136,204 C185,173 228,148 260,132 C280,121 298,114 314,109" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="8,6" stroke-linecap="round" />
+
+    <!-- Monogram E: High-contrast illuminated facet with subtle design glow -->
+    <path d="M85,78 L152,58 L152,86 L118,97 L142,106 L142,130 L118,138 L155,146 L148,172 L85,150 Z" fill="url(#whMonogramE)" stroke="#FAB005" stroke-width="4.5" stroke-linejoin="round" filter="url(#whGlow)" />
+
+    <!-- Monogram S: Brilliant cyan/azure ribbon with subtle design glow -->
+    <path d="M260,75 C242,62 212,62 198,72 C180,84 186,102 208,110 C240,120 268,128 260,158 C252,185 210,196 172,186 C152,181 138,170 130,160 L152,145 C158,155 174,166 195,166 C214,166 225,155 225,144 C225,130 205,123 186,115 C162,105 152,88 162,68 C174,48 208,42 245,52 Z" fill="url(#whSRibbon)" stroke="#FAB005" stroke-width="3.8" stroke-linejoin="round" filter="url(#whGlow)" />
+  </g>
+
+  <!-- TYPOGRAPHY IN WHITE/LIGHT -->
+  <g transform="translate(160, 0)">
+    <!-- ES with radiant golden yellow contour and subtle design glow -->
+    <text x="0" y="48" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="46" fill="#FFFFFF" stroke="#FAB005" stroke-width="3.2" paint-order="stroke fill" letter-spacing="-0.5" filter="url(#whGlow)">ES</text>
+    <rect x="74" y="27" width="18" height="10" fill="#FAB005" rx="1" />
+    <text x="100" y="48" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="46" fill="#FAB005" stroke="#FFFFFF" stroke-width="2" paint-order="stroke fill" letter-spacing="0.5">BTP</text>
+
+    <text x="0" y="70" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="10.5" fill="#FFFFFF" letter-spacing="2.2">
+      LE FUTUR SE CONSTRUIT MAINTENANT
+    </text>
+
+    <line x1="0" y1="80" x2="310" y2="80" stroke="#FAB005" stroke-width="2.5" stroke-linecap="round" />
+
+    <g transform="translate(0, 97)" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" letter-spacing="0.8">
+      <text x="0" y="0" fill="#F1F5F9">BÂTIMENT</text>
+      <text x="68" y="0" fill="#FAB005" font-size="11" font-weight="900">|</text>
+      <text x="78" y="0" fill="#F1F5F9">TRAVAUX ROUTIERS</text>
+      <text x="198" y="0" fill="#FAB005" font-size="11" font-weight="900">|</text>
+      <text x="208" y="0" fill="#F1F5F9">INFRASTRUCTURES</text>
+    </g>
+  </g>
+</svg>

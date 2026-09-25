@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="500" height="450" fill="none">
+  <defs>
+    <!-- 3D Shading Gradients for Black Monogram R and L -->
+    <linearGradient id="rlBlackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2B2D31" />
+      <stop offset="35%" stop-color="#181A1E" />
+      <stop offset="85%" stop-color="#0B0C0E" />
+      <stop offset="100%" stop-color="#020304" />
+    </linearGradient>
+
+    <!-- Red Play Button & Orbit Gradients -->
+    <linearGradient id="rlRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A3A" />
+      <stop offset="40%" stop-color="#E50914" />
+      <stop offset="80%" stop-color="#B20710" />
+      <stop offset="100%" stop-color="#7A0006" />
+    </linearGradient>
+
+    <radialGradient id="rlRedSphere" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FF5566" />
+      <stop offset="45%" stop-color="#E50914" />
+      <stop offset="85%" stop-color="#990008" />
+      <stop offset="100%" stop-color="#4A0003" />
+    </radialGradient>
+
+    <!-- Deep Drop Shadow -->
+    <filter id="rlShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <g filter="url(#rlShadow)">
+    <!-- ==================== LETTER "R" ==================== -->
+    <!-- R Stem & Base -->
+    <path d="M 90 95 L 210 95 C 248 95 272 118 272 152 C 272 178 258 198 232 208 L 290 290 L 230 290 L 180 216 L 150 216 L 150 290 L 90 290 Z M 150 145 L 150 175 L 205 175 C 218 175 224 167 224 160 C 224 152 218 145 205 145 Z" fill="url(#rlBlackGrad)" />
+
+    <!-- Red Play Button Triangle in the loop of R -->
+    <polygon points="175,140 175,205 230,172.5" fill="url(#rlRedGrad)" />
+    <!-- Play button inner highlight -->
+    <polygon points="175,140 175,205 195,172.5" fill="#FFFFFF" fill-opacity="0.18" />
+
+    <!-- Red Orbit Swoosh Ring looping around the R -->
+    <path d="M 68 208 C 65 228 115 240 185 225 C 235 214 268 185 278 145 C 284 120 270 148 245 172 C 210 205 130 218 85 195 C 72 188 68 198 68 208 Z" fill="url(#rlRedGrad)" />
+
+    <!-- Red Sphere Orb at the tip of the Orbit ring -->
+    <circle cx="282" cy="132" r="10" fill="url(#rlRedSphere)" />
+
+    <!-- ==================== LETTER "L" ==================== -->
+    <path d="M 296 95 L 356 95 L 356 235 C 356 250 366 256 382 256 L 452 256 L 452 290 L 368 290 C 322 290 296 268 296 225 Z" fill="url(#rlBlackGrad)" />
+  </g>
+
+  <!-- ==================== TEXT: Services.Inc ==================== -->
+  <g transform="translate(45, 355)" filter="url(#rlShadow)">
+    <text x="0" y="0" font-family="'Plus Jakarta Sans', 'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="52" fill="url(#rlBlackGrad)" letter-spacing="-1">
+      Services
+    </text>
+    
+    <!-- Red Sphere Dot between Services and Inc -->
+    <circle cx="218" cy="-14" r="8.5" fill="url(#rlRedSphere)" />
+
+    <text x="238" y="0" font-family="'Plus Jakarta Sans', 'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="52" fill="url(#rlBlackGrad)" letter-spacing="-0.5">
+      Inc
+    </text>
+  </g>
+</svg>

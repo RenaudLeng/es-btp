@@ -1,0 +1,6 @@
+# robots.txt for ES-BTP Gabon
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://es-btp.vercel.app/sitemap.xml

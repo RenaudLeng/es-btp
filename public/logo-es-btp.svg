@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 440" width="520" height="440">
+  <defs>
+    <!-- Gradients matching the official logo -->
+    <linearGradient id="buildingDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F2847" />
+      <stop offset="100%" stop-color="#071526" />
+    </linearGradient>
+    <linearGradient id="buildingBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="buildingLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+    <linearGradient id="sRibbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="35%" stop-color="#0088FF" />
+      <stop offset="70%" stop-color="#0066CC" />
+      <stop offset="100%" stop-color="#0A2D64" />
+    </linearGradient>
+    <linearGradient id="yellowRibbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDD00" />
+      <stop offset="50%" stop-color="#FAB005" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+    <linearGradient id="eGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091A30" />
+      <stop offset="100%" stop-color="#050E1A" />
+    </linearGradient>
+    <filter id="shadowFilter" x="-30%" y="-30%" width="160%" height="160%">
+      <!-- Lueur dorée subtile et design -->
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="goldBlur" />
+      <feFlood flood-color="#FAB005" flood-opacity="0.45" result="goldColor" />
+      <feComposite in="goldColor" in2="goldBlur" operator="in" result="goldGlow" />
+      <!-- Ombre portée architecturale -->
+      <feDropShadow in="SourceGraphic" dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.2" result="dropShadow" />
+      <feMerge>
+        <feMergeNode in="goldGlow" />
+        <feMergeNode in="dropShadow" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g transform="translate(10, 0)">
+    <!-- ========================================== -->
+    <!-- 1. TOP ARTWORK / EMBLEM -->
+    <!-- ========================================== -->
+    <g transform="translate(60, 10)">
+      <!-- Construction Crane (Tower & Jib in Bright Red-Orange) -->
+      <g stroke="#FF5500" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Vertical Mast with lattice bracing -->
+        <line x1="240" y1="28" x2="240" y2="105" />
+        <line x1="246" y1="28" x2="246" y2="105" />
+        <line x1="240" y1="36" x2="246" y2="44" />
+        <line x1="246" y1="44" x2="240" y2="52" />
+        <line x1="240" y1="52" x2="246" y2="60" />
+        <line x1="246" y1="60" x2="240" y2="68" />
+        <!-- Horizontal Jib & Counter Jib -->
+        <line x1="185" y1="28" x2="350" y2="28" stroke-width="3" />
+        <line x1="185" y1="34" x2="340" y2="34" stroke-width="1.8" />
+        <!-- Jib Bracing -->
+        <line x1="240" y1="28" x2="260" y2="34" />
+        <line x1="260" y1="34" x2="280" y2="28" />
+        <line x1="280" y1="28" x2="300" y2="34" />
+        <line x1="300" y1="34" x2="320" y2="28" />
+        <line x1="320" y1="28" x2="340" y2="34" />
+        <!-- A-Frame Apex & Pendants -->
+        <polygon points="243,14 238,28 248,28" fill="#FF5500" />
+        <line x1="243" y1="14" x2="195" y2="28" stroke-width="1.5" />
+        <line x1="243" y1="14" x2="325" y2="28" stroke-width="1.5" />
+        <!-- Counterweight -->
+        <rect x="187" y="29" width="16" height="12" fill="#FF5500" />
+        <!-- Trolley, Hoist Cable & Hook -->
+        <rect x="318" y="27" width="10" height="6" fill="#FF5500" />
+        <line x1="323" y1="33" x2="323" y2="60" stroke="#FF5500" stroke-width="2" />
+        <!-- Hook -->
+        <path d="M323,60 C323,70 314,70 314,64 C314,60 318,60 319,62" fill="none" stroke="#FF5500" stroke-width="3" stroke-linecap="round" />
+      </g>
+
+      <!-- Skyscraper / Tower Facets in Royal Blues & Navy -->
+      <!-- Left Tower -->
+      <polygon points="120,80 156,50 156,155 120,165" fill="url(#buildingDark)" />
+      <polygon points="156,50 178,35 178,145 156,155" fill="url(#buildingBlue)" />
+      <polygon points="156,50 178,35 160,28 140,40" fill="url(#buildingLight)" />
+
+      <!-- Center Tall Skyscraper -->
+      <polygon points="172,75 208,30 208,150 172,156" fill="#0A1C30" />
+      <polygon points="208,30 236,15 236,140 208,150" fill="url(#buildingBlue)" />
+      <polygon points="208,30 236,15 220,10 192,22" fill="url(#buildingLight)" />
+      <!-- Vertical glass window strips -->
+      <line x1="216" y1="35" x2="216" y2="135" stroke="#38BDF8" stroke-width="1.5" opacity="0.6" />
+      <line x1="226" y1="28" x2="226" y2="130" stroke="#38BDF8" stroke-width="1.5" opacity="0.6" />
+
+      <!-- Right Tower -->
+      <polygon points="230,75 264,55 264,130 230,135" fill="url(#buildingDark)" />
+      <polygon points="264,55 284,45 284,120 264,130" fill="url(#buildingBlue)" />
+
+      <!-- Dynamic Curved Highway Road with Median Stripes & Yellow Shoulder Ribbon -->
+      <!-- Yellow dynamic speed ribbon on left shoulder -->
+      <path d="M102,185 C145,160 190,140 235,120 C258,110 276,104 290,100" fill="none" stroke="url(#yellowRibbonGrad)" stroke-width="14" stroke-linecap="round" />
+
+      <!-- Asphalt Highway Body -->
+      <path d="M125,200 C175,170 215,148 250,130 C272,118 290,111 306,105 L324,113 C302,123 278,135 250,150 C205,175 160,205 136,215 Z" fill="#1A2533" stroke="#0E1724" stroke-width="1" />
+
+      <!-- White dashed highway lane markers -->
+      <path d="M136,204 C185,173 228,148 260,132 C280,121 298,114 314,109" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="8,6" stroke-linecap="round" />
+
+      <!-- Intertwined 3D "ES" Monogram with radiant golden outlines -->
+      <!-- Giant Letter E on left -->
+      <path d="M85,78 L152,58 L152,86 L118,97 L142,106 L142,130 L118,138 L155,146 L148,172 L85,150 Z" fill="url(#eGrad)" stroke="#FAB005" stroke-width="4.2" filter="url(#shadowFilter)" />
+
+      <!-- Giant Sweeping Letter S ribbon -->
+      <path d="M260,75 C242,62 212,62 198,72 C180,84 186,102 208,110 C240,120 268,128 260,158 C252,185 210,196 172,186 C152,181 138,170 130,160 L152,145 C158,155 174,166 195,166 C214,166 225,155 225,144 C225,130 205,123 186,115 C162,105 152,88 162,68 C174,48 208,42 245,52 Z" fill="url(#sRibbonGrad)" stroke="#FAB005" stroke-width="3.6" filter="url(#shadowFilter)" />
+    </g>
+
+    <!-- ========================================== -->
+    <!-- 2. MAIN LOGO WORDMARK "ES-BTP" -->
+    <!-- ========================================== -->
+    <g transform="translate(10, 260)">
+      <!-- "ES" with radiant golden contour and subtle design glow -->
+      <text x="50" y="65" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="78" fill="#0C1523" stroke="#FAB005" stroke-width="5" paint-order="stroke fill" letter-spacing="-1" filter="url(#shadowFilter)">ES</text>
+
+      <!-- "-" Hyphen in Golden Yellow -->
+      <rect x="175" y="32" width="28" height="15" fill="#FAB005" rx="1" />
+
+      <!-- "BTP" in Golden Yellow with crisp Midnight Navy stroke -->
+      <text x="215" y="65" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="78" fill="#FAB005" stroke="#0C1523" stroke-width="4.5" paint-order="stroke fill" letter-spacing="1">BTP</text>
+    </g>
+
+    <!-- ========================================== -->
+    <!-- 3. BASELINE SIGNATURE -->
+    <!-- ========================================== -->
+    <text x="250" y="352" font-family="'Plus Jakarta Sans', 'Barlow', sans-serif" font-weight="800" font-size="14.5" text-anchor="middle" fill="#0C1523" letter-spacing="4.5">
+      LE FUTUR SE CONSTRUIT MAINTENANT
+    </text>
+
+    <!-- ========================================== -->
+    <!-- 4. GOLDEN DIVIDER LINE -->
+    <!-- ========================================== -->
+    <line x1="45" y1="368" x2="455" y2="368" stroke="#FAB005" stroke-width="3.5" stroke-linecap="round" />
+
+    <!-- ========================================== -->
+    <!-- 5. THREE PILLARS / FIELDS OF EXPERTISE -->
+    <!-- ========================================== -->
+    <g transform="translate(250, 396)" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="13" letter-spacing="1.5">
+      <!-- BÂTIMENT -->
+      <text x="-142" y="0" fill="#0C1523">BÂTIMENT</text>
+      <!-- Separator 1 -->
+      <text x="-66" y="0" fill="#FAB005" font-size="16" font-weight="900">|</text>
+      <!-- TRAVAUX ROUTIERS -->
+      <text x="12" y="0" fill="#0C1523">TRAVAUX ROUTIERS</text>
+      <!-- Separator 2 -->
+      <text x="108" y="0" fill="#FAB005" font-size="16" font-weight="900">|</text>
+      <!-- INFRASTRUCTURES -->
+      <text x="190" y="0" fill="#0C1523">INFRASTRUCTURES</text>
+    </g>
+  </g>
+</svg>
