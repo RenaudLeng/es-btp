@@ -4,7 +4,11 @@ import { PageId } from './Header';
 import { SocialLinks } from './SocialLinks';
 import { ShareModal } from './ShareModal';
 import { VisitorCounter } from './VisitorCounter';
-import { MapPin, Phone, Mail, Clock, ArrowRight, ShieldCheck, Share2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight, ShieldCheck, Share2, Building2, HardHat, Compass } from 'lucide-react';
+import librevillePanoramique from '../assets/images/libreville_skyline_panoramic_1790420442861.jpg';
+import owendoChantier from '../assets/images/owendo_chantier_maritime_1790420456781.jpg';
+import routesImg from '../assets/images/chantier_africain_routes_1790108090031.jpg';
+import pontBordMer from '../assets/images/gabon_pont_bord_mer_1790147890714.jpg';
 
 interface FooterProps {
   onNavigate: (page: PageId) => void;
@@ -57,6 +61,53 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <p className="mt-3 text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm">
                   Entreprise de référence spécialisée dans le bâtiment, les travaux routiers, le génie civil et les aménagements d'infrastructures durables.
                 </p>
+              </div>
+
+              {/* Panorama Visuel Harmonieux : Libreville · Owendo · Chantiers Gabon */}
+              <div className="mt-5 rounded-2xl overflow-hidden border border-slate-700/80 bg-slate-900/90 shadow-xl group">
+                <div className="relative h-36 sm:h-40 overflow-hidden">
+                  <img
+                    src={librevillePanoramique}
+                    alt="Panorama de Libreville et de la côte maritime du Gabon"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#07111E] via-[#07111E]/40 to-transparent" />
+                  
+                  {/* Badge localisation sur l'image */}
+                  <div className="absolute top-2.5 left-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#07111E]/80 backdrop-blur-md border border-[#FAB005]/40 text-[10px] font-bold text-[#FAB005] shadow-xs">
+                    <MapPin className="w-3 h-3 text-[#FAB005]" />
+                    <span>Grand Libreville & Owendo</span>
+                  </div>
+
+                  {/* Vignettes synchronisées miniatures chantiers */}
+                  <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1.5">
+                    <div className="relative group/thumb cursor-pointer overflow-hidden rounded-lg border border-white/20 w-11 h-8 shadow-md">
+                      <img src={owendoChantier} alt="Port d'Owendo" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/20 group-hover/thumb:bg-transparent transition-colors" />
+                    </div>
+                    <div className="relative group/thumb cursor-pointer overflow-hidden rounded-lg border border-white/20 w-11 h-8 shadow-md">
+                      <img src={pontBordMer} alt="Ouvrages d'art Gabon" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/20 group-hover/thumb:bg-transparent transition-colors" />
+                    </div>
+                    <div className="relative group/thumb cursor-pointer overflow-hidden rounded-lg border border-white/20 w-11 h-8 shadow-md">
+                      <img src={routesImg} alt="Routes Gabon" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/20 group-hover/thumb:bg-transparent transition-colors" />
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-2 left-2.5 text-[11px] text-white font-semibold flex items-center gap-1 drop-shadow-md">
+                    <Compass className="w-3.5 h-3.5 text-[#FAB005]" />
+                    <span>Bâtir le Gabon moderne</span>
+                  </div>
+                </div>
+
+                <div className="px-3 py-2 bg-[#091526] flex items-center justify-between text-[11px] text-slate-300">
+                  <span className="text-slate-400">Rayonnement national</span>
+                  <span className="text-[#FAB005] font-semibold flex items-center gap-1">
+                    <HardHat className="w-3 h-3" />
+                    Estuaire · Ogooué · Haut-Ogooué
+                  </span>
+                </div>
               </div>
 
               {/* Réseaux Sociaux : Facebook, TikTok, WhatsApp, YouTube */}
