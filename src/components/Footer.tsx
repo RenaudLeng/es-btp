@@ -226,7 +226,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       {/* ============================================================ */}
       <div className="border-t border-slate-800/90 bg-[#050c17] py-5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400 text-center md:text-left">
-          {/* Copyright RL-Services.Inc */}
+          {/* Signature & Copyright Professionnel RL-Services.Inc */}
           <div className="inline-flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs text-slate-300">
             <div className="w-6 h-6 rounded-md bg-white p-0.5 shadow-sm flex items-center justify-center overflow-hidden shrink-0">
               <img
@@ -237,16 +237,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
             <span className="text-white font-bold text-sm">©</span>
             <strong className="text-white font-bold tracking-wide">RL-Services.Inc</strong>
-            <span className="text-slate-500 font-bold">:</span>
+            <span className="text-slate-600">·</span>
+            <span className="text-slate-400">Conception & Réalisation :</span>
+            <span className="text-white font-semibold">Renaud LENG</span>
+            <span className="text-slate-400 text-[11px]">(Renaud LENGOUORI)</span>
+            <span className="text-slate-600">·</span>
             <a
-              href="tel:077971697"
-              className="text-[#FAB005] hover:text-amber-300 hover:underline font-mono font-bold tracking-wider transition-colors px-1"
-              title="Contacter RL-Services.Inc"
+              href="mailto:arleys4u@gmail.com"
+              className="text-[#FAB005] hover:text-amber-300 hover:underline transition-colors px-1"
+              title="Contacter le concepteur web"
             >
-              077971697
+              arleys4u@gmail.com
             </a>
-            <span className="text-slate-400">by</span>
-            <span className="text-white font-bold">Renaud LENG</span>
           </div>
 
           {/* Compteur Réel & Minimaliste (Zero encombrement) */}

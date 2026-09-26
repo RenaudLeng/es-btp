@@ -1,0 +1,13 @@
+/* TEAM */
+Author & Web Architect: Renaud LENG (Renaud LENGOUORI)
+Role: Concepteur & Développeur Web
+Organization: RL-Services.Inc
+Email: arleys4u@gmail.com
+Location: Libreville, Gabon
+
+/* SITE CREDITS */
+Client: ES-BTP Gabon (Entreprise Sekoula Bâtiment et Travaux Publics)
+Website: https://es-btp.vercel.app
+Standards: HTML5, CSS3, React, TypeScript, Tailwind CSS, Schema.org JSON-LD
+Language: Français (fr_GA)
+Doctype: HTML5
