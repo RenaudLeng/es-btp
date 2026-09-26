@@ -2,6 +2,15 @@
   "framework": "vite",
   "headers": [
     {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://es-btp.vercel.app/>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
       "source": "/sitemap.xml",
       "headers": [
         {
