@@ -240,7 +240,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <span className="text-slate-600">·</span>
             <span className="text-slate-400">Conception & Réalisation :</span>
             <span className="text-white font-semibold">Renaud LENG</span>
-            <span className="text-slate-400 text-[11px]">(Renaud LENGOUORI)</span>
+            {/* Indexation SEO invisible pour les moteurs de recherche */}
+            <span className="sr-only">Renaud LENGOUORI LENGOUORI concepteur développeur web</span>
             <span className="text-slate-600">·</span>
             <a
               href="mailto:arleys4u@gmail.com"
