@@ -658,6 +658,42 @@ export const ContactView: React.FC = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Localisation Interactive Google Maps / Itinéraire */}
+                    <div className="pt-2 border-t border-slate-100">
+                      <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 relative">
+                        {/* Carte Interactive OpenStreetMap centrée sur Owendo / Libreville */}
+                        <div className="relative h-44 w-full">
+                          <iframe
+                            title="Localisation ES-BTP Owendo Libreville Gabon"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=9.4800%2C0.2800%2C9.5300%2C0.3200&amp;layer=mapnik&amp;marker=0.3000%2C9.5050"
+                            className="w-full h-full border-0 opacity-85 hover:opacity-100 transition-opacity"
+                            loading="lazy"
+                          />
+                          <div className="absolute top-2.5 left-2.5 bg-[#0B1320]/90 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/20 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-md pointer-events-none">
+                            <MapPin className="w-3.5 h-3.5 text-[#FAB005]" />
+                            <span>Owendo · Sogatole Face FOPI</span>
+                          </div>
+                        </div>
+
+                        <div className="p-3 bg-[#0B1320] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                          <div className="text-[11px] text-slate-300">
+                            <span className="text-[#FAB005] font-bold block">Accès direct chantiers & bureaux :</span>
+                            Zone industrielle et portuaire d'Owendo
+                          </div>
+
+                          <a
+                            href="https://www.google.com/maps/search/?api=1&query=Sogatole+FOPI+Owendo+Gabon"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm font-heading cursor-pointer shrink-0"
+                          >
+                            <span>Ouvrir l'itinéraire GPS</span>
+                            <ExternalLink className="w-3.5 h-3.5 text-[#0B1320]" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

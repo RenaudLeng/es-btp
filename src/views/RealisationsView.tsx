@@ -123,6 +123,13 @@ export const RealisationsView: React.FC<RealisationsViewProps> = ({
                         {project.categoryLabel}
                       </div>
 
+                      {project.keyMetric && (
+                        <div className="absolute top-3 right-3 bg-[#FAB005] text-[#0B1320] px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full shadow-md z-10 flex items-center gap-1">
+                          <Sparkles className="w-3 h-3 text-[#0B1320]" />
+                          <span>{project.keyMetric.value}</span>
+                        </div>
+                      )}
+
                       {project.isPlaceholder && (
                         <div className="absolute bottom-3 right-3 bg-slate-900/85 backdrop-blur-xs text-slate-300 text-[10px] font-mono px-2.5 py-1 rounded-full z-10">
                           Projet type

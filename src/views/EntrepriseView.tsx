@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { COMPANY_INFO } from '../data/btpData';
-import { ArrowRight, Quote, ShieldCheck, CheckCircle2, Award, Sparkles, Building2, HardHat, Compass } from 'lucide-react';
+import { ArrowRight, Quote, ShieldCheck, CheckCircle2, Award, Sparkles, Building2, HardHat, Compass, FileText, Download } from 'lucide-react';
 import { EsBtpLogo } from '../components/EsBtpLogo';
 import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
 import { TeamSection } from '../components/TeamSection';
@@ -13,6 +13,7 @@ import { FuturisticBanner } from '../components/FuturisticBanner';
 import { PartnersSection } from '../components/PartnersSection';
 import { useDgPhoto } from '../context/DgPhotoContext';
 import { ExecutivePortraitPoster } from '../components/ExecutivePortraitPoster';
+import { CorporateBrochureModal } from '../components/CorporateBrochureModal';
 import foretGabonaiseImg from '../assets/images/foret_gabonaise_1790112563726.jpg';
 import batimentAfricanImg from '../assets/images/chantier_africain_batiment_1790108101216.jpg';
 import routesAfricanImg from '../assets/images/chantier_africain_routes_1790108090031.jpg';
@@ -24,6 +25,7 @@ interface EntrepriseViewProps {
 
 export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact }) => {
   const { dgPhotoUrl, isCustomPhoto } = useDgPhoto();
+  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
   return (
     <div className="w-full relative overflow-hidden">
       {/* ============================================================ */}
@@ -360,13 +362,23 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
                   <p><span className="font-semibold text-slate-900">Direction Générale :</span> Guy Alain SEKOULA</p>
                 </div>
 
-                <button
-                  onClick={onOpenContact}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-[#0B1320] bg-[#FAB005] hover:bg-[#e09e04] rounded-xl transition-all cursor-pointer shadow-md font-heading"
-                >
-                  <span>Prendre contact avec la direction</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#0B1320]" />
-                </button>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    onClick={onOpenContact}
+                    className="inline-flex items-center gap-2 px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-[#0B1320] bg-[#FAB005] hover:bg-[#e09e04] rounded-xl transition-all cursor-pointer shadow-md font-heading"
+                  >
+                    <span>Prendre contact avec la direction</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#0B1320]" />
+                  </button>
+
+                  <button
+                    onClick={() => setIsBrochureOpen(true)}
+                    className="inline-flex items-center gap-2 px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-800 bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 rounded-xl transition-all cursor-pointer shadow-xs font-heading"
+                  >
+                    <Download className="w-4 h-4 text-[#FAB005]" />
+                    <span>Plaquette d'entreprise (PDF)</span>
+                  </button>
+                </div>
               </div>
 
               <div className="lg:col-span-6">
@@ -408,6 +420,12 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
       <ZoomReveal>
         <PartnersSection />
       </ZoomReveal>
+
+      {/* Modal de Téléchargement de la Plaquette Institutionnelle */}
+      <CorporateBrochureModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+      />
     </div>
   );
 };

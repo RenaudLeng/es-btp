@@ -19,6 +19,10 @@ export interface ProjectItem {
   location: string;
   description: string;
   image: string;
+  keyMetric?: {
+    value: string;
+    label: string;
+  };
   isPlaceholder?: boolean;
   technicalSpecs?: {
     label: string;
@@ -154,9 +158,13 @@ export const PROJECTS: ProjectItem[] = [
     title: 'Projet Bâtiment Institutionnel',
     category: 'BATIMENT',
     categoryLabel: 'Bâtiment',
-    location: 'Gabon · [Localisation à renseigner]',
+    location: 'Grand Libreville · Gabon',
     description: 'Structure béton armé et aménagement d’un ensemble administratif à haute performance fonctionnelle.',
     image: batimentImg,
+    keyMetric: {
+      value: 'R+3',
+      label: 'Gros œuvre & normes ISO'
+    },
     isPlaceholder: true,
     technicalSpecs: [
       { label: 'Type d’ouvrage', value: 'Bâtiment institutionnel R+3' },
@@ -170,9 +178,13 @@ export const PROJECTS: ProjectItem[] = [
     title: 'Projet Aménagement Routier',
     category: 'ROUTES',
     categoryLabel: 'Travaux routiers',
-    location: 'Gabon · [Axe à renseigner]',
+    location: 'Axe National · Gabon',
     description: 'Travaux de terrassement, assainissement longitudinal et pose de revêtement routier lourd.',
     image: routesImg,
+    keyMetric: {
+      value: 'BBME',
+      label: 'Enrobé bitumineux lourd'
+    },
     isPlaceholder: true,
     technicalSpecs: [
       { label: 'Linéaire', value: '[Linéaire à renseigner]' },
@@ -186,9 +198,13 @@ export const PROJECTS: ProjectItem[] = [
     title: 'Projet Ouvrage d’Art & Génie Civil',
     category: 'INFRASTRUCTURES',
     categoryLabel: 'Infrastructures',
-    location: 'Gabon · [Site à renseigner]',
+    location: 'Estuaire · Gabon',
     description: 'Réalisation d’ouvrages de franchissement hydraulique et stabilisation des sols d’accès.',
     image: infraImg,
+    keyMetric: {
+      value: 'C30/37',
+      label: 'Béton haute durabilité'
+    },
     isPlaceholder: true,
     technicalSpecs: [
       { label: 'Portée / Capacité', value: '[Donnée à renseigner]' },
@@ -202,9 +218,13 @@ export const PROJECTS: ProjectItem[] = [
     title: 'Projet Plateforme & Génie Urbain',
     category: 'BATIMENT',
     categoryLabel: 'Bâtiment / Plateforme',
-    location: 'Gabon · [Zone à renseigner]',
+    location: 'Zone Industrielle Owendo · Gabon',
     description: 'Aménagement de plateforme logistique et fondations spéciales pour zone d’activités.',
     image: chantierImg,
+    keyMetric: {
+      value: '0 Acc.',
+      label: 'Objectif sécurité QHSE'
+    },
     isPlaceholder: true,
     technicalSpecs: [
       { label: 'Superficie', value: '[À renseigner]' },

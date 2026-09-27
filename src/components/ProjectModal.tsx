@@ -81,6 +81,22 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
             </p>
           </div>
 
+          {project.keyMetric && (
+            <div className="p-3.5 bg-[#0B1320] text-white rounded-xl flex items-center justify-between">
+              <div>
+                <span className="text-[10px] uppercase font-bold tracking-wider text-[#FAB005] block">
+                  Indicateur de référence
+                </span>
+                <span className="text-xs text-slate-300">
+                  {project.keyMetric.label}
+                </span>
+              </div>
+              <span className="text-lg font-black text-[#FAB005] font-mono px-3 py-1 bg-white/10 rounded-lg">
+                {project.keyMetric.value}
+              </span>
+            </div>
+          )}
+
           {/* Technical Specifications Grid */}
           {project.technicalSpecs && (
             <div>

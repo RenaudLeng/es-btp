@@ -13,7 +13,7 @@ import { EngagementsView } from './views/EngagementsView';
 import { ActualitesView } from './views/ActualitesView';
 import { ContactView } from './views/ContactView';
 import { ProjectItem } from './data/btpData';
-import { FloatingWhatsAppButton } from './components/SocialLinks';
+import { EnhancedFloatingContact } from './components/EnhancedFloatingContact';
 
 export default function App() {
   return (
@@ -139,8 +139,8 @@ function MainApp() {
         defaultProjectContext={contactProjectContext}
       />
 
-      {/* Bouton d'accès direct WhatsApp chantiers & échanges (icône ronde flottante épurée) */}
-      <FloatingWhatsAppButton />
+      {/* Bouton d'accès direct WhatsApp & Assistance Chantiers amélioré */}
+      <EnhancedFloatingContact />
     </div>
   );
 }
