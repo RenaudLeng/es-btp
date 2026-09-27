@@ -4,11 +4,8 @@ import { PageId } from './Header';
 import { SocialLinks } from './SocialLinks';
 import { ShareModal } from './ShareModal';
 import { VisitorCounter } from './VisitorCounter';
-import { MapPin, Phone, Mail, Clock, ArrowRight, ShieldCheck, Share2, Building2, HardHat, Compass } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight, ShieldCheck, Share2 } from 'lucide-react';
 import librevillePanoramique from '../assets/images/libreville_skyline_panoramic_1790420442861.jpg';
-import owendoChantier from '../assets/images/owendo_chantier_maritime_1790420456781.jpg';
-import routesImg from '../assets/images/chantier_africain_routes_1790108090031.jpg';
-import pontBordMer from '../assets/images/gabon_pont_bord_mer_1790147890714.jpg';
 
 interface FooterProps {
   onNavigate: (page: PageId) => void;
@@ -42,77 +39,45 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* COLONNE 1 : IDENTITÉ ÉPURÉE & SLOGAN COMPACT */}
           {/* ============================================================ */}
           <div className="lg:col-span-4 flex flex-col justify-between">
-            <div>
-              {/* Logo avec halo diffus fluide à 360° pour adhérer au fond bleu nuit */}
-              <div className="relative inline-block">
-                <div className="absolute -inset-3 bg-radial from-[#FAB005]/20 via-[#0B1320]/60 to-transparent rounded-full blur-xl pointer-events-none" />
-                <div className="relative z-10 drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
-                  <EsBtpLogo variant="light" mode="horizontal" showSignature={false} />
-                </div>
+            {/* Carte de marque avec la superbe image de Libreville en fond (background cover) sans aucun texte ou vignette dessus */}
+            <div className="relative rounded-3xl overflow-hidden border border-slate-700/80 bg-slate-900/90 shadow-2xl p-6 sm:p-7 flex flex-col justify-between min-h-[380px] group">
+              {/* Image de fond de Libreville */}
+              <div className="absolute inset-0 z-0">
+                <img
+                  src={librevillePanoramique}
+                  alt="Panorama de Libreville, Gabon"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000 ease-out"
+                />
+                {/* Voile sombre pour assurer la parfaite lisibilité des textes et logos */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#07111E] via-[#07111E]/80 to-[#07111E]/40" />
               </div>
 
-              {/* Slogan réduit et stylisé (compact) */}
-              <div className="mt-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FAB005]/10 border border-[#FAB005]/30 rounded-full text-[#FAB005] text-[11px] font-bold tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FAB005]" />
-                  <span>« LE FUTUR SE CONSTRUIT MAINTENANT »</span>
-                </div>
-
-                <p className="mt-3 text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm">
-                  Entreprise de référence spécialisée dans le bâtiment, les travaux routiers, le génie civil et les aménagements d'infrastructures durables.
-                </p>
-              </div>
-
-              {/* Panorama Visuel Harmonieux : Libreville · Owendo · Chantiers Gabon */}
-              <div className="mt-5 rounded-2xl overflow-hidden border border-slate-700/80 bg-slate-900/90 shadow-xl group">
-                <div className="relative h-36 sm:h-40 overflow-hidden">
-                  <img
-                    src={librevillePanoramique}
-                    alt="Panorama de Libreville et de la côte maritime du Gabon"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#07111E] via-[#07111E]/40 to-transparent" />
-                  
-                  {/* Badge localisation sur l'image */}
-                  <div className="absolute top-2.5 left-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#07111E]/80 backdrop-blur-md border border-[#FAB005]/40 text-[10px] font-bold text-[#FAB005] shadow-xs">
-                    <MapPin className="w-3 h-3 text-[#FAB005]" />
-                    <span>Grand Libreville & Owendo</span>
-                  </div>
-
-                  {/* Vignettes synchronisées miniatures chantiers */}
-                  <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1.5">
-                    <div className="relative group/thumb cursor-pointer overflow-hidden rounded-lg border border-white/20 w-11 h-8 shadow-md">
-                      <img src={owendoChantier} alt="Port d'Owendo" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/20 group-hover/thumb:bg-transparent transition-colors" />
-                    </div>
-                    <div className="relative group/thumb cursor-pointer overflow-hidden rounded-lg border border-white/20 w-11 h-8 shadow-md">
-                      <img src={pontBordMer} alt="Ouvrages d'art Gabon" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/20 group-hover/thumb:bg-transparent transition-colors" />
-                    </div>
-                    <div className="relative group/thumb cursor-pointer overflow-hidden rounded-lg border border-white/20 w-11 h-8 shadow-md">
-                      <img src={routesImg} alt="Routes Gabon" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/20 group-hover/thumb:bg-transparent transition-colors" />
-                    </div>
-                  </div>
-
-                  <div className="absolute bottom-2 left-2.5 text-[11px] text-white font-semibold flex items-center gap-1 drop-shadow-md">
-                    <Compass className="w-3.5 h-3.5 text-[#FAB005]" />
-                    <span>Bâtir le Gabon moderne</span>
+              {/* Contenu textuel et liens par-dessus l'image de fond */}
+              <div className="relative z-10">
+                {/* Logo avec halo diffus fluide */}
+                <div className="relative inline-block">
+                  <div className="absolute -inset-3 bg-radial from-[#FAB005]/20 via-[#0B1320]/60 to-transparent rounded-full blur-xl pointer-events-none" />
+                  <div className="relative z-10 drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
+                    <EsBtpLogo variant="light" mode="horizontal" showSignature={false} />
                   </div>
                 </div>
 
-                <div className="px-3 py-2 bg-[#091526] flex items-center justify-between text-[11px] text-slate-300">
-                  <span className="text-slate-400">Rayonnement national</span>
-                  <span className="text-[#FAB005] font-semibold flex items-center gap-1">
-                    <HardHat className="w-3 h-3" />
-                    Estuaire · Ogooué · Haut-Ogooué
-                  </span>
+                {/* Slogan réduit et stylisé (compact) */}
+                <div className="mt-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FAB005]/15 backdrop-blur-md border border-[#FAB005]/40 rounded-full text-[#FAB005] text-[11px] font-bold tracking-wider shadow-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FAB005]" />
+                    <span>« LE FUTUR SE CONSTRUIT MAINTENANT »</span>
+                  </div>
+
+                  <p className="mt-3 text-xs sm:text-sm text-slate-200 font-medium leading-relaxed max-w-sm drop-shadow-sm">
+                    Entreprise de référence spécialisée dans le bâtiment, les travaux routiers, le génie civil et les aménagements d'infrastructures durables.
+                  </p>
                 </div>
               </div>
 
-              {/* Réseaux Sociaux : Facebook, TikTok, WhatsApp, YouTube */}
-              <div className="mt-5 pt-4 border-t border-slate-800/80">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#FAB005] block mb-2.5">
+              {/* Réseaux Sociaux & Partage par-dessus le fond */}
+              <div className="relative z-10 mt-6 pt-4 border-t border-white/15">
+                <span className="text-[10px] uppercase font-bold tracking-widest text-[#FAB005] block mb-2.5 drop-shadow-xs">
                   Rejoignez-nous · Réseaux Sociaux
                 </span>
                 <SocialLinks variant="gold" size="md" />
@@ -120,7 +85,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 {/* Bouton de recommandation / partage */}
                 <button
                   onClick={() => setShareModalOpen(true)}
-                  className="mt-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700/90 border border-slate-700 hover:border-[#FAB005]/50 text-xs font-bold text-slate-200 hover:text-white transition-all cursor-pointer shadow-xs group"
+                  className="mt-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#07111E]/85 hover:bg-[#07111E] backdrop-blur-md border border-slate-600 hover:border-[#FAB005]/60 text-xs font-bold text-slate-200 hover:text-white transition-all cursor-pointer shadow-md group"
                 >
                   <Share2 className="w-3.5 h-3.5 text-[#FAB005] group-hover:scale-110 transition-transform" />
                   <span>Partager ce site à un ami ou confrère</span>
@@ -129,7 +94,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
 
             {/* Label qualité & localisation compact */}
-            <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
               <span className="flex items-center gap-1.5 text-slate-300 font-medium">
                 <MapPin className="w-3.5 h-3.5 text-[#FAB005]" />
                 <span>Owendo · Libreville, Gabon</span>
