@@ -545,7 +545,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-slate-200 text-[11px] text-slate-500">
-                    Siège opérationnel : Sogatole Face à la FOPI · <span className="font-mono text-slate-700">BP : 18394 Owendo-Gabon</span>
+                    Siège opérationnel : Sogatole Face à la FOPI · <span className="font-mono text-slate-700">BP : 18394 Libreville, Gabon</span>
                   </div>
                 </div>
               </div>
@@ -553,20 +553,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </ZoomReveal>
         </div>
       </section>
-
-      {/* BANNIÈRE FLUIDE COLORÉE CYAN & OR AVANT ACTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
-        <ZoomReveal>
-          <FuturisticBanner
-            theme="electric-cyan"
-            title="UN RAYONNEMENT OPÉRATIONNEL SUR TOUT LE TERRITOIRE"
-            subtitle="Grâce à notre parc matériel, nos centrales et nos équipes mobiles, ES-BTP répond avec réactivité et fiabilité à vos appels d’offres et marchés de travaux."
-            tagline="DISPONIBILITÉ & MOBILISATION IMMÉDIATE"
-            onCtaClick={() => onOpenProjectContact()}
-            ctaText="Demander une étude de projet"
-          />
-        </ZoomReveal>
-      </div>
 
       {/* ============================================================ */}
       {/* SECTION 7 — APPEL À L'ACTION */}

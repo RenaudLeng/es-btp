@@ -353,13 +353,11 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
                   ES-BTP opère depuis le Gabon avec une capacité de projection sur l’ensemble des provinces pour des projets routiers, de génie civil et de bâtiment.
                 </p>
                 
-                <div className="p-5 bg-white border-l-4 border-[#FAB005] text-xs text-slate-700 mb-6 shadow-xs rounded-2xl space-y-1">
-                  <p className="font-bold text-[#0B1320] mb-1.5 text-sm">Siège & Coordonnées Officielles :</p>
-                  <p><span className="font-semibold text-slate-900">Siège social :</span> Sogatole Face à la FOPI, Owendo</p>
-                  <p><span className="font-semibold text-slate-900">Boîte Postale :</span> BP 18394 Owendo-Gabon</p>
-                  <p><span className="font-semibold text-slate-900">Téléphones :</span> <a href="tel:+24177088346" className="text-amber-700 font-mono font-bold hover:underline">(+241) 77 088 346</a> / <a href="tel:+24166855037" className="text-amber-700 font-mono font-bold hover:underline">66 855 037</a></p>
-                  <p><span className="font-semibold text-slate-900">Courrier électronique :</span> <a href="mailto:esbtp2013@gmail.com" className="text-slate-800 font-mono font-bold hover:underline">esbtp2013@gmail.com</a></p>
-                  <p><span className="font-semibold text-slate-900">Direction Générale :</span> Guy Alain SEKOULA</p>
+                <div className="p-4 bg-white border-l-4 border-[#FAB005] text-xs text-slate-700 mb-6 shadow-xs rounded-xl space-y-1">
+                  <p className="font-bold text-[#0B1320] mb-1 text-sm">Siège & Direction :</p>
+                  <p><span className="font-semibold text-slate-900">Adresse :</span> Sogatole Face à la FOPI, Libreville</p>
+                  <p><span className="font-semibold text-slate-900">Boîte Postale :</span> BP 18394 Libreville, Gabon</p>
+                  <p><span className="font-semibold text-slate-900">Contact :</span> <a href="tel:+24177088346" className="text-amber-700 font-mono font-bold hover:underline">(+241) 77 088 346</a> · <a href="mailto:esbtp2013@gmail.com" className="text-slate-800 font-mono font-bold hover:underline">esbtp2013@gmail.com</a></p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">

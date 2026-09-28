@@ -153,8 +153,8 @@ export const ContactView: React.FC = () => {
                 <MapPin className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-slate-900 font-bold block">Siège à Owendo</span>
-                <span className="text-[11px] text-slate-500 font-normal">Face à la FOPI</span>
+                <span className="text-slate-900 font-bold block">Siège à Libreville</span>
+                <span className="text-[11px] text-slate-500 font-normal">Sogatole Face FOPI</span>
               </div>
             </div>
 
@@ -665,7 +665,7 @@ export const ContactView: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Accès rapide vers Nos Locaux */}
+                    {/* Accès direct vers la carte Nos Locaux */}
                     <div className="pt-2 border-t border-slate-100">
                       <a
                         href="#nos-locaux"
@@ -674,23 +674,14 @@ export const ContactView: React.FC = () => {
                           const el = document.getElementById('nos-locaux');
                           if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="p-3.5 rounded-2xl bg-[#0B1320] text-white flex items-center justify-between gap-3 hover:bg-slate-800 transition-colors group cursor-pointer"
+                        className="py-2.5 px-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-between gap-3 transition-colors group cursor-pointer text-xs font-semibold"
                       >
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-[#FAB005]/20 text-[#FAB005] flex items-center justify-center shrink-0">
-                            <MapPin className="w-4 h-4" />
-                          </div>
-                          <div className="text-left">
-                            <span className="text-xs font-bold text-white block">
-                              Voir la carte d'accès & itinéraire
-                            </span>
-                            <span className="text-[10px] font-mono text-[#FAB005]">
-                              GPS : 9FGF+HJ6 Libreville
-                            </span>
-                          </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-3.5 h-3.5 text-[#FAB005]" />
+                          <span>Localisation interactive & plan d'accès</span>
                         </div>
-                        <span className="text-xs text-[#FAB005] font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
-                          Consulter ↓
+                        <span className="text-[#0B1320] font-bold group-hover:translate-x-0.5 transition-transform">
+                          Voir la carte ↓
                         </span>
                       </a>
                     </div>
