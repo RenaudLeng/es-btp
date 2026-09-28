@@ -589,7 +589,7 @@ export const ContactView: React.FC = () => {
                           Sogatole Face à la FOPI
                         </p>
                         <p className="font-mono text-slate-500 text-xs mt-0.5">
-                          BP : 18394 Owendo-Gabon
+                          BP : 18394 Libreville, Gabon
                         </p>
                       </div>
                     </div>
@@ -685,7 +685,7 @@ export const ContactView: React.FC = () => {
                               Voir la carte d'accès & itinéraire
                             </span>
                             <span className="text-[10px] font-mono text-[#FAB005]">
-                              Plus Code : 9FGF+HJ6 Owendo
+                              GPS : 9FGF+HJ6 Libreville
                             </span>
                           </div>
                         </div>

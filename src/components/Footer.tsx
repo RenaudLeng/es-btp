@@ -48,15 +48,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <div className="flex flex-col gap-1 text-xs text-slate-400">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5 text-[#FAB005] shrink-0" />
-                  <span>Sogatole Face à la FOPI · BP 18394 Owendo, Gabon</span>
+                  <span>Sogatole Face à la FOPI · BP 18394 Libreville, Gabon</span>
                 </div>
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=9FGF%2BHJ6+Owendo+Gabon"
+                  href="https://www.google.com/maps/search/?api=1&query=9FGF%2BHJ6+Libreville+Gabon"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#FAB005] hover:text-amber-300 transition-colors ml-5 w-fit"
                 >
-                  <span>GPS Google Maps : 9FGF+HJ6 Owendo</span>
+                  <span>GPS Google Maps : 9FGF+HJ6 Libreville</span>
                   <span className="text-[10px]">↗</span>
                 </a>
               </div>

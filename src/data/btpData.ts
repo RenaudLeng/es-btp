@@ -77,15 +77,15 @@ export const COMPANY_INFO = {
     phoneRaw2: '+24166855037',
     email: 'esbtp2013@gmail.com',
     address: 'Sogatole Face à la FOPI',
-    bp: 'BP 18394 Owendo-Gabon',
-    city: 'Owendo',
+    bp: 'BP 18394 Libreville-Gabon',
+    city: 'Libreville',
     country: 'Gabon',
     gps: {
-      plusCode: '9FGF+HJ6 Owendo, Gabon',
+      plusCode: '9FGF+HJ6 Libreville, Gabon',
       shortCode: '9FGF+HJ6',
       latitude: 0.3265,
       longitude: 9.4740,
-      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=9FGF%2BHJ6+Owendo+Gabon'
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=9FGF%2BHJ6+Libreville+Gabon'
     },
     socialMedia: 'Facebook, TikTok, WhatsApp, YouTube',
     creationYear: '2013',
