@@ -23,6 +23,7 @@ import pontBordMerImg from '../assets/images/gabon_pont_bord_mer_1790147890714.j
 import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
 import { ZoomReveal } from '../components/ZoomReveal';
 import { SOCIAL_PLATFORMS, WhatsAppIcon } from '../components/SocialLinks';
+import { NosLocauxSection } from '../components/NosLocauxSection';
 
 const PROJECT_TYPES = [
   { id: 'batiment', label: 'Bâtiment & Résidentiel', desc: 'Logements, tertiaire, réhabilitation' },
@@ -664,43 +665,34 @@ export const ContactView: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Localisation Interactive Google Maps / Itinéraire avec Plus Code 9FGF+HJ6 */}
+                    {/* Accès rapide vers Nos Locaux */}
                     <div className="pt-2 border-t border-slate-100">
-                      <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 relative">
-                        {/* Carte Interactive OpenStreetMap centrée exactement sur le Plus Code 9FGF+HJ6 (Sogatole Face FOPI, Owendo) */}
-                        <div className="relative h-48 w-full">
-                          <iframe
-                            title="Localisation GPS ES-BTP 9FGF+HJ6 Owendo Gabon"
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=9.4640%2C0.3165%2C9.4840%2C0.3365&amp;layer=mapnik&amp;marker=0.3265%2C9.4740"
-                            className="w-full h-full border-0 opacity-90 hover:opacity-100 transition-opacity"
-                            loading="lazy"
-                          />
-                          <div className="absolute top-2.5 left-2.5 bg-[#0B1320]/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#FAB005]/40 text-white text-[11px] font-bold flex items-center gap-2 shadow-lg pointer-events-none">
-                            <div className="w-2.5 h-2.5 rounded-full bg-[#FAB005] animate-pulse" />
-                            <span>GPS : 9FGF+HJ6 · Owendo</span>
+                      <a
+                        href="#nos-locaux"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const el = document.getElementById('nos-locaux');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="p-3.5 rounded-2xl bg-[#0B1320] text-white flex items-center justify-between gap-3 hover:bg-slate-800 transition-colors group cursor-pointer"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-[#FAB005]/20 text-[#FAB005] flex items-center justify-center shrink-0">
+                            <MapPin className="w-4 h-4" />
                           </div>
-                        </div>
-
-                        <div className="p-3.5 bg-[#0B1320] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                          <div className="text-[11px] text-slate-300">
-                            <span className="text-[#FAB005] font-bold block flex items-center gap-1.5">
-                              <MapPin className="w-3.5 h-3.5 text-[#FAB005]" />
-                              Siège & Ateliers ES-BTP (Sogatole Face FOPI)
+                          <div className="text-left">
+                            <span className="text-xs font-bold text-white block">
+                              Voir la carte d'accès & itinéraire
                             </span>
-                            <span className="font-mono text-[10px] text-slate-400">Coordonnées Google Maps Plus Code : 9FGF+HJ6 Owendo</span>
+                            <span className="text-[10px] font-mono text-[#FAB005]">
+                              Plus Code : 9FGF+HJ6 Owendo
+                            </span>
                           </div>
-
-                          <a
-                            href="https://www.google.com/maps/search/?api=1&query=9FGF%2BHJ6+Owendo+Gabon"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md font-heading cursor-pointer shrink-0"
-                          >
-                            <span>Ouvrir sur Google Maps</span>
-                            <ExternalLink className="w-3.5 h-3.5 text-[#0B1320]" />
-                          </a>
                         </div>
-                      </div>
+                        <span className="text-xs text-[#FAB005] font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                          Consulter ↓
+                        </span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -803,6 +795,11 @@ export const ContactView: React.FC = () => {
           </ZoomReveal>
         </div>
       </section>
+
+      {/* ============================================================ */}
+      {/* SECTION NOS LOCAUX : GOOGLE MAPS INTERACTIVE 9FGF+HJ6 OWENDO */}
+      {/* ============================================================ */}
+      <NosLocauxSection />
     </div>
   );
 };
