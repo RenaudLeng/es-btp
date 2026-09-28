@@ -80,6 +80,13 @@ export const COMPANY_INFO = {
     bp: 'BP 18394 Owendo-Gabon',
     city: 'Owendo',
     country: 'Gabon',
+    gps: {
+      plusCode: '9FGF+HJ6 Owendo, Gabon',
+      shortCode: '9FGF+HJ6',
+      latitude: 0.3265,
+      longitude: 9.4740,
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=9FGF%2BHJ6+Owendo+Gabon'
+    },
     socialMedia: 'Facebook, TikTok, WhatsApp, YouTube',
     creationYear: '2013',
     certifications: 'Normes de Construction & Sécurité QHSE'

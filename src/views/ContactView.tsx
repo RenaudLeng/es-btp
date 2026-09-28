@@ -576,9 +576,14 @@ export const ContactView: React.FC = () => {
                         <MapPin className="w-5 h-5" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="font-bold text-slate-900 block text-xs uppercase tracking-wider mb-1">
-                          Siège Social & Boîte Postale :
-                        </span>
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <span className="font-bold text-slate-900 block text-xs uppercase tracking-wider">
+                            Siège Social & Boîte Postale :
+                          </span>
+                          <span className="text-[10px] font-mono font-bold bg-[#FAB005]/20 text-amber-900 px-2 py-0.5 rounded-md border border-[#FAB005]/40">
+                            GPS : 9FGF+HJ6
+                          </span>
+                        </div>
                         <p className="text-slate-800 font-semibold text-sm leading-tight">
                           Sogatole Face à la FOPI
                         </p>
@@ -659,36 +664,39 @@ export const ContactView: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Localisation Interactive Google Maps / Itinéraire */}
+                    {/* Localisation Interactive Google Maps / Itinéraire avec Plus Code 9FGF+HJ6 */}
                     <div className="pt-2 border-t border-slate-100">
                       <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 relative">
-                        {/* Carte Interactive OpenStreetMap centrée sur Owendo / Libreville */}
-                        <div className="relative h-44 w-full">
+                        {/* Carte Interactive OpenStreetMap centrée exactement sur le Plus Code 9FGF+HJ6 (Sogatole Face FOPI, Owendo) */}
+                        <div className="relative h-48 w-full">
                           <iframe
-                            title="Localisation ES-BTP Owendo Libreville Gabon"
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=9.4800%2C0.2800%2C9.5300%2C0.3200&amp;layer=mapnik&amp;marker=0.3000%2C9.5050"
-                            className="w-full h-full border-0 opacity-85 hover:opacity-100 transition-opacity"
+                            title="Localisation GPS ES-BTP 9FGF+HJ6 Owendo Gabon"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=9.4640%2C0.3165%2C9.4840%2C0.3365&amp;layer=mapnik&amp;marker=0.3265%2C9.4740"
+                            className="w-full h-full border-0 opacity-90 hover:opacity-100 transition-opacity"
                             loading="lazy"
                           />
-                          <div className="absolute top-2.5 left-2.5 bg-[#0B1320]/90 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/20 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-md pointer-events-none">
-                            <MapPin className="w-3.5 h-3.5 text-[#FAB005]" />
-                            <span>Owendo · Sogatole Face FOPI</span>
+                          <div className="absolute top-2.5 left-2.5 bg-[#0B1320]/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#FAB005]/40 text-white text-[11px] font-bold flex items-center gap-2 shadow-lg pointer-events-none">
+                            <div className="w-2.5 h-2.5 rounded-full bg-[#FAB005] animate-pulse" />
+                            <span>GPS : 9FGF+HJ6 · Owendo</span>
                           </div>
                         </div>
 
-                        <div className="p-3 bg-[#0B1320] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                        <div className="p-3.5 bg-[#0B1320] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                           <div className="text-[11px] text-slate-300">
-                            <span className="text-[#FAB005] font-bold block">Accès direct chantiers & bureaux :</span>
-                            Zone industrielle et portuaire d'Owendo
+                            <span className="text-[#FAB005] font-bold block flex items-center gap-1.5">
+                              <MapPin className="w-3.5 h-3.5 text-[#FAB005]" />
+                              Siège & Ateliers ES-BTP (Sogatole Face FOPI)
+                            </span>
+                            <span className="font-mono text-[10px] text-slate-400">Coordonnées Google Maps Plus Code : 9FGF+HJ6 Owendo</span>
                           </div>
 
                           <a
-                            href="https://www.google.com/maps/search/?api=1&query=Sogatole+FOPI+Owendo+Gabon"
+                            href="https://www.google.com/maps/search/?api=1&query=9FGF%2BHJ6+Owendo+Gabon"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm font-heading cursor-pointer shrink-0"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md font-heading cursor-pointer shrink-0"
                           >
-                            <span>Ouvrir l'itinéraire GPS</span>
+                            <span>Ouvrir sur Google Maps</span>
                             <ExternalLink className="w-3.5 h-3.5 text-[#0B1320]" />
                           </a>
                         </div>
