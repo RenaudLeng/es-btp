@@ -159,7 +159,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <div>
                   <span className="text-[10px] uppercase font-mono text-slate-400 block">Siège & Boîte Postale</span>
                   <span className="font-semibold text-white block">Sogatole Face à la FOPI</span>
-                  <span className="font-mono text-slate-300 text-[11px]">BP 18394 Owendo-Gabon</span>
+                  <span className="font-mono text-slate-300 text-[11px]">BP 18394 Libreville-Gabon</span>
                 </div>
               </div>
 
