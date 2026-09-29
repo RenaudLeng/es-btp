@@ -1,6 +1,6 @@
 {
   "name": "ES-BTP | Bâtiment, Travaux Routiers & Infrastructures au Gabon",
-  "description": "Entreprise de référence au Gabon dans le bâtiment, les travaux routiers et les infrastructures durables. Le futur se construit maintenant.",
+  "description": "Entreprise aux Services des BTP. Le futur se construit maintenant.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
