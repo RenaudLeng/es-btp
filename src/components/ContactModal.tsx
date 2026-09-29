@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { X, CheckCircle2, ArrowRight } from 'lucide-react';
+import { X, CheckCircle2, ArrowRight, Mail } from 'lucide-react';
 import { EsBtpLogo } from './EsBtpLogo';
+import { WhatsAppIcon } from './SocialLinks';
+import { COMPANY_INFO } from '../data/btpData';
+import { sendContactMessage, SendResult } from '../services/contactService';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -25,6 +28,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitResult, setSubmitResult] = useState<SendResult | null>(null);
 
   // Close on Escape key press
   useEffect(() => {
@@ -45,18 +49,23 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await sendContactMessage(formData);
+      setSubmitResult(res);
       setSubmitted(true);
-    }, 600);
+    } catch {
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
     setSubmitted(false);
+    setSubmitResult(null);
     setFormData({
       nom: '',
       entreprise: '',
@@ -124,7 +133,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         {/* ============================================================ */}
         <div className="overflow-y-auto p-5 sm:p-7 flex-1">
           {submitted ? (
-            <div className="text-center py-8 sm:py-10 space-y-4">
+            <div className="text-center py-6 sm:py-8 space-y-4">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full mb-2 border border-emerald-200">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
@@ -132,15 +141,44 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 Demande transmise avec succès
               </h4>
               <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                Votre sollicitation a bien été enregistrée par l’équipe technique d’ES-BTP. Un responsable prendra contact avec vous dans les meilleurs délais pour analyser les paramètres de votre projet.
+                {submitResult?.method === 'formspree'
+                  ? "Votre demande a été transmise directement à la boîte de réception d'ES-BTP. Un responsable technique prendra contact avec vous sous 24h à 48h."
+                  : "Votre dossier est prêt à être transmis à la direction technique. Vous pouvez finaliser en un clic ou échanger directement par WhatsApp."}
               </p>
-              <div className="pt-4">
+
+              {submitResult?.method === 'mailto_fallback' && submitResult.mailtoUrl && (
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl max-w-md mx-auto text-left">
+                  <span className="text-[11px] text-slate-500 block mb-2 font-medium">
+                    Finaliser via votre boîte mail :
+                  </span>
+                  <a
+                    href={submitResult.mailtoUrl}
+                    className="flex items-center justify-center gap-2 py-2 px-4 bg-slate-900 text-[#FAB005] hover:bg-slate-800 rounded-lg text-xs font-bold transition-colors w-full"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>Ouvrir ma messagerie ({COMPANY_INFO.contact.email})</span>
+                  </a>
+                </div>
+              )}
+
+              <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   onClick={handleReset}
-                  className="px-7 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#0B1320] hover:bg-[#163A63] border-l-4 border-[#FAB005] transition-colors rounded-xs cursor-pointer shadow-xs"
+                  className="w-full sm:w-auto px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#0B1320] hover:bg-[#163A63] border-l-4 border-[#FAB005] transition-colors rounded-xl cursor-pointer shadow-xs"
                 >
                   Fermer
                 </button>
+                <a
+                  href={`https://wa.me/24177088346?text=${encodeURIComponent(
+                    `Bonjour ES-BTP, je viens de vous contacter depuis le site web (${formData.nom} - ${formData.typeProjet || 'Travaux'}).`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#25D366] hover:bg-[#20ba59] rounded-xl transition-all shadow-sm flex items-center justify-center gap-2"
+                >
+                  <WhatsAppIcon className="w-4 h-4 text-white" />
+                  <span>Suivre sur WhatsApp</span>
+                </a>
               </div>
             </div>
           ) : (

@@ -24,6 +24,7 @@ import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
 import { ZoomReveal } from '../components/ZoomReveal';
 import { SOCIAL_PLATFORMS, WhatsAppIcon } from '../components/SocialLinks';
 import { NosLocauxSection } from '../components/NosLocauxSection';
+import { sendContactMessage, SendResult, DEFAULT_FORMSPREE_ENDPOINT } from '../services/contactService';
 
 const PROJECT_TYPES = [
   { id: 'batiment', label: 'Bâtiment & Résidentiel', desc: 'Logements, tertiaire, réhabilitation' },
@@ -53,14 +54,21 @@ export const ContactView: React.FC = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitResult, setSubmitResult] = useState<SendResult | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await sendContactMessage(formData);
+      setSubmitResult(res);
       setSubmitted(true);
-    }, 600);
+    } catch {
+      // Fallback manuel si exception
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleSelectProjectType = (typeId: string) => {
@@ -224,13 +232,32 @@ export const ContactView: React.FC = () => {
                         <h3 className="text-2xl font-black font-heading text-emerald-950 mb-3">
                           Demande technique enregistrée
                         </h3>
-                        <p className="text-sm text-emerald-800/90 leading-relaxed max-w-md mx-auto mb-8">
-                          Merci pour votre confiance. Votre cahier des charges a été transmis au bureau d’études ES-BTP. Un ingénieur d’affaires vous contactera sous 24 à 48 heures.
+                        <p className="text-sm text-emerald-800/90 leading-relaxed max-w-md mx-auto mb-6">
+                          {submitResult?.method === 'formspree'
+                            ? "Votre message a été transmis directement à l'équipe technique d'ES-BTP. Un ingénieur d'affaires vous contactera sous 24 à 48 heures."
+                            : "Votre demande est prête. Vous pouvez finaliser l'envoi en un clic vers la messagerie officielle ou suivre en direct sur WhatsApp."}
                         </p>
+
+                        {submitResult?.method === 'mailto_fallback' && submitResult.mailtoUrl && (
+                          <div className="mb-6 p-4 bg-white/80 border border-emerald-200 rounded-xl max-w-md mx-auto">
+                            <p className="text-xs text-slate-600 mb-3 font-medium">
+                              Ouvrir votre application de messagerie préremplie avec tous vos détails :
+                            </p>
+                            <a
+                              href={submitResult.mailtoUrl}
+                              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900 text-[#FAB005] hover:bg-slate-800 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-sm w-full"
+                            >
+                              <Mail className="w-4 h-4" />
+                              <span>Ouvrir dans ma messagerie ({COMPANY_INFO.contact.email})</span>
+                            </a>
+                          </div>
+                        )}
+
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                           <button
                             onClick={() => {
                               setSubmitted(false);
+                              setSubmitResult(null);
                               setFormData({
                                 nom: '',
                                 entreprise: '',
@@ -246,7 +273,9 @@ export const ContactView: React.FC = () => {
                             Nouvelle demande
                           </button>
                           <a
-                            href="https://wa.me/24177088346?text=Bonjour%20ES-BTP%2C%20je%20viens%20de%20soumettre%20une%20demande%20via%20le%20site%20web."
+                            href={`https://wa.me/24177088346?text=${encodeURIComponent(
+                              `Bonjour ES-BTP, je viens de vous contacter via votre site web au sujet d'un projet (${formData.nom} - ${formData.typeProjet || 'Travaux'}).`
+                            )}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="w-full sm:w-auto px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#25D366] hover:bg-[#20ba59] rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
