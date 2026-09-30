@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Page d'accueil principale -->
   <url>
     <loc>https://es-btp.vercel.app/</loc>
-    <lastmod>2026-09-25</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <!-- Pôles d'expertises BTP, Travaux Routiers et Ouvrages d'art -->
+  <url>
+    <loc>https://es-btp.vercel.app/#expertises</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Galerie des Réalisations et Chantiers au Gabon -->
+  <url>
+    <loc>https://es-btp.vercel.app/#realisations</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Présentation Institutionnelle & Gouvernance ES-BTP -->
+  <url>
+    <loc>https://es-btp.vercel.app/#entreprise</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Charte QHSE, Normes & Sécurité des chantiers -->
+  <url>
+    <loc>https://es-btp.vercel.app/#engagements</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Bureau d'études, Devis & Contact direct Libreville -->
+  <url>
+    <loc>https://es-btp.vercel.app/#contact</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

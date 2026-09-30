@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageId } from '../components/Header';
 import { ProjectItem, PROJECTS, EXPERTISES, COMMITMENTS, COMPANY_INFO } from '../data/btpData';
+import { updatePageSeo } from '../utils/seo';
 import { ArrowRight, ArrowUpRight, MapPin, Building2, HardHat, Compass, ShieldCheck, CheckCircle2, Quote, Award, Sparkles } from 'lucide-react';
 import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
 import { ZoomReveal } from '../components/ZoomReveal';
@@ -34,6 +35,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
     if (projectFilter === 'ALL') return true;
     return p.category === projectFilter;
   });
+
+  useEffect(() => {
+    updatePageSeo({
+      title: 'ES-BTP | Bâtiment, Travaux Routiers & Génie Civil au Gabon',
+      description: 'Entreprise leader de BTP au Gabon : construction de bâtiments, travaux routiers, bitumage, ponts et infrastructures durables à Libreville et dans tout le pays.',
+      keywords: 'ES-BTP, BTP Gabon, entreprise BTP Libreville, travaux routiers Gabon, génie civil Gabon, construction bâtiment Libreville, voiries et réseaux divers Gabon',
+      canonicalPath: '/',
+    });
+  }, []);
 
   return (
     <div className="w-full">

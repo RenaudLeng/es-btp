@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EXPERTISES } from '../data/btpData';
+import { updatePageSeo } from '../utils/seo';
 import { ArrowRight, Check, Compass, Building2, HardHat, ShieldCheck, Sparkles, Layers } from 'lucide-react';
 import pontBordMerImg from '../assets/images/gabon_pont_bord_mer_1790147890714.jpg';
 import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
@@ -13,6 +14,42 @@ interface ExpertisesViewProps {
 export const ExpertisesView: React.FC<ExpertisesViewProps> = ({
   onOpenContactForExpertise,
 }) => {
+  useEffect(() => {
+    updatePageSeo({
+      title: 'Expertises BTP & Génie Civil au Gabon | ES-BTP',
+      description: 'Pôles d’excellence ES-BTP au Gabon : construction de bâtiments, travaux routiers, terrassement, ponts, dalots, assainissement urbain et voiries.',
+      keywords: 'expertises btp gabon, travaux routiers libreville, génie civil gabon, voiries libreville, assainissement gabon, gros oeuvre libreville',
+      canonicalPath: '/#expertises',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        serviceType: 'Construction & Travaux Publics',
+        provider: {
+          '@type': 'GeneralContractor',
+          name: 'ES-BTP Gabon',
+          url: 'https://es-btp.vercel.app',
+        },
+        areaServed: {
+          '@type': 'Country',
+          name: 'Gabon',
+        },
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'Pôles d’expertises ES-BTP',
+          itemListElement: EXPERTISES.map((exp, idx) => ({
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: exp.title,
+              description: exp.description,
+            },
+            position: idx + 1,
+          })),
+        },
+      },
+    });
+  }, []);
+
   return (
     <div className="w-full">
       {/* ============================================================ */}
