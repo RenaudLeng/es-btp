@@ -14,6 +14,7 @@ import { ActualitesView } from './views/ActualitesView';
 import { ContactView } from './views/ContactView';
 import { ProjectItem } from './data/btpData';
 import { EnhancedFloatingContact } from './components/EnhancedFloatingContact';
+import { ScrollToTop } from './components/ScrollToTop';
 
 export default function App() {
   return (
@@ -138,6 +139,9 @@ function MainApp() {
         onClose={() => setIsContactModalOpen(false)}
         defaultProjectContext={contactProjectContext}
       />
+
+      {/* Bouton discret flottant pour remonter en haut de la page */}
+      <ScrollToTop />
 
       {/* Bouton d'accès direct WhatsApp & Assistance Chantiers amélioré */}
       <EnhancedFloatingContact />
