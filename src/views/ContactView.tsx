@@ -25,6 +25,7 @@ import { ZoomReveal } from '../components/ZoomReveal';
 import { SOCIAL_PLATFORMS, WhatsAppIcon } from '../components/SocialLinks';
 import { NosLocauxSection } from '../components/NosLocauxSection';
 import { sendContactMessage, SendResult, DEFAULT_FORMSPREE_ENDPOINT } from '../services/contactService';
+import { FormNotification } from '../components/FormNotification';
 
 const PROJECT_TYPES = [
   { id: 'batiment', label: 'Bâtiment & Résidentiel', desc: 'Logements, tertiaire, réhabilitation' },
@@ -55,6 +56,7 @@ export const ContactView: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<SendResult | null>(null);
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,9 +65,11 @@ export const ContactView: React.FC = () => {
       const res = await sendContactMessage(formData);
       setSubmitResult(res);
       setSubmitted(true);
+      setShowNotification(true);
     } catch {
       // Fallback manuel si exception
       setSubmitted(true);
+      setShowNotification(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -227,16 +231,30 @@ export const ContactView: React.FC = () => {
                           <CheckCircle2 className="w-9 h-9" />
                         </div>
                         <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100/70 px-3 py-1 rounded-full inline-block mb-3">
-                          Confirmation d'envoi
+                          Confirmation d'envoi officiel
                         </span>
                         <h3 className="text-2xl font-black font-heading text-emerald-950 mb-3">
-                          Demande technique enregistrée
+                          Demande technique enregistrée avec succès
                         </h3>
-                        <p className="text-sm text-emerald-800/90 leading-relaxed max-w-md mx-auto mb-6">
+                        <p className="text-sm text-emerald-800/90 leading-relaxed max-w-md mx-auto mb-4">
                           {submitResult?.method === 'formspree'
-                            ? "Votre message a été transmis directement à l'équipe technique d'ES-BTP. Un ingénieur d'affaires vous contactera sous 24 à 48 heures."
-                            : "Votre demande est prête. Vous pouvez finaliser l'envoi en un clic vers la messagerie officielle ou suivre en direct sur WhatsApp."}
+                            ? `Votre message a été transmis avec succès à la boîte officielle d'ES-BTP (${COMPANY_INFO.contact.email}). Un ingénieur d'affaires étudie votre besoin et vous répondra sous 24h à 48h ouvrées.`
+                            : `Votre dossier technique a été préparé pour transmission à la direction d'ES-BTP (${COMPANY_INFO.contact.email}). Vous pouvez finaliser l'envoi en un clic ou échanger immédiatement sur WhatsApp.`}
                         </p>
+
+                        {/* Récapitulatif rassurant du message envoyé */}
+                        <div className="bg-white/90 border border-emerald-300/80 rounded-xl p-4 max-w-md mx-auto mb-6 text-left shadow-xs">
+                          <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 mb-2 flex items-center justify-between border-b border-slate-100 pb-1.5">
+                            <span>Accusé de réception</span>
+                            <span className="text-emerald-600 font-mono text-[10px]">Statut : Transmis</span>
+                          </div>
+                          <div className="space-y-1 text-xs text-slate-600">
+                            <div><strong className="text-slate-800 font-medium">Expéditeur :</strong> {formData.nom} {formData.entreprise ? `(${formData.entreprise})` : ''}</div>
+                            <div><strong className="text-slate-800 font-medium">Contact :</strong> {formData.telephone} · {formData.email}</div>
+                            {formData.typeProjet && <div><strong className="text-slate-800 font-medium">Objet :</strong> {PROJECT_TYPES.find(p => p.id === formData.typeProjet)?.label || formData.typeProjet}</div>}
+                            <div><strong className="text-slate-800 font-medium">Destinataire :</strong> {COMPANY_INFO.contact.email} (Direction Technique ES-BTP)</div>
+                          </div>
+                        </div>
 
                         {submitResult?.method === 'mailto_fallback' && submitResult.mailtoUrl && (
                           <div className="mb-6 p-4 bg-white/80 border border-emerald-200 rounded-xl max-w-md mx-auto">
@@ -820,6 +838,16 @@ export const ContactView: React.FC = () => {
       {/* SECTION NOS LOCAUX : GOOGLE MAPS INTERACTIVE 9FGF+HJ6 OWENDO */}
       {/* ============================================================ */}
       <NosLocauxSection />
+
+      {/* Notification Toast de confirmation d'envoi d'e-mail */}
+      <FormNotification
+        isOpen={showNotification}
+        onClose={() => setShowNotification(false)}
+        senderName={formData.nom}
+        senderEmail={formData.email}
+        recipientEmail={COMPANY_INFO.contact.email}
+        projectType={PROJECT_TYPES.find((p) => p.id === formData.typeProjet)?.label}
+      />
     </div>
   );
 };

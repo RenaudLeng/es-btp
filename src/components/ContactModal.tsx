@@ -142,9 +142,20 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               </h4>
               <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
                 {submitResult?.method === 'formspree'
-                  ? "Votre demande a été transmise directement à la boîte de réception d'ES-BTP. Un responsable technique prendra contact avec vous sous 24h à 48h."
-                  : "Votre dossier est prêt à être transmis à la direction technique. Vous pouvez finaliser en un clic ou échanger directement par WhatsApp."}
+                  ? `Votre demande a bien été envoyée à la boîte officielle d'ES-BTP (${COMPANY_INFO.contact.email}). Un responsable technique étudiera votre dossier et prendra contact avec vous sous 24h à 48h.`
+                  : `Votre dossier est prêt à être transmis à la direction technique (${COMPANY_INFO.contact.email}). Vous pouvez finaliser en un clic ou échanger directement par WhatsApp.`}
               </p>
+
+              {/* Accusé de réception formel */}
+              <div className="p-3.5 bg-emerald-50/80 border border-emerald-300/80 rounded-xl max-w-md mx-auto text-left shadow-xs text-xs space-y-1">
+                <div className="font-bold uppercase tracking-wider text-emerald-800 text-[10px] pb-1 border-b border-emerald-200 flex justify-between">
+                  <span>Accusé d'envoi</span>
+                  <span className="text-emerald-700 font-mono">Statut : Transmis</span>
+                </div>
+                <div><span className="text-slate-500">Expéditeur :</span> <strong className="text-slate-800 font-semibold">{formData.nom}</strong></div>
+                <div><span className="text-slate-500">Destinataire :</span> <strong className="text-slate-800 font-semibold">{COMPANY_INFO.contact.email}</strong></div>
+                <div><span className="text-slate-500">Délai estimé :</span> <strong className="text-emerald-700 font-semibold">24 à 48 heures ouvrées</strong></div>
+              </div>
 
               {submitResult?.method === 'mailto_fallback' && submitResult.mailtoUrl && (
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl max-w-md mx-auto text-left">
