@@ -26,11 +26,10 @@ export interface SendResult {
   mailtoUrl?: string;
 }
 
-// Endpoint Formspree configurable.
-// Si vous créez votre formulaire gratuit sur formspree.io, indiquez votre code ici
-// Exemple : 'https://formspree.io/f/mqkenwdk'
+// Endpoint Formspree officiel ES-BTP.
+// Configuré avec l'ID Formspree fourni par l'administrateur
 export const DEFAULT_FORMSPREE_ENDPOINT =
-  (import.meta.env.VITE_FORMSPREE_ENDPOINT as string) || '';
+  (import.meta.env.VITE_FORMSPREE_ENDPOINT as string) || 'https://formspree.io/f/mdekbpgg';
 
 export async function sendContactMessage(data: ContactFormData): Promise<SendResult> {
   const formspreeUrl = DEFAULT_FORMSPREE_ENDPOINT;
