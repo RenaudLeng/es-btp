@@ -34,8 +34,11 @@ export const DEFAULT_FORMSPREE_ENDPOINT =
 export async function sendContactMessage(data: ContactFormData): Promise<SendResult> {
   const formspreeUrl = DEFAULT_FORMSPREE_ENDPOINT;
 
-  // Préparation des données lisibles
+  // Préparation des données lisibles (avec standard Formspree _replyto et email en minuscules requis pour l'Autoresponder)
   const payload = {
+    name: data.nom,
+    email: data.email,
+    _replyto: data.email,
     Nom: data.nom,
     Entreprise: data.entreprise || 'Non renseigné (Particulier/Autre)',
     Telephone: data.telephone,
