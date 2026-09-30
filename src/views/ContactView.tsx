@@ -26,6 +26,7 @@ import { SOCIAL_PLATFORMS, WhatsAppIcon } from '../components/SocialLinks';
 import { NosLocauxSection } from '../components/NosLocauxSection';
 import { sendContactMessage, SendResult, DEFAULT_FORMSPREE_ENDPOINT } from '../services/contactService';
 import { FormNotification } from '../components/FormNotification';
+import { EsBtpLogo } from '../components/EsBtpLogo';
 
 const PROJECT_TYPES = [
   { id: 'batiment', label: 'Bâtiment & Résidentiel', desc: 'Logements, tertiaire, réhabilitation' },
