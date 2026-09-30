@@ -19,13 +19,13 @@ export const StatsCounterSection: React.FC = () => {
   const [isCounting, setIsCounting] = useState(false);
   const [activeTab, setActiveTab] = useState<'all' | 'batiment' | 'routes'>('all');
 
-  // Valeurs cibles pour l'animation
+  // Valeurs cibles pour l'animation (réalistes et crédibles pour une PME BTP gabonaise active et rigoureuse)
   const targets = {
-    batimentM2: 45000,
-    routesKm: 120,
-    provinces: 9,
+    batimentM2: 12500,
+    routesKm: 28,
+    provinces: 5,
     qhse: 100,
-    experience: 15,
+    experience: 12,
     reception: 98,
   };
 
@@ -198,11 +198,11 @@ export const StatsCounterSection: React.FC = () => {
               </div>
 
               <h3 className="text-lg sm:text-xl font-bold font-heading text-white mb-2">
-                Surfaces Bâties & Ouvrages Industriels
+                Surfaces Bâties & Ouvrages Réalisés
               </h3>
 
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-lg mb-6">
-                Immeubles administratifs, hangars logistiques, complexes commerciaux et dalles industrielles haute résistance conçus pour résister au climat équatorial.
+                Bâtiments administratifs, aménagements tertiaires, résidences et dallages industriels exécutés avec rigueur et contrôle géotechnique.
               </p>
             </div>
 
@@ -252,11 +252,11 @@ export const StatsCounterSection: React.FC = () => {
               </div>
 
               <h3 className="text-lg sm:text-xl font-bold font-heading text-white mb-2">
-                Axes Routiers & Voiries Urbaines
+                Linéaires Traités & Voiries Aménagées
               </h3>
 
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-lg mb-6">
-                Bitumage, reprofilage lourd, pistes de désenclavement et ouvrages d'assainissement pour assurer la circulation durable au Gabon.
+                Voiries urbaines, pistes traitées, canalisations de drainage pluvial et réfection d'accès pour désenclaver et sécuriser les zones d'activités.
               </p>
             </div>
 
@@ -290,10 +290,10 @@ export const StatsCounterSection: React.FC = () => {
                   {Math.floor(counts.provinces)} / 9
                 </div>
                 <div className="text-xs font-bold text-slate-200">
-                  Provinces Couvertes
+                  Provinces Déjà Touchées
                 </div>
                 <p className="mt-1 text-[11px] text-slate-400 leading-snug">
-                  Bases-vie mobiles et capacité d’intervention rapide dans tout le pays.
+                  Interventions régulières dans l'Estuaire, l'Ogooué-Maritime et l'Intérieur.
                 </p>
               </div>
             </div>
@@ -309,10 +309,10 @@ export const StatsCounterSection: React.FC = () => {
                   {Math.floor(counts.qhse)}%
                 </div>
                 <div className="text-xs font-bold text-slate-200">
-                  Conformité QHSE
+                  Conformité Sécurité
                 </div>
                 <p className="mt-1 text-[11px] text-slate-400 leading-snug">
-                  Port obligatoire des EPI et objectif quotidien « Zéro Accident ».
+                  Port systématique des EPI et sensibilisation active sur chaque base-vie.
                 </p>
               </div>
             </div>
@@ -322,16 +322,16 @@ export const StatsCounterSection: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono uppercase text-slate-400 mb-2">
                   <Clock className="w-3.5 h-3.5 text-sky-400" />
-                  <span>Expérience</span>
+                  <span>Fondation</span>
                 </div>
                 <div className="text-2xl sm:text-3xl lg:text-4xl font-black font-heading text-white tracking-tight tabular-nums mb-1">
-                  +{Math.floor(counts.experience)} Ans
+                  {Math.floor(counts.experience)} Ans
                 </div>
                 <div className="text-xs font-bold text-slate-200">
-                  Ingénierie de Terrain
+                  Présence au Gabon
                 </div>
                 <p className="mt-1 text-[11px] text-slate-400 leading-snug">
-                  Direction technique chevronnée et chefs d'équipes gabonais.
+                  Créée en 2013, bâtie pas à pas avec des équipes locales dévouées.
                 </p>
               </div>
             </div>

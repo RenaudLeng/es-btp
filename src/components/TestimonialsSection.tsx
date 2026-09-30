@@ -100,31 +100,31 @@ export const TestimonialsSection: React.FC = () => {
           {/* Header de section */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FAB005]/10 border border-[#FAB005]/30 rounded-full mb-3 text-xs font-bold text-[#FAB005] uppercase tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FAB005]/10 border border-[#FAB005]/30 rounded-full mb-3 text-xs font-bold text-[#FAB005] uppercase tracking-wider">
                 <ThumbsUp className="w-3.5 h-3.5 text-[#FAB005]" />
-                <span>Indicateurs de Satisfaction & Confiance Partenaire</span>
+                <span>Retours d'expérience sur chantiers</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-heading tracking-tight text-white">
-                TÉMOIGNAGES CLIENTS & AVIS
+              <h2 className="text-2xl sm:text-4xl font-black font-heading tracking-tight text-white">
+                ILS NOUS FONT CONFIANCE
               </h2>
               <div className="mt-4">
                 <EsBtpAccentBar />
               </div>
             </div>
 
-            {/* Note globale certifiée */}
+            {/* Note d'appréciation partenaires */}
             <div className="flex items-center gap-4 bg-white/5 border border-slate-700/80 px-5 py-3 rounded-2xl backdrop-blur-sm self-start md:self-auto">
               <div className="flex flex-col">
-                <span className="text-2xl font-black font-heading text-[#FAB005] leading-none">
-                  5.0 / 5.0
+                <span className="text-xl sm:text-2xl font-black font-heading text-[#FAB005] leading-none">
+                  4.8 / 5.0
                 </span>
                 <span className="text-[11px] text-slate-300 font-medium mt-1">
-                  100% de satisfaction sur chantiers
+                  Appréciation de nos maîtres d'ouvrage
                 </span>
               </div>
               <div className="flex items-center gap-1 text-[#FAB005]">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-[#FAB005]" />
+                  <Star key={i} className={`w-4 h-4 ${i === 4 ? 'fill-[#FAB005]/70' : 'fill-[#FAB005]'}`} />
                 ))}
               </div>
             </div>

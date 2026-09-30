@@ -5,12 +5,9 @@ import { EsBtpLogo } from '../components/EsBtpLogo';
 import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
 import { TeamSection } from '../components/TeamSection';
 import { AnimatedValuesSection } from '../components/AnimatedValuesSection';
-import { StatsCounterSection } from '../components/StatsCounterSection';
 import { ZoomReveal } from '../components/ZoomReveal';
 import { MotionImage } from '../components/MotionImage';
 import { FuturisticMeshBackdrop } from '../components/FuturisticMeshBackdrop';
-import { FuturisticBanner } from '../components/FuturisticBanner';
-import { PartnersSection } from '../components/PartnersSection';
 import { useDgPhoto } from '../context/DgPhotoContext';
 import { ExecutivePortraitPoster } from '../components/ExecutivePortraitPoster';
 import { CorporateBrochureModal } from '../components/CorporateBrochureModal';
@@ -298,19 +295,6 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
         </div>
       </section>
 
-      {/* BANNIÈRE FUTURISTE CORPORATE INTÉGRÉE */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
-        <ZoomReveal>
-          <FuturisticBanner
-            title="INGÉNIERIE & INFRASTRUCTURES DURABLES AU GABON"
-            subtitle="ES-BTP allie rigueur des calculs de structures, matériaux certifiés et engagement éco-responsable sur l’ensemble du territoire."
-            tagline="STANDARDS INTERNATIONAUX"
-            onCtaClick={onOpenContact}
-            ctaText="Nous consulter"
-          />
-        </ZoomReveal>
-      </div>
-
       {/* ============================================================ */}
       {/* SECTION 3: NOS VALEURS EN MOUVEMENT (PROFESSIONNALISME, PRÉCISION, SÉCURITÉ, DURABILITÉ) */}
       {/* ============================================================ */}
@@ -322,13 +306,6 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
       <div id="equipe-es-btp">
         <TeamSection />
       </div>
-
-      {/* ============================================================ */}
-      {/* SECTION CHIFFRES CLÉS & COMPTEURS DIGITAUX ES-BTP */}
-      {/* ============================================================ */}
-      <ZoomReveal>
-        <StatsCounterSection />
-      </ZoomReveal>
 
       {/* ============================================================ */}
       {/* SECTION 5: IMPLANTATION & CHANTIERS ROUTIERS */}
@@ -399,25 +376,6 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
           </ZoomReveal>
         </div>
       </section>
-
-      {/* BANNIÈRE FLUIDE INSTITUTIONNELLE */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
-        <ZoomReveal>
-          <FuturisticBanner
-            theme="warm-amber"
-            title="L’ENGAGEMENT TECHNIQUE AU SERVICE DE LA NATION"
-            subtitle="ES-BTP met un point d’honneur à respecter rigoureusement les calendriers d’exécution, la sécurité de ses équipes et la pérennité des chantiers."
-            tagline="PARTENARIATS D’EXCELLENCE"
-            onCtaClick={onOpenContact}
-            ctaText="Contacter notre direction"
-          />
-        </ZoomReveal>
-      </div>
-
-      {/* SECTION PARTENAIRES & CONFIANCE INSTITUTIONNELLE */}
-      <ZoomReveal>
-        <PartnersSection />
-      </ZoomReveal>
 
       {/* Modal de Téléchargement de la Plaquette Institutionnelle */}
       <CorporateBrochureModal

@@ -7,11 +7,8 @@ import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
 import { ZoomReveal } from '../components/ZoomReveal';
 import { MotionImage } from '../components/MotionImage';
 import { FuturisticMeshBackdrop } from '../components/FuturisticMeshBackdrop';
-import { FuturisticBanner } from '../components/FuturisticBanner';
 import { StatsCounterSection } from '../components/StatsCounterSection';
 import { PartnersSection } from '../components/PartnersSection';
-import { TeamSection } from '../components/TeamSection';
-import { AnimatedValuesSection } from '../components/AnimatedValuesSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { useDgPhoto } from '../context/DgPhotoContext';
 import { ExecutivePortraitPoster } from '../components/ExecutivePortraitPoster';
@@ -78,7 +75,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
             {/* Secondary Text */}
             <p className="text-base sm:text-lg text-slate-200 font-normal leading-relaxed mb-8 max-w-2xl text-balance">
-              Entreprise de référence au Gabon, <strong className="text-white font-semibold">ES-BTP</strong> mobilise une ingénierie rigoureuse et des équipements modernes pour bâtir des infrastructures pérennes au service du développement économique.
+              Entreprise gabonaise de construction et de travaux publics, <strong className="text-white font-semibold">ES-BTP</strong> intervient avec rigueur technique et proximité humaine pour réaliser vos chantiers de bâtiment, voiries et aménagements au Gabon.
             </p>
 
             {/* Buttons */}
@@ -102,7 +99,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 onClick={() => onNavigate('entreprise')}
                 className="px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:bg-white/10 transition-all border border-slate-600/70 rounded-xl text-center cursor-pointer"
               >
-                Découvrir ES-BTP
+                L'entreprise
               </button>
             </div>
           </div>
@@ -316,20 +313,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </section>
 
-      {/* BANNIÈRE FUTURISTE D'IMPACT DANS HOME */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
-        <ZoomReveal>
-          <FuturisticBanner
-            theme="gabon-prestige"
-            title="L’EXCELLENCE DES BÂTISSEURS DU GABON MODERNE"
-            subtitle="Génie civil de pointe, voiries et réseaux divers (VRD), structures en béton armé et projets d'infrastructures d’envergure."
-            tagline="HORIZON 2030+ · INNOVATION & EXCELLENCE"
-            onCtaClick={() => onNavigate('realisations')}
-            ctaText="Explorer nos réalisations"
-          />
-        </ZoomReveal>
-      </div>
-
       {/* ============================================================ */}
       {/* SECTION 4 — RÉALISATIONS */}
       {/* ============================================================ */}
@@ -451,18 +434,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </ZoomReveal>
         </div>
       </section>
-
-      {/* ============================================================ */}
-      {/* SECTION 5 — NOS VALEURS EN MOUVEMENT (PROFESSIONNALISME, PRÉCISION, SÉCURITÉ, DURABILITÉ) */}
-      {/* ============================================================ */}
-      <AnimatedValuesSection onCtaClick={() => onOpenProjectContact()} />
-
-      {/* ============================================================ */}
-      {/* SECTION CAPITAL HUMAIN & L'ÉQUIPE ES-BTP (PRÉSENTATION HOMEPAGE PUBLIÉE) */}
-      {/* ============================================================ */}
-      <div id="equipe-es-btp">
-        <TeamSection />
-      </div>
 
       {/* ============================================================ */}
       {/* SECTION PARTENAIRES : ILS NOUS FONT CONFIANCE */}
