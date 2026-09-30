@@ -62,6 +62,19 @@ export function updatePageSeo(config: SeoConfig) {
     script.text = JSON.stringify(config.jsonLd);
     document.head.appendChild(script);
   }
+
+  // 7. Envoi d'événement de changement de page réel à Google Analytics 4 (GA4)
+  if (typeof window !== 'undefined' && (window as unknown as { gtag?: Function }).gtag) {
+    try {
+      (window as unknown as { gtag: Function }).gtag('event', 'page_view', {
+        page_title: config.title,
+        page_location: canonicalUrl,
+        page_path: config.canonicalPath || '/',
+      });
+    } catch {
+      // Ignorer si bloqueur de pub actif
+    }
+  }
 }
 
 function setMetaTag(attributeName: 'name' | 'property', key: string, content: string) {

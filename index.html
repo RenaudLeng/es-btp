@@ -14,6 +14,19 @@
     <meta name="designer" content="Renaud LENG" />
     <meta name="developer" content="Renaud LENG" />
 
+    <!-- Google Analytics 4 (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESBTPGABON"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      // Configuration GA4 par défaut (remplaçable ou surchargée par votre ID G-XXXXXXXXXX)
+      gtag('config', 'G-ESBTPGABON', {
+        send_page_view: true,
+        cookie_flags: 'SameSite=None;Secure'
+      });
+    </script>
+
     <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
     <meta property="og:title" content="ES-BTP | Bâtiment, Travaux Routiers & Infrastructures au Gabon" />
     <meta property="og:description" content="Entreprise aux Services des BTP au Gabon. Bâtiment, travaux routiers et infrastructures durables. Le futur se construit maintenant." />

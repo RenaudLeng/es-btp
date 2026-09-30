@@ -3,7 +3,6 @@ import { EsBtpLogo } from './EsBtpLogo';
 import { PageId } from './Header';
 import { SocialLinks } from './SocialLinks';
 import { ShareModal } from './ShareModal';
-import { VisitorCounter } from './VisitorCounter';
 import { MapPin, Phone, Mail, Clock, ArrowRight, ShieldCheck, Share2 } from 'lucide-react';
 
 interface FooterProps {
@@ -241,9 +240,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </a>
           </div>
 
-          {/* Compteur Réel & Minimaliste (Zero encombrement) */}
+          {/* Indicateur de Mesure & Analyse d'Audience Réelle Google Analytics 4 */}
           <div className="flex items-center justify-center">
-            <VisitorCounter />
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900/90 border border-slate-700/80 rounded-full text-[11px] text-slate-300 shadow-xs"
+              title="Trafic & métriques certifiés via Google Analytics 4"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider">Trafic certifié</span>
+              <span className="font-bold text-slate-200">Google Analytics 4</span>
+            </div>
           </div>
 
           {/* Liens institutionnels discrets */}
