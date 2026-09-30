@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, CheckCircle2, ArrowRight, Mail } from 'lucide-react';
+import { X, CheckCircle2, ArrowRight, Mail, Loader2 } from 'lucide-react';
 import { EsBtpLogo } from './EsBtpLogo';
 import { WhatsAppIcon } from './SocialLinks';
 import { COMPANY_INFO } from '../data/btpData';
@@ -326,10 +326,23 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#0B1320] hover:bg-[#163A63] border-l-4 border-[#FAB005] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 rounded-xl shadow-xs"
+                  className={`w-full sm:w-auto px-6 py-3.5 text-xs font-black uppercase tracking-wider text-white border-l-4 border-[#FAB005] transition-all flex items-center justify-center gap-2.5 rounded-xl shadow-xs select-none relative overflow-hidden ${
+                    isSubmitting
+                      ? 'bg-[#163A63] cursor-wait opacity-95'
+                      : 'bg-[#0B1320] hover:bg-[#163A63] cursor-pointer'
+                  }`}
                 >
-                  <span>{isSubmitting ? 'Transmission en cours...' : 'Envoyer la demande'}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#FAB005]" />
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 text-[#FAB005] animate-spin shrink-0 stroke-[2.5]" />
+                      <span className="text-white font-bold">Transmission en cours...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Envoyer la demande technique</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#FAB005]" />
+                    </>
+                  )}
                 </button>
               </div>
 

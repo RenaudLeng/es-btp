@@ -18,6 +18,7 @@ import {
   ExternalLink,
   Check,
   PhoneCall,
+  Loader2,
 } from 'lucide-react';
 import pontBordMerImg from '../assets/images/gabon_pont_bord_mer_1790147890714.jpg';
 import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
@@ -576,13 +577,21 @@ export const ContactView: React.FC = () => {
                           <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full py-4 px-6 text-sm font-black uppercase tracking-wider text-[#0B1320] bg-gradient-to-r from-[#FAB005] via-amber-400 to-[#FAB005] hover:brightness-105 active:scale-[0.99] rounded-2xl transition-all shadow-lg hover:shadow-xl shadow-amber-500/20 cursor-pointer flex items-center justify-center gap-3 font-heading border-2 border-amber-300"
+                            className={`w-full py-4 px-6 text-sm font-black uppercase tracking-wider rounded-2xl transition-all shadow-lg font-heading border-2 flex items-center justify-center gap-3 select-none relative overflow-hidden ${
+                              isSubmitting
+                                ? 'bg-amber-300/90 text-[#0B1320] border-amber-400 cursor-wait shadow-inner'
+                                : 'text-[#0B1320] bg-gradient-to-r from-[#FAB005] via-amber-400 to-[#FAB005] hover:brightness-105 active:scale-[0.99] hover:shadow-xl shadow-amber-500/20 cursor-pointer border-amber-300'
+                            }`}
                           >
                             {isSubmitting ? (
-                              <div className="flex items-center gap-2.5">
-                                <div className="w-4 h-4 border-2 border-[#0B1320] border-t-transparent rounded-full animate-spin" />
-                                <span>Transmission en cours...</span>
-                              </div>
+                              <>
+                                {/* Animation de barre de chargement en fond */}
+                                <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                                <div className="relative z-10 flex items-center gap-2.5">
+                                  <Loader2 className="w-5 h-5 text-[#0B1320] animate-spin shrink-0 stroke-[2.5]" />
+                                  <span className="tracking-widest font-black">Transmission du dossier en cours...</span>
+                                </div>
+                              </>
                             ) : (
                               <>
                                 <Send className="w-4 h-4 text-[#0B1320]" />
