@@ -12,6 +12,7 @@ import { StatsCounterSection } from '../components/StatsCounterSection';
 import { PartnersSection } from '../components/PartnersSection';
 import { TeamSection } from '../components/TeamSection';
 import { AnimatedValuesSection } from '../components/AnimatedValuesSection';
+import { TestimonialsSection } from '../components/TestimonialsSection';
 import { useDgPhoto } from '../context/DgPhotoContext';
 import { ExecutivePortraitPoster } from '../components/ExecutivePortraitPoster';
 import heroImg from '../assets/images/chantier_africain_routes_1790108090031.jpg';
@@ -563,6 +564,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </ZoomReveal>
         </div>
       </section>
+
+      {/* ============================================================ */}
+      {/* SECTION TÉMOIGNAGES CLIENTS & NOTATION PAR ÉTOILES */}
+      {/* ============================================================ */}
+      <TestimonialsSection />
 
       {/* ============================================================ */}
       {/* SECTION 7 — APPEL À L'ACTION */}
