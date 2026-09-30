@@ -146,15 +146,23 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   : `Votre dossier est prêt à être transmis à la direction technique (${COMPANY_INFO.contact.email}). Vous pouvez finaliser en un clic ou échanger directement par WhatsApp.`}
               </p>
 
-              {/* Accusé de réception formel */}
-              <div className="p-3.5 bg-emerald-50/80 border border-emerald-300/80 rounded-xl max-w-md mx-auto text-left shadow-xs text-xs space-y-1">
-                <div className="font-bold uppercase tracking-wider text-emerald-800 text-[10px] pb-1 border-b border-emerald-200 flex justify-between">
-                  <span>Accusé d'envoi</span>
-                  <span className="text-emerald-700 font-mono">Statut : Transmis</span>
+              {/* Accusé de réception formel avec branding ES-BTP */}
+              <div className="p-4 bg-slate-900 text-white border-2 border-[#FAB005]/70 rounded-xl max-w-md mx-auto text-left shadow-lg text-xs space-y-2 relative overflow-hidden">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+                  <div className="bg-white px-2 py-0.5 rounded shadow-xs flex items-center">
+                    <EsBtpLogo variant="dark" mode="horizontal" height={18} withGlow={false} />
+                  </div>
+                  <span className="text-emerald-400 font-mono text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 font-bold">
+                    ✓ TRANSMIS
+                  </span>
                 </div>
-                <div><span className="text-slate-500">Expéditeur :</span> <strong className="text-slate-800 font-semibold">{formData.nom}</strong></div>
-                <div><span className="text-slate-500">Destinataire :</span> <strong className="text-slate-800 font-semibold">{COMPANY_INFO.contact.email}</strong></div>
-                <div><span className="text-slate-500">Délai estimé :</span> <strong className="text-emerald-700 font-semibold">24 à 48 heures ouvrées</strong></div>
+                <div><span className="text-slate-400">Expéditeur :</span> <strong className="text-white font-semibold">{formData.nom}</strong></div>
+                <div><span className="text-slate-400">Direction :</span> <strong className="text-white font-semibold">{COMPANY_INFO.contact.email}</strong></div>
+                <div><span className="text-slate-400">Délai contractuel :</span> <strong className="text-[#FAB005] font-semibold">24 à 48 heures ouvrées</strong></div>
+                <div className="pt-1.5 border-t border-slate-800/80 text-[10px] text-slate-400 flex items-center justify-between">
+                  <span className="italic text-[#FAB005]">« Le futur se construit maintenant »</span>
+                  <span className="font-mono text-slate-500">ES-BTP Gabon</span>
+                </div>
               </div>
 
               {submitResult?.method === 'mailto_fallback' && submitResult.mailtoUrl && (

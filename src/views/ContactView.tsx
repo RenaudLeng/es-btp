@@ -226,33 +226,46 @@ export const ContactView: React.FC = () => {
                     </div>
 
                     {submitted ? (
-                      <div className="py-12 px-6 sm:px-10 bg-emerald-50/70 border border-emerald-200 rounded-2xl text-center">
-                        <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm">
-                          <CheckCircle2 className="w-9 h-9" />
+                      <div className="py-10 px-6 sm:px-10 bg-slate-900 text-white border-2 border-[#FAB005]/70 rounded-2xl text-center shadow-xl relative overflow-hidden">
+                        {/* Liseré Gabon & Or */}
+                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#009e60] via-[#FAB005] to-[#163A63]" />
+
+                        {/* Logo ES-BTP officiel */}
+                        <div className="inline-flex items-center bg-white px-4 py-1.5 rounded-xl shadow-md mb-5">
+                          <EsBtpLogo variant="dark" mode="horizontal" height={28} withGlow={false} />
                         </div>
-                        <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100/70 px-3 py-1 rounded-full inline-block mb-3">
-                          Confirmation d'envoi officiel
-                        </span>
-                        <h3 className="text-2xl font-black font-heading text-emerald-950 mb-3">
+
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                          <span className="text-xs font-bold uppercase tracking-widest text-[#FAB005] bg-[#FAB005]/10 px-3 py-1 rounded-full border border-[#FAB005]/20 flex items-center gap-1.5">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                            Accusé d'Envoi Officiel · ES-BTP Gabon
+                          </span>
+                        </div>
+
+                        <h3 className="text-2xl font-black font-heading text-white mb-2">
                           Demande technique enregistrée avec succès
                         </h3>
-                        <p className="text-sm text-emerald-800/90 leading-relaxed max-w-md mx-auto mb-4">
+
+                        <p className="text-sm text-slate-300 leading-relaxed max-w-md mx-auto mb-5">
                           {submitResult?.method === 'formspree'
-                            ? `Votre message a été transmis avec succès à la boîte officielle d'ES-BTP (${COMPANY_INFO.contact.email}). Un ingénieur d'affaires étudie votre besoin et vous répondra sous 24h à 48h ouvrées.`
+                            ? `Votre message a été transmis avec succès aux services techniques d'ES-BTP (${COMPANY_INFO.contact.email}). Un ingénieur d'affaires étudie votre besoin et vous répondra sous 24h à 48h ouvrées.`
                             : `Votre dossier technique a été préparé pour transmission à la direction d'ES-BTP (${COMPANY_INFO.contact.email}). Vous pouvez finaliser l'envoi en un clic ou échanger immédiatement sur WhatsApp.`}
                         </p>
 
-                        {/* Récapitulatif rassurant du message envoyé */}
-                        <div className="bg-white/90 border border-emerald-300/80 rounded-xl p-4 max-w-md mx-auto mb-6 text-left shadow-xs">
-                          <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 mb-2 flex items-center justify-between border-b border-slate-100 pb-1.5">
-                            <span>Accusé de réception</span>
-                            <span className="text-emerald-600 font-mono text-[10px]">Statut : Transmis</span>
+                        {/* Récapitulatif officiel aux couleurs ES-BTP */}
+                        <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-4 max-w-md mx-auto mb-6 text-left shadow-inner">
+                          <div className="text-[11px] font-bold uppercase tracking-wider text-[#FAB005] mb-2.5 flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span>Bordereau de transmission technique</span>
+                            <span className="text-emerald-400 font-mono text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                              Statut : Transmis
+                            </span>
                           </div>
-                          <div className="space-y-1 text-xs text-slate-600">
-                            <div><strong className="text-slate-800 font-medium">Expéditeur :</strong> {formData.nom} {formData.entreprise ? `(${formData.entreprise})` : ''}</div>
-                            <div><strong className="text-slate-800 font-medium">Contact :</strong> {formData.telephone} · {formData.email}</div>
-                            {formData.typeProjet && <div><strong className="text-slate-800 font-medium">Objet :</strong> {PROJECT_TYPES.find(p => p.id === formData.typeProjet)?.label || formData.typeProjet}</div>}
-                            <div><strong className="text-slate-800 font-medium">Destinataire :</strong> {COMPANY_INFO.contact.email} (Direction Technique ES-BTP)</div>
+                          <div className="space-y-1.5 text-xs text-slate-300 font-sans">
+                            <div><span className="text-slate-400">Expéditeur :</span> <strong className="text-white font-medium">{formData.nom}</strong> {formData.entreprise ? <span className="text-slate-400">({formData.entreprise})</span> : ''}</div>
+                            <div><span className="text-slate-400">Contact :</span> <span className="text-[#FAB005] font-mono">{formData.telephone}</span> · <span className="text-slate-300">{formData.email}</span></div>
+                            {formData.typeProjet && <div><span className="text-slate-400">Type de projet :</span> <strong className="text-white font-medium">{PROJECT_TYPES.find(p => p.id === formData.typeProjet)?.label || formData.typeProjet}</strong></div>}
+                            <div><span className="text-slate-400">Direction réceptrice :</span> <strong className="text-white font-medium">{COMPANY_INFO.contact.email}</strong> (ES-BTP Gabon)</div>
+                            <div><span className="text-slate-400">Délai contractuel de réponse :</span> <strong className="text-emerald-400 font-medium">24 à 48 heures ouvrées</strong></div>
                           </div>
                         </div>
 
