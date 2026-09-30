@@ -240,18 +240,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </a>
           </div>
 
-          {/* Indicateur de Mesure & Analyse d'Audience Réelle Google Analytics 4 */}
-          <div className="flex items-center justify-center">
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900/90 border border-slate-700/80 rounded-full text-[11px] text-slate-300 shadow-xs"
-              title="Trafic & métriques certifiés via Google Analytics 4"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider">Trafic certifié</span>
-              <span className="font-bold text-slate-200">Google Analytics 4</span>
-            </div>
-          </div>
-
           {/* Liens institutionnels discrets */}
           <div className="flex items-center justify-center md:justify-end gap-4 text-xs">
             <button
