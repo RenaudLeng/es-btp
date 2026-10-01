@@ -245,8 +245,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSuperAdmin }) 
             </a>
           </div>
 
-          {/* Liens institutionnels discrets + Cadenas SuperAdmin */}
-          <div className="flex items-center justify-center md:justify-end gap-3 text-xs">
+          {/* Liens institutionnels & Accès Sécurisé SuperAdmin */}
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 text-xs">
             <button
               onClick={() => handleNav('entreprise')}
               className="text-slate-400 hover:text-white transition-colors cursor-pointer"
@@ -261,17 +261,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSuperAdmin }) 
               Contact
             </button>
             
-            {/* Cadenas discret SuperAdmin */}
+            {/* Accès Sécurisé SuperAdmin clairement repérable */}
             {onOpenSuperAdmin && (
               <>
                 <span className="text-slate-700">·</span>
                 <button
                   onClick={onOpenSuperAdmin}
-                  className="p-1 rounded text-slate-600 hover:text-[#FAB005] hover:bg-white/5 transition-colors cursor-pointer"
-                  title="Espace SuperAdmin Direction"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAB005]/15 hover:bg-[#FAB005]/25 border border-[#FAB005]/30 text-[#FAB005] hover:text-amber-300 font-bold text-[11px] transition-all cursor-pointer shadow-2xs group"
+                  title="Ouvrir l'Espace SuperAdmin (Direction & Gestion des contenus)"
                   aria-label="Accès sécurisé SuperAdmin"
                 >
-                  <Lock className="w-3 h-3" />
+                  <Lock className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                  <span>Administration</span>
                 </button>
               </>
             )}

@@ -16,6 +16,7 @@ import {
   Newspaper,
   Send,
   MessageCircle,
+  Lock,
 } from 'lucide-react';
 
 export type PageId =
@@ -31,6 +32,7 @@ interface HeaderProps {
   currentPage: PageId;
   onNavigate: (page: PageId) => void;
   onOpenProjectContact?: () => void;
+  onOpenSuperAdmin?: () => void;
 }
 
 const NAV_ITEMS: { id: PageId; label: string; icon: React.FC<{ className?: string }> }[] = [
@@ -47,6 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
   currentPage,
   onNavigate,
   onOpenProjectContact,
+  onOpenSuperAdmin,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
@@ -120,9 +123,22 @@ export const Header: React.FC<HeaderProps> = ({
             </nav>
 
             {/* ============================================================ */}
-            {/* 3. ACTIONS DE DROITE : PARTAGE & CONTACT */}
+            {/* 3. ACTIONS DE DROITE : PARTAGE, CONTACT & CADENAS SUPERADMIN */}
             {/* ============================================================ */}
             <div className="flex items-center gap-2 sm:gap-3">
+              {/* Bouton Cadenas SuperAdmin dans l'en-tête (Visible et Repérable) */}
+              {onOpenSuperAdmin && (
+                <button
+                  onClick={onOpenSuperAdmin}
+                  className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-[#08121E] bg-[#FAB005]/20 hover:bg-[#FAB005] border border-[#FAB005]/50 hover:border-[#FAB005] rounded-xl transition-all cursor-pointer shadow-2xs group"
+                  title="Espace SuperAdmin Direction (Édition des textes & chantiers)"
+                  aria-label="Espace SuperAdmin Direction"
+                >
+                  <Lock className="w-3.5 h-3.5 text-[#08121E] group-hover:scale-110 transition-transform" />
+                  <span className="hidden md:inline font-bold">Admin</span>
+                </button>
+              )}
+
               {/* Bouton Partager le site (Desktop & Mobile) */}
               <button
                 onClick={() => setShareModalOpen(true)}
@@ -245,24 +261,39 @@ export const Header: React.FC<HeaderProps> = ({
               })}
             </div>
 
-            {/* Raccourcis contacts d'urgence */}
-            <div className="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2">
-              <a
-                href="tel:+24177088346"
-                className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold hover:bg-slate-200 transition-colors"
-              >
-                <Phone className="w-3.5 h-3.5 text-[#FAB005]" />
-                <span>Appeler la direction</span>
-              </a>
-              <a
-                href="https://wa.me/24177088346?text=Bonjour%20ES-BTP"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px] font-bold hover:bg-emerald-100 transition-colors"
-              >
-                <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-                <span>WhatsApp chantiers</span>
-              </a>
+            {/* Accès SuperAdmin & Raccourcis contacts */}
+            <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-2">
+              {onOpenSuperAdmin && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenSuperAdmin();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 p-2.5 rounded-xl bg-[#FAB005]/20 hover:bg-[#FAB005] border border-[#FAB005]/50 text-[#08121E] text-xs font-black uppercase tracking-wider transition-all cursor-pointer shadow-2xs font-heading"
+                >
+                  <Lock className="w-4 h-4 text-[#08121E]" />
+                  <span>Espace Administration SuperAdmin</span>
+                </button>
+              )}
+
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href="tel:+24177088346"
+                  className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold hover:bg-slate-200 transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#FAB005]" />
+                  <span>Appeler la direction</span>
+                </a>
+                <a
+                  href="https://wa.me/24177088346?text=Bonjour%20ES-BTP"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px] font-bold hover:bg-emerald-100 transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>WhatsApp chantiers</span>
+                </a>
+              </div>
             </div>
 
             {/* Réseaux sociaux */}

@@ -37,12 +37,16 @@ function MainApp() {
   const [contactProjectContext, setContactProjectContext] = useState<string>('');
   const [isSuperAdminOpen, setIsSuperAdminOpen] = useState(false);
 
-  // Handle URL hash navigation for deep linking or back button
+  // Handle URL hash navigation for deep linking, back button, and #admin shortcut
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '') as PageId;
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'admin' || hash === 'superadmin') {
+        setIsSuperAdminOpen(true);
+        return;
+      }
       if (['accueil', 'entreprise', 'expertises', 'realisations', 'engagements', 'actualites', 'contact'].includes(hash)) {
-        setCurrentPage(hash);
+        setCurrentPage(hash as PageId);
       }
     };
 
@@ -77,11 +81,12 @@ function MainApp() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#FAB005] selection:text-[#0B1320]">
-      {/* Navigation Header */}
+      {/* Navigation Header avec cadenas SuperAdmin */}
       <Header
         currentPage={currentPage}
         onNavigate={handleNavigate}
         onOpenProjectContact={() => handleOpenProjectContact()}
+        onOpenSuperAdmin={() => setIsSuperAdminOpen(true)}
       />
 
       {/* Main Content Pages */}
@@ -157,8 +162,8 @@ function MainApp() {
       {/* Bouton discret flottant pour remonter en haut de la page */}
       <ScrollToTop />
 
-      {/* Bouton d'accès direct WhatsApp & Assistance Chantiers amélioré */}
-      <EnhancedFloatingContact />
+      {/* Bouton d'accès direct WhatsApp & Assistance Chantiers amélioré avec accès admin */}
+      <EnhancedFloatingContact onOpenSuperAdmin={() => setIsSuperAdminOpen(true)} />
     </div>
   );
 }
