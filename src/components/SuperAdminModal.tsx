@@ -265,25 +265,25 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#07111E]/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-[#07111E]/85 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
       <div 
-        className="w-full max-w-5xl max-h-[92vh] flex flex-col bg-[#0B1320] text-white rounded-2xl border border-slate-700/80 shadow-2xl overflow-hidden"
+        className="w-full max-w-4xl max-h-[96vh] sm:max-h-[92vh] flex flex-col bg-[#0B1320] text-white rounded-2xl border border-slate-700/80 shadow-2xl overflow-hidden my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* En-tête de la modale */}
-        <div className="px-6 py-4 bg-gradient-to-r from-[#0B1320] via-[#122238] to-[#0B1320] border-b border-slate-700 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#FAB005]/20 border border-[#FAB005]/40 flex items-center justify-center text-[#FAB005]">
+        <div className="px-5 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#0B1320] via-[#122238] to-[#0B1320] border-b border-slate-700 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#FAB005]/20 border border-[#FAB005]/40 flex items-center justify-center text-[#FAB005] shrink-0">
               {isAdminAuthenticated ? <Unlock className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
             </div>
             <div>
-              <h3 className="text-base font-black font-heading tracking-wide text-white flex items-center gap-2">
+              <h3 className="text-sm sm:text-base font-black font-heading tracking-wide text-white flex flex-wrap items-center gap-2">
                 <span>Espace SuperAdmin ES-BTP · Édition Complète Sans Coder</span>
                 <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#FAB005]/15 text-[#FAB005] border border-[#FAB005]/30">
                   {isAdminAuthenticated ? 'En ligne' : 'Verrouillé'}
                 </span>
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-[11px] sm:text-xs text-slate-400 hidden sm:block">
                 Vous avez la main totale sur les textes, slogans, photos, chantiers et actualités.
               </p>
             </div>
@@ -319,52 +319,52 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
 
         {/* Écran d'authentification avec arrière-plan de chantier & design immersif */}
         {!isAdminAuthenticated ? (
-          <div className="relative min-h-[540px] sm:min-h-[580px] flex items-center justify-center p-4 sm:p-8 overflow-hidden">
+          <div className="relative min-h-[500px] flex-1 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
             {/* Arrière-plan de chantier haute qualité avec filtres et dégradés */}
             <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
               <img
                 src={chantierHeroBg}
                 alt="Chantier de construction ES-BTP Gabon"
-                className="w-full h-full object-cover object-center scale-105 filter brightness-50 contrast-110 saturate-125"
+                className="w-full h-full object-cover object-center scale-105 filter brightness-[0.45] contrast-110 saturate-125"
               />
               {/* Superposition sombre & dégradés de protection de contraste */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#07111E]/92 via-[#07111E]/88 to-[#0B1320]/96 backdrop-blur-[2px]" />
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#FAB005]/15 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#07111E]/95 via-[#07111E]/90 to-[#0B1320]/98 backdrop-blur-[2px]" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#FAB005]/20 via-transparent to-transparent" />
               {/* Trame de grille technique subtile */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]" />
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]" />
             </div>
 
-            {/* Carte centrale d'authentification */}
-            <div className="relative z-10 w-full max-w-md bg-[#0B1320]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] ring-1 ring-white/10">
+            {/* Carte centrale d'authentification optimisée pour tenir à l'écran sans coupure */}
+            <div className="relative z-10 w-full max-w-lg bg-[#0B1320]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl p-5 sm:p-7 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] ring-1 ring-white/10 my-auto">
               
               {/* Badge supérieur & icône */}
-              <div className="flex flex-col items-center text-center">
-                <div className="relative mb-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FAB005] to-[#c98e03] p-0.5 shadow-lg shadow-[#FAB005]/20 flex items-center justify-center">
-                    <div className="w-full h-full bg-[#0B1320] rounded-[14px] flex items-center justify-center">
-                      <Lock className="w-7 h-7 text-[#FAB005]" />
+              <div className="flex flex-col items-center text-center mb-4">
+                <div className="relative mb-2.5">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FAB005] to-[#c98e03] p-0.5 shadow-lg shadow-[#FAB005]/20 flex items-center justify-center">
+                    <div className="w-full h-full bg-[#0B1320] rounded-[10px] flex items-center justify-center">
+                      <Lock className="w-5 h-5 text-[#FAB005]" />
                     </div>
                   </div>
-                  <span className="absolute -bottom-1 -right-1 px-2 py-0.5 rounded-full bg-[#FAB005] text-[#08121E] text-[10px] font-black uppercase tracking-wider shadow-sm">
+                  <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-full bg-[#FAB005] text-[#08121E] text-[9px] font-black uppercase tracking-wider shadow-sm">
                     Sécurisé
                   </span>
                 </div>
 
-                <span className="text-[11px] font-mono uppercase tracking-widest text-[#FAB005] font-bold mb-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#FAB005] font-bold mb-0.5">
                   Espace Direction & Édition
                 </span>
-                <h4 className="text-xl sm:text-2xl font-black font-heading text-white tracking-tight mb-2">
+                <h4 className="text-lg sm:text-xl font-black font-heading text-white tracking-tight mb-1">
                   Accès SuperAdmin Direction Générale
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-300 max-w-sm mb-6 leading-relaxed">
+                <p className="text-xs text-slate-300 max-w-md leading-relaxed">
                   Saisissez le mot de passe secret pour modifier librement tous les textes, photos, chantiers et chiffres de votre site ES-BTP.
                 </p>
               </div>
 
               {/* Formulaire de connexion */}
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-slate-300 text-left">
+              <form onSubmit={handleLogin} className="space-y-3.5">
+                <div className="space-y-1">
+                  <label className="block text-xs font-bold text-slate-200 text-left">
                     Mot de passe administrateur
                   </label>
                   <div className="relative">
@@ -379,7 +379,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                         if (authError) setAuthError('');
                       }}
                       placeholder="Entrez le mot de passe secret..."
-                      className="w-full pl-10 pr-11 py-3.5 rounded-xl bg-slate-900/90 border-2 border-slate-700 focus:border-[#FAB005] focus:bg-slate-900 focus:outline-hidden text-sm text-white placeholder-slate-500 font-mono tracking-wider shadow-inner transition-colors"
+                      className="w-full pl-10 pr-11 py-3 rounded-xl bg-slate-900 border-2 border-slate-700 focus:border-[#FAB005] focus:bg-slate-900 focus:outline-hidden text-sm text-white placeholder-slate-500 font-mono tracking-wider shadow-inner transition-colors"
                       autoFocus
                     />
                     <button
@@ -394,7 +394,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                   </div>
 
                   {authError && (
-                    <div className="mt-2 p-2.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2 font-medium animate-in fade-in duration-200">
+                    <div className="mt-1.5 p-2 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2 font-medium animate-in fade-in duration-200">
                       <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
                       <span>{authError}</span>
                     </div>
@@ -404,7 +404,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 {/* BOUTON DE VALIDATION HAUTE VISIBILITÉ */}
                 <button
                   type="submit"
-                  className="w-full py-4 px-6 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] active:bg-[#c98e03] text-[#08121E] font-black text-sm uppercase tracking-wider transition-all duration-200 shadow-xl shadow-[#FAB005]/25 hover:shadow-[#FAB005]/40 hover:-translate-y-0.5 active:translate-y-0 font-heading cursor-pointer flex items-center justify-center gap-2 border-2 border-[#ffc229]"
+                  className="w-full py-3.5 px-5 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] active:bg-[#c98e03] text-[#08121E] font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 shadow-xl shadow-[#FAB005]/25 hover:shadow-[#FAB005]/40 hover:-translate-y-0.5 active:translate-y-0 font-heading cursor-pointer flex items-center justify-center gap-2 border-2 border-[#ffc229]"
                 >
                   <Unlock className="w-4 h-4 text-[#08121E] stroke-[2.5]" />
                   <span>Valider et ouvrir le panneau d'administration</span>
@@ -412,12 +412,12 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 </button>
 
                 {/* Bloc d'aide & mot de passe perdu */}
-                <div className="pt-2 border-t border-slate-800 flex flex-col gap-2.5">
+                <div className="pt-2 border-t border-slate-800 flex flex-col gap-2">
                   <div className="flex items-center justify-between text-xs">
                     <button
                       type="button"
                       onClick={() => setShowForgotHelp(!showForgotHelp)}
-                      className="inline-flex items-center gap-1.5 text-slate-400 hover:text-[#FAB005] transition-colors cursor-pointer font-medium"
+                      className="inline-flex items-center gap-1.5 text-slate-300 hover:text-[#FAB005] transition-colors cursor-pointer font-medium"
                     >
                       <HelpCircle className="w-3.5 h-3.5 text-[#FAB005]" />
                       <span>Mot de passe oublié ?</span>
@@ -431,18 +431,18 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                         setPasswordInput('ESBTP2026@');
                         setTimeout(() => setCopiedCode(false), 2500);
                       }}
-                      className="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-white transition-colors cursor-pointer px-2 py-1 rounded-md bg-white/5 hover:bg-white/10"
-                      title="Copier le code par défaut"
+                      className="inline-flex items-center gap-1.5 text-[11px] text-slate-300 hover:text-white transition-colors cursor-pointer px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 border border-slate-700"
+                      title="Insérer directement le code secret officiel"
                     >
                       {copiedCode ? (
                         <>
-                          <Check className="w-3 h-3 text-emerald-400" />
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
                           <span className="text-emerald-400 font-bold">Rempli !</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="w-3 h-3 text-slate-400" />
-                          <span>Code par défaut</span>
+                          <Copy className="w-3.5 h-3.5 text-[#FAB005]" />
+                          <span className="font-semibold">Code par défaut</span>
                         </>
                       )}
                     </button>
@@ -450,7 +450,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
 
                   {/* Panneau déroulant : Logique de mot de passe perdu & assistance */}
                   {showForgotHelp && (
-                    <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-left text-xs space-y-2.5 text-slate-300 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="p-3.5 rounded-xl bg-slate-900/95 border border-slate-700/80 text-left text-xs space-y-2 text-slate-300 animate-in fade-in slide-in-from-top-2 duration-200">
                       <div className="flex items-center gap-2 text-[#FAB005] font-bold text-xs">
                         <Shield className="w-4 h-4" />
                         <span>Procédure de récupération & codes valides</span>
@@ -459,8 +459,8 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                         Le code maître configuré pour votre direction est :
                       </p>
                       
-                      <div className="flex items-center justify-between p-2 rounded-lg bg-black/40 border border-slate-700 font-mono text-xs">
-                        <span className="text-[#FAB005] font-bold tracking-wider">ESBTP2026@</span>
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-black/50 border border-slate-700 font-mono text-xs">
+                        <span className="text-[#FAB005] font-bold tracking-wider text-sm">ESBTP2026@</span>
                         <button
                           type="button"
                           onClick={() => {
@@ -469,28 +469,26 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                             setCopiedCode(true);
                             setTimeout(() => setCopiedCode(false), 2500);
                           }}
-                          className="px-2 py-0.5 rounded bg-[#FAB005]/20 text-[#FAB005] hover:bg-[#FAB005] hover:text-[#08121E] font-bold text-[10px] transition-colors"
+                          className="px-2.5 py-1 rounded-md bg-[#FAB005] text-[#08121E] hover:bg-[#e09e04] font-black text-[11px] transition-colors cursor-pointer"
                         >
-                          Insérer
+                          Insérer automatiquement
                         </button>
                       </div>
 
-                      <div className="pt-1.5 border-t border-slate-800 text-[11px] space-y-1 text-slate-400">
+                      <div className="pt-1.5 border-t border-slate-800 text-[11px] space-y-0.5 text-slate-400">
                         <p className="font-semibold text-slate-300">Codes de secours acceptés :</p>
-                        <p className="font-mono text-slate-400">· <code className="text-slate-300">admin2026</code> ou <code className="text-slate-300">DG@ESBTP</code></p>
+                        <p className="font-mono text-slate-400">· <code className="text-slate-300 bg-white/5 px-1 py-0.5 rounded">admin2026</code> ou <code className="text-slate-300 bg-white/5 px-1 py-0.5 rounded">DG@ESBTP</code></p>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-800 flex flex-col gap-1.5 text-[11px]">
-                        <span className="text-slate-400">Besoin d'aide technique ou de réinitialisation ?</span>
-                        <div className="flex items-center gap-2">
-                          <a
-                            href="mailto:arleys4u@gmail.com?subject=Demande%20assistance%20SuperAdmin%20ES-BTP"
-                            className="inline-flex items-center gap-1.5 text-[#FAB005] hover:underline font-semibold"
-                          >
-                            <Mail className="w-3 h-3" />
-                            <span>Contacter le webmaster (Renaud LENG)</span>
-                          </a>
-                        </div>
+                      <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-[11px]">
+                        <span className="text-slate-400">Assistance technique Webmaster :</span>
+                        <a
+                          href="mailto:arleys4u@gmail.com?subject=Demande%20assistance%20SuperAdmin%20ES-BTP"
+                          className="inline-flex items-center gap-1.5 text-[#FAB005] hover:underline font-semibold"
+                        >
+                          <Mail className="w-3.5 h-3.5" />
+                          <span>arleys4u@gmail.com (Renaud LENG)</span>
+                        </a>
                       </div>
                     </div>
                   )}
@@ -498,7 +496,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
               </form>
 
               {/* Mention de sécurité */}
-              <div className="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-mono">
+              <div className="mt-4 pt-2.5 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-mono">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Session chiffrée SSL · ES-BTP Gabon</span>
               </div>
