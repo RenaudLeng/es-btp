@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDgPhoto } from '../context/DgPhotoContext';
+import { useSiteData } from '../context/SiteDataContext';
 import { ShieldCheck } from 'lucide-react';
 
 interface ExecutivePortraitPosterProps {
@@ -8,6 +9,7 @@ interface ExecutivePortraitPosterProps {
 
 export const ExecutivePortraitPoster: React.FC<ExecutivePortraitPosterProps> = ({ className = '' }) => {
   const { dgPhotoUrl } = useDgPhoto();
+  const { companyInfo } = useSiteData();
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
@@ -56,12 +58,13 @@ export const ExecutivePortraitPoster: React.FC<ExecutivePortraitPosterProps> = (
 
           <div className="relative z-10">
             <div className="flex items-baseline gap-1.5 flex-wrap">
-              <span className="text-white text-lg font-bold tracking-tight">Guy Alain</span>
-              <span className="text-[#FAB005] text-lg font-black tracking-wider uppercase">SEKOULA</span>
+              <span className="text-white text-lg font-bold tracking-tight">
+                {companyInfo.dgName || 'Guy Alain SEKOULA'}
+              </span>
             </div>
             <div className="flex items-center gap-2 mt-0.5">
               <span className="text-slate-300 text-xs font-semibold uppercase tracking-widest">
-                Directeur Général
+                {companyInfo.dgTitle || 'Directeur Général'}
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#FAB005]" />
               <span className="text-slate-400 text-[11px] font-medium">ES-BTP Gabon</span>

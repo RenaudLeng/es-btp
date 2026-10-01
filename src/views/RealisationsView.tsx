@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ProjectItem, PROJECTS } from '../data/btpData';
+import { ProjectItem } from '../data/btpData';
+import { useSiteData } from '../context/SiteDataContext';
 import { updatePageSeo } from '../utils/seo';
 import { MapPin, ArrowUpRight, Plus, SlidersHorizontal, Building2, HardHat, Compass, Sparkles } from 'lucide-react';
 import skylineUrbainImg from '../assets/images/gabon_skyline_urbain_1790147905493.jpg';
@@ -16,6 +17,7 @@ export const RealisationsView: React.FC<RealisationsViewProps> = ({
   onSelectProject,
   onOpenContact,
 }) => {
+  const { projects } = useSiteData();
   const [filter, setFilter] = useState<'ALL' | 'BATIMENT' | 'ROUTES' | 'INFRASTRUCTURES'>('ALL');
 
   useEffect(() => {
@@ -24,29 +26,10 @@ export const RealisationsView: React.FC<RealisationsViewProps> = ({
       description: 'Découvrez les chantiers et réalisations d’ES-BTP au Gabon : complexes administratifs, voiries urbaines, axes routiers bitumés et ponts d’envergure.',
       keywords: 'chantiers btp gabon, réalisations es-btp, projets construction libreville, bitumage gabon, ponts gabon, voiries libreville',
       canonicalPath: '/#realisations',
-      jsonLd: {
-        '@context': 'https://schema.org',
-        '@type': 'ItemList',
-        name: 'Projets et Chantiers Réalisés par ES-BTP au Gabon',
-        itemListElement: PROJECTS.map((proj, idx) => ({
-          '@type': 'ListItem',
-          position: idx + 1,
-          item: {
-            '@type': 'LandmarksOrHistoricalBuildings',
-            name: proj.title,
-            description: proj.description,
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality: proj.location,
-              addressCountry: 'GA',
-            },
-          },
-        })),
-      },
     });
   }, []);
 
-  const filteredProjects = PROJECTS.filter((p) => {
+  const filteredProjects = projects.filter((p) => {
     if (filter === 'ALL') return true;
     return p.category === filter;
   });

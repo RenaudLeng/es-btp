@@ -3,14 +3,17 @@ import { EsBtpLogo } from './EsBtpLogo';
 import { PageId } from './Header';
 import { SocialLinks } from './SocialLinks';
 import { ShareModal } from './ShareModal';
-import { MapPin, Phone, Mail, Clock, ArrowRight, ShieldCheck, Share2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight, ShieldCheck, Share2, Lock } from 'lucide-react';
+import { useSiteData } from '../context/SiteDataContext';
 
 interface FooterProps {
   onNavigate: (page: PageId) => void;
+  onOpenSuperAdmin?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSuperAdmin }) => {
   const [shareModalOpen, setShareModalOpen] = useState(false);
+  const { companyInfo } = useSiteData();
 
   const handleNav = (page: PageId) => {
     onNavigate(page);
@@ -47,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <div className="flex flex-col gap-1 text-xs text-slate-400">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5 text-[#FAB005] shrink-0" />
-                  <span>Sogatole Face à la FOPI · BP 18394 Libreville, Gabon</span>
+                  <span>{companyInfo.address} · {companyInfo.bp} {companyInfo.city}, {companyInfo.country}</span>
                 </div>
                 <a
                   href="https://www.google.com/maps/search/?api=1&query=9FGF%2BHJ6+Libreville+Gabon"
@@ -157,8 +160,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <MapPin className="w-4 h-4 text-[#FAB005] shrink-0 mt-0.5" />
                 <div>
                   <span className="text-[10px] uppercase font-mono text-slate-400 block">Siège & Boîte Postale</span>
-                  <span className="font-semibold text-white block">Sogatole Face à la FOPI</span>
-                  <span className="font-mono text-slate-300 text-[11px]">BP 18394 Libreville-Gabon</span>
+                  <span className="font-semibold text-white block">{companyInfo.address}</span>
+                  <span className="font-mono text-slate-300 text-[11px]">{companyInfo.bp} {companyInfo.city} - {companyInfo.country}</span>
                 </div>
               </div>
 
@@ -167,12 +170,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <div>
                   <span className="text-[10px] uppercase font-mono text-slate-400 block">Téléphones Directs</span>
                   <div className="flex flex-col gap-0.5 font-mono text-slate-200">
-                    <a href="tel:+24177088346" className="hover:text-[#FAB005] transition-colors">
-                      (+241) 77 088 346
+                    <a href={`tel:${companyInfo.phone1.replace(/\s+/g, '')}`} className="hover:text-[#FAB005] transition-colors">
+                      {companyInfo.phone1}
                     </a>
-                    <a href="tel:+24166855037" className="hover:text-[#FAB005] transition-colors">
-                      (+241) 66 855 037
-                    </a>
+                    {companyInfo.phone2 && (
+                      <a href={`tel:${companyInfo.phone2.replace(/\s+/g, '')}`} className="hover:text-[#FAB005] transition-colors">
+                        {companyInfo.phone2}
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -181,8 +186,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <Mail className="w-4 h-4 text-[#FAB005] shrink-0 mt-0.5" />
                 <div>
                   <span className="text-[10px] uppercase font-mono text-slate-400 block">Courrier Électronique</span>
-                  <a href="mailto:esbtp2013@gmail.com" className="font-mono text-slate-200 hover:text-[#FAB005] transition-colors break-all">
-                    esbtp2013@gmail.com
+                  <a href={`mailto:${companyInfo.email}`} className="font-mono text-slate-200 hover:text-[#FAB005] transition-colors break-all">
+                    {companyInfo.email}
                   </a>
                 </div>
               </div>
@@ -240,8 +245,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </a>
           </div>
 
-          {/* Liens institutionnels discrets */}
-          <div className="flex items-center justify-center md:justify-end gap-4 text-xs">
+          {/* Liens institutionnels discrets + Cadenas SuperAdmin */}
+          <div className="flex items-center justify-center md:justify-end gap-3 text-xs">
             <button
               onClick={() => handleNav('entreprise')}
               className="text-slate-400 hover:text-white transition-colors cursor-pointer"
@@ -255,6 +260,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             >
               Contact
             </button>
+            
+            {/* Cadenas discret SuperAdmin */}
+            {onOpenSuperAdmin && (
+              <>
+                <span className="text-slate-700">·</span>
+                <button
+                  onClick={onOpenSuperAdmin}
+                  className="p-1 rounded text-slate-600 hover:text-[#FAB005] hover:bg-white/5 transition-colors cursor-pointer"
+                  title="Espace SuperAdmin Direction"
+                  aria-label="Accès sécurisé SuperAdmin"
+                >
+                  <Lock className="w-3 h-3" />
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

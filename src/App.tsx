@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { LogoProvider } from './context/LogoContext';
 import { DgPhotoProvider } from './context/DgPhotoContext';
+import { SiteDataProvider } from './context/SiteDataContext';
 import { Header, PageId } from './components/Header';
 import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
 import { ContactModal } from './components/ContactModal';
+import { SuperAdminModal } from './components/SuperAdminModal';
 import { HomeView } from './views/HomeView';
 import { EntrepriseView } from './views/EntrepriseView';
 import { ExpertisesView } from './views/ExpertisesView';
@@ -20,7 +22,9 @@ export default function App() {
   return (
     <LogoProvider>
       <DgPhotoProvider>
-        <MainApp />
+        <SiteDataProvider>
+          <MainApp />
+        </SiteDataProvider>
       </DgPhotoProvider>
     </LogoProvider>
   );
@@ -31,6 +35,7 @@ function MainApp() {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [contactProjectContext, setContactProjectContext] = useState<string>('');
+  const [isSuperAdminOpen, setIsSuperAdminOpen] = useState(false);
 
   // Handle URL hash navigation for deep linking or back button
   useEffect(() => {
@@ -123,8 +128,17 @@ function MainApp() {
         )}
       </main>
 
-      {/* Institutional Footer with RL-Services.Inc Copyright */}
-      <Footer onNavigate={handleNavigate} />
+      {/* Institutional Footer with RL-Services.Inc Copyright & SuperAdmin Lock */}
+      <Footer 
+        onNavigate={handleNavigate} 
+        onOpenSuperAdmin={() => setIsSuperAdminOpen(true)}
+      />
+
+      {/* SuperAdmin Content Management Modal */}
+      <SuperAdminModal
+        isOpen={isSuperAdminOpen}
+        onClose={() => setIsSuperAdminOpen(false)}
+      />
 
       {/* Project Technical Modal */}
       <ProjectModal

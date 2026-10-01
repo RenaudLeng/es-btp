@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { WhatsAppIcon } from './SocialLinks';
+import { useSiteData } from '../context/SiteDataContext';
 import { Phone, X, MessageSquare, Clock, ArrowRight } from 'lucide-react';
 
 export const EnhancedFloatingContact: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { companyInfo } = useSiteData();
 
   return (
     <aside aria-label="Assistance & Contact Rapide ES-BTP" className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end">
@@ -56,19 +58,21 @@ export const EnhancedFloatingContact: React.FC = () => {
 
             <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px]">
               <a
-                href="tel:+24177088346"
+                href={`tel:${companyInfo.phone1.replace(/\s+/g, '')}`}
                 className="flex items-center gap-1.5 text-slate-300 hover:text-[#FAB005] transition-colors font-mono font-semibold"
               >
                 <Phone className="w-3 h-3 text-[#FAB005]" />
-                <span>(+241) 77 088 346</span>
+                <span>{companyInfo.phone1}</span>
               </a>
-              <a
-                href="tel:+24166855037"
-                className="flex items-center gap-1.5 text-slate-300 hover:text-[#FAB005] transition-colors font-mono font-semibold"
-              >
-                <Phone className="w-3 h-3 text-[#FAB005]" />
-                <span>66 855 037</span>
-              </a>
+              {companyInfo.phone2 && (
+                <a
+                  href={`tel:${companyInfo.phone2.replace(/\s+/g, '')}`}
+                  className="flex items-center gap-1.5 text-slate-300 hover:text-[#FAB005] transition-colors font-mono font-semibold"
+                >
+                  <Phone className="w-3 h-3 text-[#FAB005]" />
+                  <span>{companyInfo.phone2}</span>
+                </a>
+              )}
             </div>
           </div>
         </div>

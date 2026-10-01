@@ -184,7 +184,9 @@ export const TestimonialsSection: React.FC = () => {
                         {current.name}
                       </h4>
                       {current.verified && (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 inline" title="Maître d'ouvrage vérifié" />
+                        <span title="Maître d'ouvrage vérifié" className="inline-flex">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 inline" />
+                        </span>
                       )}
                     </div>
                     <p className="text-xs text-slate-400">

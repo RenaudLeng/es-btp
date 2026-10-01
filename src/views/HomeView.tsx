@@ -11,6 +11,7 @@ import { StatsCounterSection } from '../components/StatsCounterSection';
 import { PartnersSection } from '../components/PartnersSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { useDgPhoto } from '../context/DgPhotoContext';
+import { useSiteData } from '../context/SiteDataContext';
 import { ExecutivePortraitPoster } from '../components/ExecutivePortraitPoster';
 import heroImg from '../assets/images/chantier_africain_routes_1790108090031.jpg';
 import chantierImg from '../assets/images/chantier_africain_infra_1790108112692.jpg';
@@ -27,9 +28,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onSelectProject,
 }) => {
   const { dgPhotoUrl, isCustomPhoto } = useDgPhoto();
+  const { companyInfo, projects } = useSiteData();
   const [projectFilter, setProjectFilter] = useState<'ALL' | 'BATIMENT' | 'ROUTES' | 'INFRASTRUCTURES'>('ALL');
 
-  const filteredProjects = PROJECTS.filter((p) => {
+  const filteredProjects = projects.filter((p) => {
     if (projectFilter === 'ALL') return true;
     return p.category === projectFilter;
   });
@@ -70,12 +72,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div className="max-w-3xl">
             {/* Main Title (H1) */}
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black font-heading text-white tracking-tight leading-[1.08] mb-6 drop-shadow-sm">
-              LE FUTUR SE CONSTRUIT MAINTENANT.
+              {companyInfo.heroTagline || 'LE FUTUR SE CONSTRUIT MAINTENANT.'}
             </h1>
 
             {/* Secondary Text */}
             <p className="text-base sm:text-lg text-slate-200 font-normal leading-relaxed mb-8 max-w-2xl text-balance">
-              Entreprise gabonaise de construction et de travaux publics, <strong className="text-white font-semibold">ES-BTP</strong> intervient avec rigueur technique et proximité humaine pour réaliser vos chantiers de bâtiment, voiries et aménagements au Gabon.
+              {companyInfo.heroDescription}
             </p>
 
             {/* Buttons */}
@@ -200,12 +202,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="relative pl-6 py-3 border-l-4 border-[#FAB005] mb-6 bg-white/5 p-5 rounded-2xl backdrop-blur-xs">
                   <Quote className="w-8 h-8 text-[#FAB005]/30 absolute top-2 right-4 pointer-events-none" />
                   <p className="text-base sm:text-lg text-slate-200 font-medium leading-relaxed italic">
-                    « {COMPANY_INFO.management.quote} »
+                    « {companyInfo.dgQuote || COMPANY_INFO.management.quote} »
                   </p>
                 </div>
 
                 <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-6">
-                  {COMPANY_INFO.management.speech[0]}
+                  {companyInfo.dgSpeechParagraph1 || COMPANY_INFO.management.speech[0]}
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">

@@ -28,6 +28,7 @@ import { NosLocauxSection } from '../components/NosLocauxSection';
 import { sendContactMessage, SendResult, DEFAULT_FORMSPREE_ENDPOINT } from '../services/contactService';
 import { FormNotification } from '../components/FormNotification';
 import { EsBtpLogo } from '../components/EsBtpLogo';
+import { useSiteData } from '../context/SiteDataContext';
 
 const PROJECT_TYPES = [
   { id: 'batiment', label: 'Bâtiment & Résidentiel', desc: 'Logements, tertiaire, réhabilitation' },
@@ -45,6 +46,7 @@ const PRESET_LOCATIONS = [
 ];
 
 export const ContactView: React.FC = () => {
+  const { companyInfo } = useSiteData();
   const [formData, setFormData] = useState({
     nom: '',
     entreprise: '',
@@ -656,10 +658,10 @@ export const ContactView: React.FC = () => {
                           </span>
                         </div>
                         <p className="text-slate-800 font-semibold text-sm leading-tight">
-                          Sogatole Face à la FOPI
+                          {companyInfo.address}
                         </p>
                         <p className="font-mono text-slate-500 text-xs mt-0.5">
-                          BP : 18394 Libreville, Gabon
+                          {companyInfo.bp} {companyInfo.city}, {companyInfo.country}
                         </p>
                       </div>
                     </div>
@@ -675,18 +677,22 @@ export const ContactView: React.FC = () => {
                         </span>
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                           <a
-                            href="tel:+24177088346"
+                            href={`tel:${companyInfo.phone1.replace(/\s+/g, '')}`}
                             className="inline-flex items-center gap-1 font-mono font-bold text-slate-900 hover:text-amber-600 transition-colors bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs shadow-2xs"
                           >
-                            <span>(+241) 77 088 346</span>
+                            <span>{companyInfo.phone1}</span>
                           </a>
-                          <span className="text-slate-300 font-bold">/</span>
-                          <a
-                            href="tel:+24166855037"
-                            className="inline-flex items-center gap-1 font-mono font-bold text-slate-900 hover:text-amber-600 transition-colors bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs shadow-2xs"
-                          >
-                            <span>(+241) 66 855 037</span>
-                          </a>
+                          {companyInfo.phone2 && (
+                            <>
+                              <span className="text-slate-300 font-bold">/</span>
+                              <a
+                                href={`tel:${companyInfo.phone2.replace(/\s+/g, '')}`}
+                                className="inline-flex items-center gap-1 font-mono font-bold text-slate-900 hover:text-amber-600 transition-colors bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs shadow-2xs"
+                              >
+                                <span>{companyInfo.phone2}</span>
+                              </a>
+                            </>
+                          )}
                         </div>
                         <span className="text-[11px] text-slate-500 block mt-1.5">
                           Appels directs & assistance technique
@@ -704,10 +710,10 @@ export const ContactView: React.FC = () => {
                           Courrier électronique officiel :
                         </span>
                         <a
-                          href="mailto:esbtp2013@gmail.com"
+                          href={`mailto:${companyInfo.email}`}
                           className="font-mono font-bold text-emerald-800 hover:text-emerald-950 hover:underline transition-colors block text-xs sm:text-sm break-all"
                         >
-                          esbtp2013@gmail.com
+                          {companyInfo.email}
                         </a>
                         <span className="text-[11px] text-slate-500 block mt-1">
                           Pour devis, appels d'offres et partenariats

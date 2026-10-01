@@ -9,6 +9,7 @@ import { ZoomReveal } from '../components/ZoomReveal';
 import { MotionImage } from '../components/MotionImage';
 import { FuturisticMeshBackdrop } from '../components/FuturisticMeshBackdrop';
 import { useDgPhoto } from '../context/DgPhotoContext';
+import { useSiteData } from '../context/SiteDataContext';
 import { ExecutivePortraitPoster } from '../components/ExecutivePortraitPoster';
 import { CorporateBrochureModal } from '../components/CorporateBrochureModal';
 import foretGabonaiseImg from '../assets/images/foret_gabonaise_1790112563726.jpg';
@@ -22,6 +23,7 @@ interface EntrepriseViewProps {
 
 export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact }) => {
   const { dgPhotoUrl, isCustomPhoto } = useDgPhoto();
+  const { companyInfo } = useSiteData();
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);
   return (
     <div className="w-full relative overflow-hidden">
@@ -125,13 +127,19 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
                 <div className="relative pl-6 py-4 border-l-4 border-[#FAB005] mb-8 bg-amber-50/50 p-6 rounded-2xl shadow-xs">
                   <Quote className="w-8 h-8 text-[#FAB005]/40 absolute top-3 right-4 pointer-events-none" />
                   <p className="text-base sm:text-lg font-bold text-[#0B1320] leading-snug font-heading italic">
-                    « {COMPANY_INFO.management.quote} »
+                    « {companyInfo.dgQuote || COMPANY_INFO.management.quote} »
                   </p>
                 </div>
 
                 {/* Texte officiel du Mot du DG */}
                 <div className="space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed">
-                  {COMPANY_INFO.management.speech.map((paragraph, idx) => (
+                  <p className="text-justify">
+                    {companyInfo.dgSpeechParagraph1 || COMPANY_INFO.management.speech[0]}
+                  </p>
+                  <p className="text-justify">
+                    {companyInfo.dgSpeechParagraph2 || COMPANY_INFO.management.speech[1]}
+                  </p>
+                  {COMPANY_INFO.management.speech.slice(2).map((paragraph, idx) => (
                     <p key={idx} className="text-justify">
                       {paragraph}
                     </p>
@@ -145,10 +153,10 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
                       Direction Générale
                     </p>
                     <p className="text-base font-black text-[#0B1320] font-heading mt-0.5">
-                      Guy Alain SEKOULA
+                      {companyInfo.dgName || 'Guy Alain SEKOULA'}
                     </p>
                     <p className="text-xs text-slate-500 font-medium">
-                      Directeur Général · ES-BTP
+                      {companyInfo.dgTitle || 'Directeur Général'} · ES-BTP
                     </p>
                   </div>
 
