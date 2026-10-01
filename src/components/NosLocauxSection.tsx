@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { MapPin, Navigation, ExternalLink, Copy, Check, Clock, Phone, Building2 } from 'lucide-react';
+import { MapPin, Navigation, ExternalLink, Copy, Check, Clock, Phone, Building2, Sparkles } from 'lucide-react';
 import { COMPANY_INFO } from '../data/btpData';
 import { ZoomReveal } from './ZoomReveal';
+import { InteractiveGoogleMap } from './InteractiveGoogleMap';
 
 export const NosLocauxSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -59,15 +60,9 @@ export const NosLocauxSection: React.FC = () => {
                   </a>
                 </div>
 
-                {/* Cadre de la carte Google Maps 100% propre (aucun badge polluant par-dessus) */}
-                <div className="relative w-full h-[360px] sm:h-[400px] lg:h-[440px] bg-slate-100">
-                  <iframe
-                    title="Carte Google Maps ES-BTP Libreville"
-                    src="https://maps.google.com/maps?q=9FGF%2BHJ6%20Libreville,%20Gabon&t=&z=16&ie=UTF8&iwloc=&output=embed"
-                    className="w-full h-full border-0"
-                    loading="lazy"
-                    allowFullScreen
-                  />
+                {/* Composant de carte interactive Google Maps avec SDK @vis.gl/react-google-maps & Advanced Markers */}
+                <div className="relative w-full h-[380px] sm:h-[420px] lg:h-[460px] bg-slate-900">
+                  <InteractiveGoogleMap />
                 </div>
 
                 {/* Barre de statut sobre sous la carte */}
