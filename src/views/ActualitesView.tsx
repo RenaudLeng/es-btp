@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { NEWS, NewsItem } from '../data/btpData';
+import { NewsItem } from '../data/btpData';
+import { useSiteData } from '../context/SiteDataContext';
 import { ArrowRight, X, Calendar, Tag, Newspaper, Sparkles, Building2 } from 'lucide-react';
 import portLogistiqueImg from '../assets/images/gabon_port_logistique_1790147937593.jpg';
 import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
@@ -7,6 +8,7 @@ import { ZoomReveal } from '../components/ZoomReveal';
 import { MotionImage } from '../components/MotionImage';
 
 export const ActualitesView: React.FC = () => {
+  const { news } = useSiteData();
   const [selectedArticle, setSelectedArticle] = useState<NewsItem | null>(null);
 
   return (
@@ -64,7 +66,7 @@ export const ActualitesView: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {NEWS.map((article, index) => (
+              {news.map((article, index) => (
                 <article
                   key={article.id}
                   className="group bg-white border border-slate-200 hover:border-[#FAB005]/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"

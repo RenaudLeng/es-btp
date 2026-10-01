@@ -194,10 +194,10 @@ export const EntrepriseView: React.FC<EntrepriseViewProps> = ({ onOpenContact })
                 </h2>
                 <EsBtpAccentBar className="mb-6" />
                 <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
-                  Active dans le secteur du BTP au Gabon, ES-BTP est une entreprise dédiée à la conception, l'ingénierie et la réalisation de projets de bâtiment, de travaux routiers et d'infrastructures.
+                  {companyInfo.entreprisePresentationP1 || "Active dans le secteur du BTP au Gabon, ES-BTP est une entreprise dédiée à la conception, l'ingénierie et la réalisation de projets de bâtiment, de travaux routiers et d'infrastructures."}
                 </p>
                 <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
-                  Notre mission repose sur la mobilisation de savoir-faire techniques pointus, d'équipements adaptés et d'une gestion de chantier stricte pour répondre aux standards de qualité les plus exigeants du pays.
+                  {companyInfo.entreprisePresentationP2 || "Notre mission repose sur la mobilisation de savoir-faire techniques pointus, d'équipements adaptés et d'une gestion de chantier stricte pour répondre aux standards de qualité les plus exigeants du pays."}
                 </p>
 
                 {/* Repères institutionnels arrondis */}

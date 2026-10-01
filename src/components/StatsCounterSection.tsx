@@ -12,19 +12,21 @@ import {
 } from 'lucide-react';
 import { EsBtpAccentBar } from './EsBtpAccentBar';
 import { FuturisticMeshBackdrop } from './FuturisticMeshBackdrop';
+import { useSiteData } from '../context/SiteDataContext';
 import batimentImg from '../assets/images/chantier_africain_batiment_1790108101216.jpg';
 import routesImg from '../assets/images/chantier_africain_routes_1790108090031.jpg';
 
 export const StatsCounterSection: React.FC = () => {
+  const { companyInfo } = useSiteData();
   const [isCounting, setIsCounting] = useState(false);
   const [activeTab, setActiveTab] = useState<'all' | 'batiment' | 'routes'>('all');
 
-  // Valeurs cibles pour l'animation (réalistes et crédibles pour une PME BTP gabonaise active et rigoureuse)
+  // Valeurs cibles pour l'animation dynamiques depuis le panneau SuperAdmin
   const targets = {
-    batimentM2: 12500,
-    routesKm: 28,
-    provinces: 5,
-    qhse: 100,
+    batimentM2: companyInfo.metricBatimentM2 || 12500,
+    routesKm: companyInfo.metricRoutesKm || 28,
+    provinces: companyInfo.metricProvinces || 5,
+    qhse: companyInfo.metricSecuriteQhse || 100,
     experience: 12,
     reception: 98,
   };

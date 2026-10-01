@@ -18,7 +18,11 @@ import {
   User,
   Phone,
   Building,
-  FileText
+  FileText,
+  BarChart3,
+  Newspaper,
+  ShieldCheck,
+  Globe
 } from 'lucide-react';
 
 interface SuperAdminModalProps {
@@ -30,6 +34,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
   const { 
     companyInfo, 
     projects, 
+    news,
     isAdminAuthenticated, 
     loginAdmin, 
     logoutAdmin, 
@@ -37,19 +42,21 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
     updateProject,
     addProject,
     deleteProject,
+    updateNewsItem,
+    addNewsItem,
+    deleteNewsItem,
     resetToDefaults,
     exportDataJson,
-    importDataJson
   } = useSiteData();
 
   const { uploadDgPhoto, resetDgPhoto, isCustomPhoto } = useDgPhoto();
 
   const [passwordInput, setPasswordInput] = useState('');
   const [authError, setAuthError] = useState('');
-  const [activeTab, setActiveTab] = useState<'info' | 'dg' | 'projets' | 'export'>('info');
+  const [activeTab, setActiveTab] = useState<'info' | 'home' | 'dg' | 'projets' | 'actualites' | 'engagements' | 'chiffres' | 'export'>('info');
   const [saveSuccessMessage, setSaveSuccessMessage] = useState('');
 
-  // Formulaire Projet (Édition / Ajout)
+  // Formulaire Projet
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [projectFormData, setProjectFormData] = useState({
     title: '',
@@ -57,6 +64,17 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
     categoryLabel: 'Bâtiment',
     location: '',
     description: '',
+    image: '',
+  });
+
+  // Formulaire Actualité
+  const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
+  const [newsFormData, setNewsFormData] = useState({
+    title: '',
+    category: 'Vie de l’entreprise',
+    date: '2026',
+    excerpt: '',
+    content: '',
     image: '',
   });
 
@@ -80,7 +98,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
 
   const handleSaveInfo = (e: React.FormEvent) => {
     e.preventDefault();
-    showNotification('Modifications enregistrées avec succès sur le site !');
+    showNotification('Modifications enregistrées immédiatement sur l’ensemble du site !');
   };
 
   const handleDgPhotoFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,6 +121,20 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
         const result = ev.target?.result as string;
         if (result) {
           setProjectFormData((prev) => ({ ...prev, image: result }));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleNewsImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const result = ev.target?.result as string;
+        if (result) {
+          setNewsFormData((prev) => ({ ...prev, image: result }));
         }
       };
       reader.readAsDataURL(file);
@@ -164,10 +196,65 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
     setEditingProjectId(null);
   };
 
+  const handleOpenAddNews = () => {
+    setEditingNewsId('NEW');
+    setNewsFormData({
+      title: '',
+      category: 'Vie de l’entreprise',
+      date: '2026',
+      excerpt: '',
+      content: '',
+      image: '/projects/chantier_default.jpg',
+    });
+  };
+
+  const handleOpenEditNews = (item: any) => {
+    setEditingNewsId(item.id);
+    setNewsFormData({
+      title: item.title,
+      category: item.category,
+      date: item.date,
+      excerpt: item.excerpt,
+      content: item.content || item.excerpt,
+      image: item.image,
+    });
+  };
+
+  const handleSaveNewsForm = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsFormData.title.trim()) {
+      alert('Veuillez saisir le titre de l’actualité');
+      return;
+    }
+
+    if (editingNewsId === 'NEW') {
+      addNewsItem({
+        title: newsFormData.title,
+        category: newsFormData.category,
+        date: newsFormData.date,
+        excerpt: newsFormData.excerpt,
+        content: newsFormData.content,
+        image: newsFormData.image || '/projects/chantier_default.jpg',
+      });
+      showNotification('Nouvelle publication ajoutée aux actualités !');
+    } else if (editingNewsId) {
+      updateNewsItem(editingNewsId, {
+        title: newsFormData.title,
+        category: newsFormData.category,
+        date: newsFormData.date,
+        excerpt: newsFormData.excerpt,
+        content: newsFormData.content,
+        image: newsFormData.image,
+      });
+      showNotification('Publication mise à jour !');
+    }
+    setEditingNewsId(null);
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#07111E]/80 backdrop-blur-md animate-in fade-in duration-200">
       <div 
-        className="w-full max-w-4xl max-h-[92vh] flex flex-col bg-[#0B1320] text-white rounded-2xl border border-slate-700/80 shadow-2xl overflow-hidden"
+        className="w-full max-w-5xl max-h-[92vh] flex flex-col bg-[#0B1320] text-white rounded-2xl border border-slate-700/80 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* En-tête de la modale */}
@@ -178,13 +265,13 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
             </div>
             <div>
               <h3 className="text-base font-black font-heading tracking-wide text-white flex items-center gap-2">
-                <span>Espace SuperAdmin ES-BTP</span>
+                <span>Espace SuperAdmin ES-BTP · Édition Complète Sans Coder</span>
                 <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#FAB005]/15 text-[#FAB005] border border-[#FAB005]/30">
-                  {isAdminAuthenticated ? 'Connecté' : 'Sécurisé'}
+                  {isAdminAuthenticated ? 'En ligne' : 'Verrouillé'}
                 </span>
               </h3>
               <p className="text-xs text-slate-400">
-                Gestion simplifiée des coordonnées, textes officiels et chantiers sans coder.
+                Vous avez la main totale sur les textes, slogans, photos, chantiers et actualités.
               </p>
             </div>
           </div>
@@ -194,14 +281,14 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
               <button
                 onClick={logoutAdmin}
                 className="text-xs text-slate-400 hover:text-rose-400 px-3 py-1.5 rounded-lg border border-slate-700 hover:border-rose-400/40 transition-colors"
-                title="Se déconnecter de la session admin"
+                title="Quitter la session d'administration"
               >
                 Déconnexion
               </button>
             )}
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+              className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
               aria-label="Fermer"
             >
               <X className="w-5 h-5" />
@@ -209,7 +296,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
           </div>
         </div>
 
-        {/* Message de succès temporaire */}
+        {/* Notification de confirmation */}
         {saveSuccessMessage && (
           <div className="px-6 py-2.5 bg-emerald-500/15 border-b border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2 font-medium">
             <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
@@ -217,7 +304,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
           </div>
         )}
 
-        {/* Contenu : Si NON authentifié, écran de verrouillage */}
+        {/* Écran d'authentification */}
         {!isAdminAuthenticated ? (
           <div className="p-8 sm:p-12 flex flex-col items-center justify-center text-center my-auto">
             <div className="w-16 h-16 rounded-2xl bg-white/5 border border-slate-700 flex items-center justify-center text-[#FAB005] mb-5 shadow-inner">
@@ -225,10 +312,10 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
             </div>
 
             <h4 className="text-xl font-bold font-heading text-white mb-2">
-              Accès Réservé à la Direction
+              Accès SuperAdmin Direction Générale
             </h4>
             <p className="text-sm text-slate-400 max-w-md mb-6 leading-relaxed">
-              Veuillez saisir votre code d'accès superadmin pour ouvrir le panneau de gestion de contenu du site ES-BTP.
+              Saisissez le mot de passe secret pour modifier librement tous les textes, photos, chantiers et chiffres de votre site ES-BTP.
             </p>
 
             <form onSubmit={handleLogin} className="w-full max-w-sm space-y-4">
@@ -237,7 +324,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                   type="password"
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
-                  placeholder="Code d'accès secret..."
+                  placeholder="Mot de passe secret..."
                   className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:border-[#FAB005] focus:outline-hidden text-sm text-white placeholder-slate-500 text-center tracking-widest font-mono shadow-inner"
                   autoFocus
                 />
@@ -253,82 +340,115 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 type="submit"
                 className="w-full py-3 px-4 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] active:bg-[#c98e03] text-[#0B1320] font-bold text-xs uppercase tracking-wider transition-all shadow-md font-heading cursor-pointer"
               >
-                Déverrouiller l'espace
+                Ouvrir le panneau d'administration
               </button>
 
               <div className="pt-2 text-[11px] text-slate-500">
-                Code par défaut fourni à la livraison : <span className="font-mono text-slate-400 font-bold">ESBTP2026@</span>
+                Code secret officiel : <span className="font-mono text-slate-400 font-bold">ESBTP2026@</span>
               </div>
             </form>
           </div>
         ) : (
-          /* Contenu : Si AUTHENTIFIÉ, onglets de gestion */
+          /* PANNEAU COMPLET D'ADMINISTRATION */
           <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Onglets de navigation */}
-            <div className="flex items-center gap-2 px-6 pt-3 border-b border-slate-800 bg-[#09111c] overflow-x-auto shrink-0">
+            {/* Barre d'onglets ergonomique */}
+            <div className="flex items-center gap-1 px-4 pt-2 border-b border-slate-800 bg-[#09111c] overflow-x-auto shrink-0">
               <button
-                onClick={() => { setActiveTab('info'); setEditingProjectId(null); }}
-                className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
-                  activeTab === 'info'
-                    ? 'border-[#FAB005] text-[#FAB005]'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                onClick={() => { setActiveTab('info'); setEditingProjectId(null); setEditingNewsId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'info' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
                 }`}
               >
                 <Phone className="w-3.5 h-3.5" />
-                <span>Coordonnées & Textes Accueil</span>
+                <span>1. Coordonnées & Siège</span>
               </button>
 
               <button
-                onClick={() => { setActiveTab('dg'); setEditingProjectId(null); }}
-                className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
-                  activeTab === 'dg'
-                    ? 'border-[#FAB005] text-[#FAB005]'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                onClick={() => { setActiveTab('home'); setEditingProjectId(null); setEditingNewsId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'home' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span>2. Accueil & Entreprise</span>
+              </button>
+
+              <button
+                onClick={() => { setActiveTab('dg'); setEditingProjectId(null); setEditingNewsId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'dg' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
                 }`}
               >
                 <User className="w-3.5 h-3.5" />
-                <span>Direction Générale & Photo</span>
+                <span>3. Mot du DG & Photo</span>
               </button>
 
               <button
-                onClick={() => { setActiveTab('projets'); }}
-                className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
-                  activeTab === 'projets'
-                    ? 'border-[#FAB005] text-[#FAB005]'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                onClick={() => { setActiveTab('projets'); setEditingNewsId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'projets' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
                 }`}
               >
                 <Building className="w-3.5 h-3.5" />
-                <span>Chantiers & Ouvrages ({projects.length})</span>
+                <span>4. Chantiers ({projects.length})</span>
               </button>
 
               <button
-                onClick={() => { setActiveTab('export'); setEditingProjectId(null); }}
-                className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
-                  activeTab === 'export'
-                    ? 'border-[#FAB005] text-[#FAB005]'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                onClick={() => { setActiveTab('actualites'); setEditingProjectId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'actualites' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <Newspaper className="w-3.5 h-3.5" />
+                <span>5. Actualités ({news.length})</span>
+              </button>
+
+              <button
+                onClick={() => { setActiveTab('engagements'); setEditingProjectId(null); setEditingNewsId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'engagements' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>6. Engagements QHSE</span>
+              </button>
+
+              <button
+                onClick={() => { setActiveTab('chiffres'); setEditingProjectId(null); setEditingNewsId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'chiffres' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <BarChart3 className="w-3.5 h-3.5" />
+                <span>7. Chiffres Clés</span>
+              </button>
+
+              <button
+                onClick={() => { setActiveTab('export'); setEditingProjectId(null); setEditingNewsId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'export' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
                 }`}
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Sauvegarde & Export</span>
+                <span>8. Sauvegarde</span>
               </button>
             </div>
 
-            {/* Corps défilable de l'onglet actif */}
+            {/* Corps défilable */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              {/* ONGLET 1 : COORDONNÉES ET ACCUEIL */}
+
+              {/* ONGLET 1 : COORDONNÉES & SIÈGE */}
               {activeTab === 'info' && (
-                <form onSubmit={handleSaveInfo} className="space-y-6 max-w-2xl mx-auto">
+                <form onSubmit={handleSaveInfo} className="space-y-6 max-w-3xl mx-auto">
                   <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
                     <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
                       <Phone className="w-4 h-4" />
-                      <span>Numéros de téléphone & Email</span>
+                      <span>Numéros de téléphone officiels (Appels & WhatsApp)</span>
                     </h5>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs text-slate-400 mb-1">Téléphone Principal (Airtel / WhatsApp)</label>
+                        <label className="block text-xs text-slate-400 mb-1">Téléphone Principal (Airtel / WhatsApp direct)</label>
                         <input
                           type="text"
                           value={companyInfo.phone1}
@@ -349,7 +469,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                     </div>
 
                     <div>
-                      <label className="block text-xs text-slate-400 mb-1">Adresse Email Officielle</label>
+                      <label className="block text-xs text-slate-400 mb-1">Email Officiel ES-BTP (Devis & Chantiers)</label>
                       <input
                         type="email"
                         value={companyInfo.email}
@@ -362,12 +482,12 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                   <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
                     <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
                       <Building className="w-4 h-4" />
-                      <span>Adresse physique & Boîte Postale</span>
+                      <span>Adresse Physique & Boîte Postale</span>
                     </h5>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs text-slate-400 mb-1">Emplacement Siège</label>
+                        <label className="block text-xs text-slate-400 mb-1">Localisation du Siège</label>
                         <input
                           type="text"
                           value={companyInfo.address}
@@ -388,10 +508,25 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                     </div>
                   </div>
 
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] font-bold text-xs uppercase tracking-wider transition-all shadow-md font-heading cursor-pointer"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>Enregistrer les coordonnées</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* ONGLET 2 : ACCUEIL & PRÉSENTATION ENTREPRISE */}
+              {activeTab === 'home' && (
+                <form onSubmit={handleSaveInfo} className="space-y-6 max-w-3xl mx-auto">
                   <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
                     <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
                       <FileText className="w-4 h-4" />
-                      <span>Message d'introduction en page d'accueil</span>
+                      <span>Haut de la Page d'Accueil (Bannière Hero)</span>
                     </h5>
 
                     <div>
@@ -405,11 +540,65 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                     </div>
 
                     <div>
-                      <label className="block text-xs text-slate-400 mb-1">Texte d'introduction concis</label>
+                      <label className="block text-xs text-slate-400 mb-1">Texte d'introduction de la bannière</label>
                       <textarea
                         rows={3}
                         value={companyInfo.heroDescription}
                         onChange={(e) => updateCompanyInfo({ heroDescription: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none leading-relaxed"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
+                    <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
+                      <Globe className="w-4 h-4" />
+                      <span>Textes d'introduction des sections Expertises & Réalisations</span>
+                    </h5>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">Sous-titre Section Expertises</label>
+                      <input
+                        type="text"
+                        value={companyInfo.expertisesIntro}
+                        onChange={(e) => updateCompanyInfo({ expertisesIntro: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">Sous-titre Section Chantiers & Ouvrages</label>
+                      <input
+                        type="text"
+                        value={companyInfo.realisationsIntro}
+                        onChange={(e) => updateCompanyInfo({ realisationsIntro: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
+                    <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
+                      <Building className="w-4 h-4" />
+                      <span>Page Entreprise : Présentation institutionnelle</span>
+                    </h5>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">Paragraphe 1 : Origine et mission</label>
+                      <textarea
+                        rows={3}
+                        value={companyInfo.entreprisePresentationP1}
+                        onChange={(e) => updateCompanyInfo({ entreprisePresentationP1: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none leading-relaxed"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">Paragraphe 2 : Moyens et engagements</label>
+                      <textarea
+                        rows={3}
+                        value={companyInfo.entreprisePresentationP2}
+                        onChange={(e) => updateCompanyInfo({ entreprisePresentationP2: e.target.value })}
                         className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none leading-relaxed"
                       />
                     </div>
@@ -421,16 +610,16 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] font-bold text-xs uppercase tracking-wider transition-all shadow-md font-heading cursor-pointer"
                     >
                       <Save className="w-4 h-4" />
-                      <span>Enregistrer les coordonnées</span>
+                      <span>Enregistrer les textes</span>
                     </button>
                   </div>
                 </form>
               )}
 
-              {/* ONGLET 2 : DIRECTION GÉNÉRALE & PHOTO */}
+              {/* ONGLET 3 : DIRECTION GÉNÉRALE & PHOTO */}
               {activeTab === 'dg' && (
-                <div className="space-y-6 max-w-2xl mx-auto">
-                  {/* Photo officielle du DG */}
+                <div className="space-y-6 max-w-3xl mx-auto">
+                  {/* Photo officielle */}
                   <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
                     <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
                       <ImageIcon className="w-4 h-4" />
@@ -438,7 +627,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                     </h5>
 
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Remplacez instantanément la photo officielle du Directeur Général affichée sur la page d'accueil et la page Entreprise.
+                      Remplacez instantanément la photo officielle du Directeur Général affichée sur l'accueil, la page Entreprise et dans la signature officielle.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
@@ -469,7 +658,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                     </div>
                   </div>
 
-                  {/* Nom, Titre et Citations du DG */}
+                  {/* Textes DG */}
                   <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
                     <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
                       <User className="w-4 h-4" />
@@ -488,7 +677,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                       </div>
 
                       <div>
-                        <label className="block text-xs text-slate-400 mb-1">Fonction Officielle</label>
+                        <label className="block text-xs text-slate-400 mb-1">Fonction</label>
                         <input
                           type="text"
                           value={companyInfo.dgTitle}
@@ -509,11 +698,21 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                     </div>
 
                     <div>
-                      <label className="block text-xs text-slate-400 mb-1">Extrait du Discours du DG (Page d'accueil)</label>
+                      <label className="block text-xs text-slate-400 mb-1">Discours du DG - Paragraphe 1</label>
                       <textarea
-                        rows={4}
+                        rows={3}
                         value={companyInfo.dgSpeechParagraph1}
                         onChange={(e) => updateCompanyInfo({ dgSpeechParagraph1: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none leading-relaxed"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">Discours du DG - Paragraphe 2</label>
+                      <textarea
+                        rows={3}
+                        value={companyInfo.dgSpeechParagraph2}
+                        onChange={(e) => updateCompanyInfo({ dgSpeechParagraph2: e.target.value })}
                         className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none leading-relaxed"
                       />
                     </div>
@@ -532,11 +731,10 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 </div>
               )}
 
-              {/* ONGLET 3 : GESTION DES CHANTIERS & PROJETS */}
+              {/* ONGLET 4 : CHANTIERS & OUVRAGES */}
               {activeTab === 'projets' && (
                 <div className="space-y-6">
                   {editingProjectId !== null ? (
-                    /* Formulaire d'édition / d'ajout */
                     <form onSubmit={handleSaveProjectForm} className="bg-white/5 border border-slate-800 rounded-xl p-6 space-y-4 max-w-2xl mx-auto">
                       <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                         <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005]">
@@ -601,7 +799,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                       </div>
 
                       <div>
-                        <label className="block text-xs text-slate-400 mb-1">Photo d'illustration du chantier</label>
+                        <label className="block text-xs text-slate-400 mb-1">Photo d'illustration</label>
                         <div className="flex items-center gap-4">
                           {projectFormData.image && (
                             <img
@@ -612,7 +810,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                           )}
                           <label className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition-colors cursor-pointer border border-slate-700">
                             <Upload className="w-3.5 h-3.5 text-[#FAB005]" />
-                            <span>Choisir une image</span>
+                            <span>Sélectionner une photo</span>
                             <input
                               type="file"
                               accept="image/*"
@@ -640,7 +838,6 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                       </div>
                     </form>
                   ) : (
-                    /* Liste des projets existants */
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <p className="text-xs text-slate-400">
@@ -708,16 +905,328 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 </div>
               )}
 
-              {/* ONGLET 4 : SAUVEGARDE & EXPORT */}
+              {/* ONGLET 5 : ACTUALITÉS & PUBLICATIONS */}
+              {activeTab === 'actualites' && (
+                <div className="space-y-6">
+                  {editingNewsId !== null ? (
+                    <form onSubmit={handleSaveNewsForm} className="bg-white/5 border border-slate-800 rounded-xl p-6 space-y-4 max-w-2xl mx-auto">
+                      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005]">
+                          {editingNewsId === 'NEW' ? 'Rédiger une actualité' : 'Modifier l’actualité'}
+                        </h5>
+                        <button
+                          type="button"
+                          onClick={() => setEditingNewsId(null)}
+                          className="text-xs text-slate-400 hover:text-white"
+                        >
+                          Annuler
+                        </button>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Titre de l'article / communiqué</label>
+                        <input
+                          type="text"
+                          required
+                          value={newsFormData.title}
+                          onChange={(e) => setNewsFormData((prev) => ({ ...prev, title: e.target.value }))}
+                          placeholder="Ex: Réception de nouveaux engins de terrassement..."
+                          className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden font-bold"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs text-slate-400 mb-1">Catégorie</label>
+                          <input
+                            type="text"
+                            value={newsFormData.category}
+                            onChange={(e) => setNewsFormData((prev) => ({ ...prev, category: e.target.value }))}
+                            placeholder="Vie de l'entreprise, Chantier, QHSE..."
+                            className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs text-slate-400 mb-1">Date affichée</label>
+                          <input
+                            type="text"
+                            value={newsFormData.date}
+                            onChange={(e) => setNewsFormData((prev) => ({ ...prev, date: e.target.value }))}
+                            placeholder="Ex: Mars 2026"
+                            className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden font-mono"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Résumé court</label>
+                        <textarea
+                          rows={2}
+                          value={newsFormData.excerpt}
+                          onChange={(e) => setNewsFormData((prev) => ({ ...prev, excerpt: e.target.value }))}
+                          placeholder="Bref résumé affiché sur la carte..."
+                          className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Contenu complet de l'article</label>
+                        <textarea
+                          rows={4}
+                          value={newsFormData.content}
+                          onChange={(e) => setNewsFormData((prev) => ({ ...prev, content: e.target.value }))}
+                          placeholder="Développez l'article ou le communiqué complet..."
+                          className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none leading-relaxed"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Image de l'article</label>
+                        <div className="flex items-center gap-4">
+                          {newsFormData.image && (
+                            <img
+                              src={newsFormData.image}
+                              alt="Aperçu"
+                              className="w-16 h-16 rounded-lg object-cover border border-slate-700"
+                            />
+                          )}
+                          <label className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition-colors cursor-pointer border border-slate-700">
+                            <Upload className="w-3.5 h-3.5 text-[#FAB005]" />
+                            <span>Charger une image</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleNewsImageUpload}
+                            />
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                        <button
+                          type="button"
+                          onClick={() => setEditingNewsId(null)}
+                          className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white"
+                        >
+                          Annuler
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-6 py-2.5 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] text-xs font-bold uppercase tracking-wider font-heading cursor-pointer"
+                        >
+                          Enregistrer l'article
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-400">
+                          {news.length} article(s) publié(s) sur le site.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={handleOpenAddNews}
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] text-xs font-bold uppercase tracking-wider font-heading cursor-pointer shadow-sm"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Publier une actualité</span>
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {news.map((item) => (
+                          <div
+                            key={item.id}
+                            className="p-4 bg-white/5 border border-slate-800 rounded-xl flex items-start gap-4 hover:border-slate-700 transition-colors"
+                          >
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-16 h-16 rounded-lg object-cover shrink-0 border border-slate-700"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <span className="text-[10px] font-mono uppercase tracking-wider text-[#FAB005] block">
+                                {item.category} · {item.date}
+                              </span>
+                              <h6 className="text-sm font-bold text-white truncate mt-0.5">
+                                {item.title}
+                              </h6>
+                              <p className="text-xs text-slate-400 line-clamp-1 mt-1">
+                                {item.excerpt}
+                              </p>
+                            </div>
+
+                            <div className="flex items-center gap-1 shrink-0">
+                              <button
+                                onClick={() => handleOpenEditNews(item)}
+                                className="p-2 rounded-lg text-slate-400 hover:text-[#FAB005] hover:bg-white/5 transition-colors"
+                                title="Modifier cette publication"
+                              >
+                                <Edit3 className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => {
+                                  if (confirm(`Confirmez-vous la suppression de l'actualité "${item.title}" ?`)) {
+                                    deleteNewsItem(item.id);
+                                    showNotification('Actualité supprimée.');
+                                  }
+                                }}
+                                className="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-white/5 transition-colors"
+                                title="Supprimer cette publication"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ONGLET 6 : ENGAGEMENTS QHSE & RSE */}
+              {activeTab === 'engagements' && (
+                <form onSubmit={handleSaveInfo} className="space-y-6 max-w-3xl mx-auto">
+                  <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
+                    <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4" />
+                      <span>Textes des 4 Piliers QHSE & RSE</span>
+                    </h5>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">1. Qualité d'exécution</label>
+                      <textarea
+                        rows={2}
+                        value={companyInfo.qualiteCommitmentText}
+                        onChange={(e) => updateCompanyInfo({ qualiteCommitmentText: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">2. Rigueur opérationnelle & Respect des délais</label>
+                      <textarea
+                        rows={2}
+                        value={companyInfo.rigueurCommitmentText}
+                        onChange={(e) => updateCompanyInfo({ rigueurCommitmentText: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">3. Sécurité des compagnons (Zéro accident)</label>
+                      <textarea
+                        rows={2}
+                        value={companyInfo.securiteCommitmentText}
+                        onChange={(e) => updateCompanyInfo({ securiteCommitmentText: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-slate-400 mb-1">4. Durabilité & Protection de l'environnement</label>
+                      <textarea
+                        rows={2}
+                        value={companyInfo.durabiliteCommitmentText}
+                        onChange={(e) => updateCompanyInfo({ durabiliteCommitmentText: e.target.value })}
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] font-bold text-xs uppercase tracking-wider transition-all shadow-md font-heading cursor-pointer"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>Enregistrer les engagements</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* ONGLET 7 : CHIFFRES CLÉS DU COMPTEUR */}
+              {activeTab === 'chiffres' && (
+                <form onSubmit={handleSaveInfo} className="space-y-6 max-w-3xl mx-auto">
+                  <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
+                    <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
+                      <BarChart3 className="w-4 h-4" />
+                      <span>Chiffres Réalistes de la Section Compteur</span>
+                    </h5>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Ces valeurs animent dynamiquement les compteurs visibles au milieu de la page d'accueil.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Surfaces Bâtiments Réalisées (m²)</label>
+                        <input
+                          type="number"
+                          value={companyInfo.metricBatimentM2}
+                          onChange={(e) => updateCompanyInfo({ metricBatimentM2: parseInt(e.target.value, 10) || 0 })}
+                          className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden font-mono"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Voiries & Voies Bitumées (km)</label>
+                        <input
+                          type="number"
+                          value={companyInfo.metricRoutesKm}
+                          onChange={(e) => updateCompanyInfo({ metricRoutesKm: parseInt(e.target.value, 10) || 0 })}
+                          className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden font-mono"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Provinces du Gabon Couvertes</label>
+                        <input
+                          type="number"
+                          value={companyInfo.metricProvinces}
+                          onChange={(e) => updateCompanyInfo({ metricProvinces: parseInt(e.target.value, 10) || 0 })}
+                          className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden font-mono"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Taux de Conformité QHSE (%)</label>
+                        <input
+                          type="number"
+                          value={companyInfo.metricSecuriteQhse}
+                          onChange={(e) => updateCompanyInfo({ metricSecuriteQhse: parseInt(e.target.value, 10) || 0 })}
+                          className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:border-[#FAB005] focus:outline-hidden font-mono"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] text-[#0B1320] font-bold text-xs uppercase tracking-wider transition-all shadow-md font-heading cursor-pointer"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>Valider les chiffres</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* ONGLET 8 : SAUVEGARDE & RESTAURATION */}
               {activeTab === 'export' && (
                 <div className="space-y-6 max-w-2xl mx-auto">
                   <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
                     <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
                       <Download className="w-4 h-4" />
-                      <span>Télécharger une sauvegarde (Fichier JSON)</span>
+                      <span>Télécharger une sauvegarde complète</span>
                     </h5>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Téléchargez une copie complète de tous vos textes, numéros et projets modifiés. Vous pourrez restaurer ce fichier à tout moment sur n'importe quel ordinateur ou téléphone.
+                      Téléchargez une copie intégrale de l'ensemble des textes, chantiers et actualités personnalisés.
                     </p>
                     <button
                       type="button"
@@ -732,10 +1241,10 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                         URL.revokeObjectURL(url);
                         showNotification('Fichier de sauvegarde téléchargé !');
                       }}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition-colors border border-slate-700"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition-colors border border-slate-700 cursor-pointer"
                     >
                       <Download className="w-4 h-4 text-[#FAB005]" />
-                      <span>Exporter la sauvegarde du site (.json)</span>
+                      <span>Exporter le fichier JSON</span>
                     </button>
                   </div>
 
@@ -745,7 +1254,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                       <span>Rétablir le contenu d'origine</span>
                     </h5>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Si vous souhaitez effacer toutes les modifications personnalisées et revenir au contenu officiel initial livré par le développeur.
+                      Si vous souhaitez tout réinitialiser et revenir à la version officielle initiale.
                     </p>
                     <button
                       type="button"
@@ -755,7 +1264,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                           showNotification('Contenu réinitialisé avec succès !');
                         }
                       }}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 text-xs font-bold transition-colors border border-rose-800/40"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 text-xs font-bold transition-colors border border-rose-800/40 cursor-pointer"
                     >
                       <RotateCcw className="w-4 h-4" />
                       <span>Réinitialiser aux valeurs d'origine</span>

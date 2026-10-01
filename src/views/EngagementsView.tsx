@@ -1,5 +1,6 @@
 import React from 'react';
 import { COMMITMENTS } from '../data/btpData';
+import { useSiteData } from '../context/SiteDataContext';
 import { ArrowRight, ShieldCheck, CheckCircle2, Award, HardHat, Compass, Leaf, Sparkles } from 'lucide-react';
 import estuaireNatureImg from '../assets/images/gabon_estuaire_nature_1790147925382.jpg';
 import { EsBtpAccentBar } from '../components/EsBtpAccentBar';
@@ -10,12 +11,14 @@ interface EngagementsViewProps {
 }
 
 export const EngagementsView: React.FC<EngagementsViewProps> = ({ onOpenContact }) => {
+  const { companyInfo } = useSiteData();
+
   const detailedEngagements = [
     {
       title: 'QUALITÉ',
       subtitle: 'Exigence d’exécution et fidélité aux cahiers des charges',
       icon: Award,
-      text: 'Une attention portée à la qualité d’exécution et aux exigences propres à chaque projet.',
+      text: companyInfo.qualiteCommitmentText || 'Sélection contrôlée des agrégats, fers à béton certifiés et contrôles systématiques des affaissements (Slump test).',
       points: [
         'Sélection contrôlée des agrégats, fers à béton et liants hydrauliques',
         'Contrôles systématiques de compactage et d’affaissement (Slump test)',
@@ -26,7 +29,7 @@ export const EngagementsView: React.FC<EngagementsViewProps> = ({ onOpenContact 
       title: 'RIGUEUR',
       subtitle: 'Organisation méthodique et pilotage des flux',
       icon: Compass,
-      text: 'Une organisation structurée pour accompagner chaque étape du projet.',
+      text: companyInfo.rigueurCommitmentText || 'Planification opérationnelle rigoureuse, suivi strict des plannings de chantier et gestion anticipée des approvisionnements.',
       points: [
         'Planification opérationnelle et respect des jalons d’intervention',
         'Gestion anticipée des approvisionnements sur le territoire national',
@@ -37,7 +40,7 @@ export const EngagementsView: React.FC<EngagementsViewProps> = ({ onOpenContact 
       title: 'SÉCURITÉ',
       subtitle: 'Protection des personnes et prévention des risques',
       icon: ShieldCheck,
-      text: 'La sécurité occupe une place centrale dans la conduite des travaux et l’organisation des chantiers.',
+      text: companyInfo.securiteCommitmentText || 'Port strict des EPI, briefings de sécurité quotidiens « 5 minutes sécurité » et zéro compromis sur la protection des vies humaines.',
       points: [
         'Port obligatoire des Équipements de Protection Individuelle (EPI)',
         'Briefings quotidiens de sécurité et identification des zones à risque',
@@ -48,7 +51,7 @@ export const EngagementsView: React.FC<EngagementsViewProps> = ({ onOpenContact 
       title: 'DURABILITÉ',
       subtitle: 'Pérennité des ouvrages et respect du milieu naturel',
       icon: Leaf,
-      text: 'Concevoir des ouvrages pensés pour leur usage et leur pérennité face aux contraintes climatiques équatoriales.',
+      text: companyInfo.durabiliteCommitmentText || 'Dimensionnement adapté au climat équatorial gabonais, maîtrise des écoulements hydrauliques et gestion responsable des déchets de chantier.',
       points: [
         'Dimensionnement adapté au régime pluviométrique équatorial',
         'Gestion des écoulements et prévention de l’érosion des talus',
@@ -87,10 +90,10 @@ export const EngagementsView: React.FC<EngagementsViewProps> = ({ onOpenContact 
                 </span>
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-heading tracking-tight mb-4 text-white drop-shadow-md">
-                NOS ENGAGEMENTS
+                {companyInfo.engagementsTitle || 'NOS ENGAGEMENTS'}
               </h1>
               <p className="text-base sm:text-xl text-slate-200 font-normal leading-relaxed drop-shadow-sm">
-                Une démarche sobre, exigeante et responsable pour garantir la conformité technique et environnementale de chaque ouvrage.
+                {companyInfo.engagementsSubtitle || 'Une démarche sobre, exigeante et responsable pour garantir la conformité technique et environnementale de chaque ouvrage.'}
               </p>
               <div className="mt-4">
                 <EsBtpAccentBar />

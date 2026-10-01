@@ -259,7 +259,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </h2>
               <EsBtpAccentBar className="mb-4" />
               <p className="text-base text-slate-600 leading-relaxed">
-                Des compétences mobilisées pour répondre aux exigences de chaque projet.
+                {companyInfo.expertisesIntro || 'Des compétences mobilisées pour répondre aux exigences de chaque projet.'}
               </p>
             </div>
 
@@ -336,7 +336,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </h2>
                 <EsBtpAccentBar className="mb-4" />
                 <p className="text-base text-slate-600">
-                  Découvrez les projets réalisés ou accompagnés par ES-BTP.
+                  {companyInfo.realisationsIntro || 'Découvrez les projets réalisés ou accompagnés par ES-BTP.'}
                 </p>
               </div>
 
