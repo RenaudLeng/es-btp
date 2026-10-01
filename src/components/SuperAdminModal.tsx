@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSiteData } from '../context/SiteDataContext';
 import { useDgPhoto } from '../context/DgPhotoContext';
+import chantierHeroBg from '../assets/images/chantier_gabon_live_1790106446872.jpg';
 import { 
   Lock, 
   Unlock, 
@@ -22,7 +23,16 @@ import {
   BarChart3,
   Newspaper,
   ShieldCheck,
-  Globe
+  Globe,
+  Eye,
+  EyeOff,
+  KeyRound,
+  HelpCircle,
+  Mail,
+  Copy,
+  Check,
+  ArrowRight,
+  Shield
 } from 'lucide-react';
 
 interface SuperAdminModalProps {
@@ -52,7 +62,10 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
   const { uploadDgPhoto, resetDgPhoto, isCustomPhoto } = useDgPhoto();
 
   const [passwordInput, setPasswordInput] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState('');
+  const [showForgotHelp, setShowForgotHelp] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
   const [activeTab, setActiveTab] = useState<'info' | 'home' | 'dg' | 'projets' | 'actualites' | 'engagements' | 'chiffres' | 'export'>('info');
   const [saveSuccessMessage, setSaveSuccessMessage] = useState('');
 
@@ -304,49 +317,192 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
           </div>
         )}
 
-        {/* Écran d'authentification */}
+        {/* Écran d'authentification avec arrière-plan de chantier & design immersif */}
         {!isAdminAuthenticated ? (
-          <div className="p-8 sm:p-12 flex flex-col items-center justify-center text-center my-auto">
-            <div className="w-16 h-16 rounded-2xl bg-white/5 border border-slate-700 flex items-center justify-center text-[#FAB005] mb-5 shadow-inner">
-              <Lock className="w-8 h-8" />
+          <div className="relative min-h-[540px] sm:min-h-[580px] flex items-center justify-center p-4 sm:p-8 overflow-hidden">
+            {/* Arrière-plan de chantier haute qualité avec filtres et dégradés */}
+            <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+              <img
+                src={chantierHeroBg}
+                alt="Chantier de construction ES-BTP Gabon"
+                className="w-full h-full object-cover object-center scale-105 filter brightness-50 contrast-110 saturate-125"
+              />
+              {/* Superposition sombre & dégradés de protection de contraste */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#07111E]/92 via-[#07111E]/88 to-[#0B1320]/96 backdrop-blur-[2px]" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#FAB005]/15 via-transparent to-transparent" />
+              {/* Trame de grille technique subtile */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]" />
             </div>
 
-            <h4 className="text-xl font-bold font-heading text-white mb-2">
-              Accès SuperAdmin Direction Générale
-            </h4>
-            <p className="text-sm text-slate-400 max-w-md mb-6 leading-relaxed">
-              Saisissez le mot de passe secret pour modifier librement tous les textes, photos, chantiers et chiffres de votre site ES-BTP.
-            </p>
+            {/* Carte centrale d'authentification */}
+            <div className="relative z-10 w-full max-w-md bg-[#0B1320]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] ring-1 ring-white/10">
+              
+              {/* Badge supérieur & icône */}
+              <div className="flex flex-col items-center text-center">
+                <div className="relative mb-4">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FAB005] to-[#c98e03] p-0.5 shadow-lg shadow-[#FAB005]/20 flex items-center justify-center">
+                    <div className="w-full h-full bg-[#0B1320] rounded-[14px] flex items-center justify-center">
+                      <Lock className="w-7 h-7 text-[#FAB005]" />
+                    </div>
+                  </div>
+                  <span className="absolute -bottom-1 -right-1 px-2 py-0.5 rounded-full bg-[#FAB005] text-[#08121E] text-[10px] font-black uppercase tracking-wider shadow-sm">
+                    Sécurisé
+                  </span>
+                </div>
 
-            <form onSubmit={handleLogin} className="w-full max-w-sm space-y-4">
-              <div>
-                <input
-                  type="password"
-                  value={passwordInput}
-                  onChange={(e) => setPasswordInput(e.target.value)}
-                  placeholder="Mot de passe secret..."
-                  className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:border-[#FAB005] focus:outline-hidden text-sm text-white placeholder-slate-500 text-center tracking-widest font-mono shadow-inner"
-                  autoFocus
-                />
-                {authError && (
-                  <p className="mt-2 text-xs text-rose-400 flex items-center justify-center gap-1.5 font-medium">
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    <span>{authError}</span>
-                  </p>
-                )}
+                <span className="text-[11px] font-mono uppercase tracking-widest text-[#FAB005] font-bold mb-1">
+                  Espace Direction & Édition
+                </span>
+                <h4 className="text-xl sm:text-2xl font-black font-heading text-white tracking-tight mb-2">
+                  Accès SuperAdmin Direction Générale
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-300 max-w-sm mb-6 leading-relaxed">
+                  Saisissez le mot de passe secret pour modifier librement tous les textes, photos, chantiers et chiffres de votre site ES-BTP.
+                </p>
               </div>
 
-              <button
-                type="submit"
-                className="w-full py-3 px-4 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] active:bg-[#c98e03] text-[#0B1320] font-bold text-xs uppercase tracking-wider transition-all shadow-md font-heading cursor-pointer"
-              >
-                Ouvrir le panneau d'administration
-              </button>
+              {/* Formulaire de connexion */}
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-semibold text-slate-300 text-left">
+                    Mot de passe administrateur
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                      <KeyRound className="w-4 h-4 text-[#FAB005]" />
+                    </div>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={passwordInput}
+                      onChange={(e) => {
+                        setPasswordInput(e.target.value);
+                        if (authError) setAuthError('');
+                      }}
+                      placeholder="Entrez le mot de passe secret..."
+                      className="w-full pl-10 pr-11 py-3.5 rounded-xl bg-slate-900/90 border-2 border-slate-700 focus:border-[#FAB005] focus:bg-slate-900 focus:outline-hidden text-sm text-white placeholder-slate-500 font-mono tracking-wider shadow-inner transition-colors"
+                      autoFocus
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white transition-colors cursor-pointer"
+                      title={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+                      aria-label="Afficher ou masquer"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
 
-              <div className="pt-2 text-[11px] text-slate-500">
-                Code secret officiel : <span className="font-mono text-slate-400 font-bold">ESBTP2026@</span>
+                  {authError && (
+                    <div className="mt-2 p-2.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2 font-medium animate-in fade-in duration-200">
+                      <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+                      <span>{authError}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* BOUTON DE VALIDATION HAUTE VISIBILITÉ */}
+                <button
+                  type="submit"
+                  className="w-full py-4 px-6 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] active:bg-[#c98e03] text-[#08121E] font-black text-sm uppercase tracking-wider transition-all duration-200 shadow-xl shadow-[#FAB005]/25 hover:shadow-[#FAB005]/40 hover:-translate-y-0.5 active:translate-y-0 font-heading cursor-pointer flex items-center justify-center gap-2 border-2 border-[#ffc229]"
+                >
+                  <Unlock className="w-4 h-4 text-[#08121E] stroke-[2.5]" />
+                  <span>Valider et ouvrir le panneau d'administration</span>
+                  <ArrowRight className="w-4 h-4 text-[#08121E] stroke-[2.5]" />
+                </button>
+
+                {/* Bloc d'aide & mot de passe perdu */}
+                <div className="pt-2 border-t border-slate-800 flex flex-col gap-2.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <button
+                      type="button"
+                      onClick={() => setShowForgotHelp(!showForgotHelp)}
+                      className="inline-flex items-center gap-1.5 text-slate-400 hover:text-[#FAB005] transition-colors cursor-pointer font-medium"
+                    >
+                      <HelpCircle className="w-3.5 h-3.5 text-[#FAB005]" />
+                      <span>Mot de passe oublié ?</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText('ESBTP2026@');
+                        setCopiedCode(true);
+                        setPasswordInput('ESBTP2026@');
+                        setTimeout(() => setCopiedCode(false), 2500);
+                      }}
+                      className="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-white transition-colors cursor-pointer px-2 py-1 rounded-md bg-white/5 hover:bg-white/10"
+                      title="Copier le code par défaut"
+                    >
+                      {copiedCode ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-400" />
+                          <span className="text-emerald-400 font-bold">Rempli !</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3 text-slate-400" />
+                          <span>Code par défaut</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Panneau déroulant : Logique de mot de passe perdu & assistance */}
+                  {showForgotHelp && (
+                    <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-left text-xs space-y-2.5 text-slate-300 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="flex items-center gap-2 text-[#FAB005] font-bold text-xs">
+                        <Shield className="w-4 h-4" />
+                        <span>Procédure de récupération & codes valides</span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 leading-relaxed">
+                        Le code maître configuré pour votre direction est :
+                      </p>
+                      
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-black/40 border border-slate-700 font-mono text-xs">
+                        <span className="text-[#FAB005] font-bold tracking-wider">ESBTP2026@</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText('ESBTP2026@');
+                            setPasswordInput('ESBTP2026@');
+                            setCopiedCode(true);
+                            setTimeout(() => setCopiedCode(false), 2500);
+                          }}
+                          className="px-2 py-0.5 rounded bg-[#FAB005]/20 text-[#FAB005] hover:bg-[#FAB005] hover:text-[#08121E] font-bold text-[10px] transition-colors"
+                        >
+                          Insérer
+                        </button>
+                      </div>
+
+                      <div className="pt-1.5 border-t border-slate-800 text-[11px] space-y-1 text-slate-400">
+                        <p className="font-semibold text-slate-300">Codes de secours acceptés :</p>
+                        <p className="font-mono text-slate-400">· <code className="text-slate-300">admin2026</code> ou <code className="text-slate-300">DG@ESBTP</code></p>
+                      </div>
+
+                      <div className="pt-2 border-t border-slate-800 flex flex-col gap-1.5 text-[11px]">
+                        <span className="text-slate-400">Besoin d'aide technique ou de réinitialisation ?</span>
+                        <div className="flex items-center gap-2">
+                          <a
+                            href="mailto:arleys4u@gmail.com?subject=Demande%20assistance%20SuperAdmin%20ES-BTP"
+                            className="inline-flex items-center gap-1.5 text-[#FAB005] hover:underline font-semibold"
+                          >
+                            <Mail className="w-3 h-3" />
+                            <span>Contacter le webmaster (Renaud LENG)</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </form>
+
+              {/* Mention de sécurité */}
+              <div className="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-mono">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Session chiffrée SSL · ES-BTP Gabon</span>
               </div>
-            </form>
+            </div>
           </div>
         ) : (
           /* PANNEAU COMPLET D'ADMINISTRATION */
