@@ -78,22 +78,6 @@ export const EnhancedFloatingContact: React.FC<EnhancedFloatingContactProps> = (
                 </a>
               )}
             </div>
-
-            {/* Accès discret SuperAdmin dans la bulle */}
-            {onOpenSuperAdmin && (
-              <div className="pt-2 border-t border-slate-800/80">
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    onOpenSuperAdmin();
-                  }}
-                  className="w-full flex items-center justify-center gap-2 py-1.5 px-3 rounded-lg bg-white/5 hover:bg-[#FAB005]/20 text-[#FAB005] text-[10px] font-bold uppercase tracking-wider transition-colors cursor-pointer border border-[#FAB005]/30"
-                >
-                  <Lock className="w-3 h-3 text-[#FAB005]" />
-                  <span>Espace SuperAdmin Direction</span>
-                </button>
-              </div>
-            )}
           </div>
         </div>
       )}

@@ -243,9 +243,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSuperAdmin }) 
             >
               arleys4u@gmail.com
             </a>
+            {/* Cadenas très discret placé juste après le mail du concepteur */}
+            {onOpenSuperAdmin && (
+              <button
+                onClick={onOpenSuperAdmin}
+                className="p-1 rounded text-slate-500 hover:text-[#FAB005] hover:bg-white/10 transition-colors cursor-pointer inline-flex items-center justify-center opacity-75 hover:opacity-100"
+                title="Accès sécurisé"
+                aria-label="Accès sécurisé"
+              >
+                <Lock className="w-3 h-3" />
+              </button>
+            )}
           </div>
 
-          {/* Liens institutionnels & Cadenas discret SuperAdmin */}
+          {/* Liens institutionnels */}
           <div className="flex items-center justify-center md:justify-end gap-3 text-xs">
             <button
               onClick={() => handleNav('entreprise')}
@@ -260,21 +271,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSuperAdmin }) 
             >
               Contact
             </button>
-            
-            {/* Cadenas très discret en bas sans texte */}
-            {onOpenSuperAdmin && (
-              <>
-                <span className="text-slate-700">·</span>
-                <button
-                  onClick={onOpenSuperAdmin}
-                  className="p-1.5 rounded text-slate-500 hover:text-[#FAB005] hover:bg-white/10 transition-colors cursor-pointer"
-                  title="Accès sécurisé"
-                  aria-label="Accès sécurisé"
-                >
-                  <Lock className="w-3.5 h-3.5" />
-                </button>
-              </>
-            )}
           </div>
         </div>
       </div>
