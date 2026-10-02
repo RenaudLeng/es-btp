@@ -314,55 +314,29 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
           </div>
         )}
 
-        {/* Écran d'authentification avec arrière-plan de chantier & design immersif */}
+        {/* Écran d'authentification épuré, sobre et 100% fonctionnel */}
         {!isAdminAuthenticated ? (
-          <div className="relative flex-1 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            {/* Arrière-plan de chantier haute qualité avec filtres et dégradés */}
-            <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-              <img
-                src={chantierHeroBg}
-                alt="Chantier de construction ES-BTP Gabon"
-                className="w-full h-full object-cover object-center scale-105 filter brightness-[0.38] contrast-110 saturate-125"
-              />
-              {/* Superposition sombre & dégradés de protection de contraste */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#07111E]/95 via-[#07111E]/90 to-[#0B1320]/98 backdrop-blur-[2px]" />
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#FAB005]/20 via-transparent to-transparent" />
-              {/* Trame de grille technique subtile */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]" />
-            </div>
-
-            {/* Carte centrale d'authentification optimisée pour tenir à l'écran sans coupure */}
-            <div className="relative z-10 w-full bg-[#0B1320]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl p-5 sm:p-6 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] ring-1 ring-white/10 my-auto">
+          <div className="relative p-6 sm:p-8 flex flex-col justify-center bg-[#0B1320]">
+            <div className="max-w-sm mx-auto w-full space-y-5">
               
-              {/* Badge supérieur & icône */}
-              <div className="flex flex-col items-center text-center mb-4">
-                <div className="relative mb-2.5">
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FAB005] to-[#c98e03] p-0.5 shadow-lg shadow-[#FAB005]/20 flex items-center justify-center">
-                    <div className="w-full h-full bg-[#0B1320] rounded-[9px] flex items-center justify-center">
-                      <Lock className="w-5 h-5 text-[#FAB005]" />
-                    </div>
-                  </div>
-                  <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-full bg-[#FAB005] text-[#08121E] text-[9px] font-black uppercase tracking-wider shadow-sm">
-                    Sécurisé
-                  </span>
+              {/* En-tête sobre */}
+              <div className="text-center space-y-1">
+                <div className="w-10 h-10 mx-auto rounded-xl bg-[#FAB005]/10 border border-[#FAB005]/20 flex items-center justify-center text-[#FAB005] mb-2">
+                  <Lock className="w-5 h-5" />
                 </div>
-
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#FAB005] font-bold mb-0.5">
-                  Administration
-                </span>
-                <h4 className="text-base sm:text-lg font-black font-heading text-white tracking-tight">
-                  Connexion Direction
+                <h4 className="text-base font-bold text-white tracking-tight">
+                  Espace Direction
                 </h4>
+                <p className="text-xs text-slate-400">
+                  Accès réservé à l'administration du site
+                </p>
               </div>
 
-              {/* Formulaire de connexion */}
-              <form onSubmit={handleLogin} className="space-y-3.5">
-                <div className="space-y-1">
-                  <label className="block text-xs font-semibold text-slate-300 text-left">
-                    Mot de passe
-                  </label>
+              {/* Formulaire direct et fluide */}
+              <form onSubmit={handleLogin} className="space-y-3">
+                <div className="space-y-1.5">
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                       <KeyRound className="w-4 h-4 text-[#FAB005]" />
                     </div>
                     <input
@@ -373,127 +347,84 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                         if (authError) setAuthError('');
                       }}
                       placeholder="Mot de passe secret..."
-                      className="w-full pl-10 pr-11 py-2.5 rounded-xl bg-slate-900 border border-slate-700 focus:border-[#FAB005] focus:bg-slate-950 focus:outline-hidden text-sm text-white placeholder-slate-500 font-mono tracking-wider shadow-inner transition-colors"
+                      className="w-full pl-9 pr-10 py-2.5 rounded-lg bg-slate-900 border border-slate-700/80 focus:border-[#FAB005] focus:outline-hidden text-sm text-white placeholder-slate-500 font-mono tracking-wider transition-colors"
                       autoFocus
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white transition-colors cursor-pointer"
-                      title={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
-                      aria-label="Afficher ou masquer"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white transition-colors cursor-pointer"
+                      title={showPassword ? 'Masquer' : 'Afficher'}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
 
                   {authError && (
-                    <div className="mt-1.5 p-2 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2 font-medium animate-in fade-in duration-200">
-                      <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+                    <div className="p-2 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                       <span>{authError}</span>
                     </div>
                   )}
                 </div>
 
-                {/* BOUTON ÉLÉGANT, ÉPURÉ ET SOBRE */}
+                {/* Bouton de validation simple, propre et réactif */}
                 <button
                   type="submit"
-                  className="w-full py-2.5 px-4 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] active:scale-[0.99] text-[#08121E] font-bold text-xs uppercase tracking-wider transition-all duration-150 shadow-md shadow-[#FAB005]/20 cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 rounded-lg bg-[#FAB005] hover:bg-[#e09e04] active:scale-[0.99] text-[#08121E] font-bold text-xs uppercase tracking-wider transition-all duration-150 shadow-sm cursor-pointer flex items-center justify-center gap-2"
                 >
-                  <Unlock className="w-4 h-4 text-[#08121E]" />
+                  <Unlock className="w-3.5 h-3.5" />
                   <span>Connexion</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#08121E]" />
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
 
-                {/* Bloc d'aide & mot de passe perdu */}
-                <div className="pt-2 border-t border-slate-800 flex flex-col gap-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <button
-                      type="button"
-                      onClick={() => setShowForgotHelp(!showForgotHelp)}
-                      className="inline-flex items-center gap-1.5 text-slate-300 hover:text-[#FAB005] transition-colors cursor-pointer font-medium"
-                    >
-                      <HelpCircle className="w-3.5 h-3.5 text-[#FAB005]" />
-                      <span>Mot de passe oublié ?</span>
-                    </button>
+                {/* Actions secondaires discrètes */}
+                <div className="pt-2 flex items-center justify-between text-xs text-slate-400">
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotHelp(!showForgotHelp)}
+                    className="hover:text-[#FAB005] transition-colors cursor-pointer"
+                  >
+                    Besoin d'aide ?
+                  </button>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigator.clipboard.writeText('ESBTP2026@');
-                        setCopiedCode(true);
-                        setPasswordInput('ESBTP2026@');
-                        setTimeout(() => setCopiedCode(false), 2500);
-                      }}
-                      className="inline-flex items-center gap-1.5 text-[11px] text-slate-300 hover:text-white transition-colors cursor-pointer px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 border border-slate-700"
-                      title="Insérer directement le code secret officiel"
-                    >
-                      {copiedCode ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-emerald-400 font-bold">Rempli !</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5 text-[#FAB005]" />
-                          <span className="font-semibold">Code par défaut</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-
-                  {/* Panneau déroulant : Logique de mot de passe perdu & assistance */}
-                  {showForgotHelp && (
-                    <div className="p-3 rounded-xl bg-slate-900/95 border border-slate-700 text-left text-xs space-y-2 text-slate-300 animate-in fade-in slide-in-from-top-2 duration-200">
-                      <div className="flex items-center gap-2 text-[#FAB005] font-bold text-xs">
-                        <Shield className="w-4 h-4" />
-                        <span>Procédure de récupération & codes valides</span>
-                      </div>
-                      <p className="text-[11px] text-slate-400 leading-relaxed">
-                        Le code maître officiel est :
-                      </p>
-                      
-                      <div className="flex items-center justify-between p-2 rounded-lg bg-black/50 border border-slate-700 font-mono text-xs">
-                        <span className="text-[#FAB005] font-bold tracking-wider text-sm">ESBTP2026@</span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            navigator.clipboard.writeText('ESBTP2026@');
-                            setPasswordInput('ESBTP2026@');
-                            setCopiedCode(true);
-                            setTimeout(() => setCopiedCode(false), 2500);
-                          }}
-                          className="px-2.5 py-1 rounded-md bg-[#FAB005] text-[#08121E] hover:bg-[#e09e04] font-black text-[11px] transition-colors cursor-pointer"
-                        >
-                          Insérer automatiquement
-                        </button>
-                      </div>
-
-                      <div className="pt-1.5 border-t border-slate-800 text-[11px] space-y-0.5 text-slate-400">
-                        <p className="font-semibold text-slate-300">Codes de secours acceptés :</p>
-                        <p className="font-mono text-slate-400">· <code className="text-slate-300 bg-white/5 px-1 py-0.5 rounded">admin2026</code> ou <code className="text-slate-300 bg-white/5 px-1 py-0.5 rounded">DG@ESBTP</code></p>
-                      </div>
-
-                      <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-[11px]">
-                        <span className="text-slate-400">Assistance Webmaster :</span>
-                        <a
-                          href="mailto:arleys4u@gmail.com?subject=Demande%20assistance%20SuperAdmin%20ES-BTP"
-                          className="inline-flex items-center gap-1.5 text-[#FAB005] hover:underline font-semibold"
-                        >
-                          <Mail className="w-3.5 h-3.5" />
-                          <span>arleys4u@gmail.com</span>
-                        </a>
-                      </div>
-                    </div>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPasswordInput('ESBTP2026@');
+                      setCopiedCode(true);
+                      setTimeout(() => setCopiedCode(false), 2000);
+                    }}
+                    className="hover:text-white transition-colors cursor-pointer flex items-center gap-1"
+                  >
+                    {copiedCode ? (
+                      <span className="text-emerald-400 font-medium">Code inséré</span>
+                    ) : (
+                      <>
+                        <Copy className="w-3 h-3 text-[#FAB005]" />
+                        <span>Code par défaut</span>
+                      </>
+                    )}
+                  </button>
                 </div>
+
+                {/* Tiroir d'assistance discret */}
+                {showForgotHelp && (
+                  <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 space-y-1.5 animate-in fade-in duration-150">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">Code officiel :</span>
+                      <code className="text-[#FAB005] font-mono font-bold">ESBTP2026@</code>
+                    </div>
+                    <div className="flex items-center justify-between border-t border-slate-800/80 pt-1.5 text-[11px]">
+                      <span className="text-slate-400">Support :</span>
+                      <a href="mailto:arleys4u@gmail.com" className="text-slate-300 hover:text-[#FAB005] transition-colors">
+                        arleys4u@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                )}
               </form>
 
-              {/* Mention de sécurité */}
-              <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-mono">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Session chiffrée SSL · ES-BTP Gabon</span>
-              </div>
             </div>
           </div>
         ) : (
