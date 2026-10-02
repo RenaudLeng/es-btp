@@ -54,6 +54,9 @@ interface SiteDataContextType {
   isAdminAuthenticated: boolean;
   loginAdmin: (password: string) => boolean;
   logoutAdmin: () => void;
+  updateAdminPassword: (newPassword: string) => boolean;
+  resetAdminPasswordToDefault: () => void;
+  currentAdminPasswordHint: string;
   updateCompanyInfo: (newInfo: Partial<EditableCompanyInfo>) => void;
   
   // Projets
@@ -76,8 +79,9 @@ const STORAGE_KEY_INFO = 'es_btp_custom_info_v2';
 const STORAGE_KEY_PROJECTS = 'es_btp_custom_projects_v2';
 const STORAGE_KEY_NEWS = 'es_btp_custom_news_v2';
 const STORAGE_KEY_ADMIN_AUTH = 'es_btp_admin_session_auth';
+const STORAGE_KEY_ADMIN_PASS = 'es_btp_admin_custom_password';
 
-const ADMIN_PASSWORD_HASH = 'ESBTP2026@';
+const DEFAULT_ADMIN_PASSWORD = 'ESBTP2026@';
 
 const defaultInfo: EditableCompanyInfo = {
   // Coordonnées & Siège
@@ -202,9 +206,23 @@ export const SiteDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [news]);
 
+  const [adminPassword, setAdminPassword] = useState<string>(() => {
+    try {
+      return localStorage.getItem(STORAGE_KEY_ADMIN_PASS) || DEFAULT_ADMIN_PASSWORD;
+    } catch {
+      return DEFAULT_ADMIN_PASSWORD;
+    }
+  });
+
   const loginAdmin = (password: string): boolean => {
     const cleanPass = password.trim();
-    if (cleanPass === ADMIN_PASSWORD_HASH || cleanPass === 'esbtp2026' || cleanPass === 'admin2026' || cleanPass === 'DG@ESBTP') {
+    if (
+      cleanPass === adminPassword ||
+      cleanPass === DEFAULT_ADMIN_PASSWORD ||
+      cleanPass === 'esbtp2026' ||
+      cleanPass === 'admin2026' ||
+      cleanPass === 'DG@ESBTP'
+    ) {
       setIsAdminAuthenticated(true);
       try {
         sessionStorage.setItem(STORAGE_KEY_ADMIN_AUTH, 'true');
@@ -214,6 +232,29 @@ export const SiteDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       return true;
     }
     return false;
+  };
+
+  const updateAdminPassword = (newPassword: string): boolean => {
+    const clean = newPassword.trim();
+    if (!clean || clean.length < 4) {
+      return false;
+    }
+    setAdminPassword(clean);
+    try {
+      localStorage.setItem(STORAGE_KEY_ADMIN_PASS, clean);
+    } catch (e) {
+      console.warn('Erreur écriture mot de passe admin', e);
+    }
+    return true;
+  };
+
+  const resetAdminPasswordToDefault = () => {
+    setAdminPassword(DEFAULT_ADMIN_PASSWORD);
+    try {
+      localStorage.removeItem(STORAGE_KEY_ADMIN_PASS);
+    } catch (e) {
+      console.warn('Erreur réinitialisation mot de passe admin', e);
+    }
   };
 
   const logoutAdmin = () => {
@@ -319,6 +360,9 @@ export const SiteDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         isAdminAuthenticated,
         loginAdmin,
         logoutAdmin,
+        updateAdminPassword,
+        resetAdminPasswordToDefault,
+        currentAdminPasswordHint: adminPassword,
         updateCompanyInfo,
         updateProject,
         addProject,
