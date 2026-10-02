@@ -21,12 +21,44 @@
         }
       },
       "required": ["email", "role"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Journal d'activité et d'audit des modifications du site ES-BTP",
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Type d'action effectuée (ex: Mise à jour coordonnées, Nouveau chantier, Actualité, Photo DG)"
+        },
+        "category": {
+          "type": "string",
+          "description": "Catégorie de la modification (info, dg, projets, actualites, securite)"
+        },
+        "details": {
+          "type": "string",
+          "description": "Description détaillée de la modification"
+        },
+        "author": {
+          "type": "string",
+          "description": "Auteur ou rôle (ex: SuperAdmin ES-BTP, Direction)"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Horodatage ISO de la modification"
+        }
+      },
+      "required": ["action", "category", "details", "timestamp"]
     }
   },
   "firestore": {
     "/admins/{adminId}": {
       "schema": "AdminProfile",
       "description": "Collection des administrateurs autorisés"
+    },
+    "/activity_logs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "Collection de l'historique d'activité et des audits de modifications"
     }
   }
 }

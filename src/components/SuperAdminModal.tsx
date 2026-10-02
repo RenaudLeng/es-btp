@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSiteData } from '../context/SiteDataContext';
 import { useDgPhoto } from '../context/DgPhotoContext';
 import { auth } from '../lib/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { sendContactMessage } from '../services/contactService';
+import { logActivity, fetchRecentActivities, ActivityLogItem } from '../services/activityService';
 import chantierHeroBg from '../assets/images/chantier_gabon_live_1790106446872.jpg';
 import { 
   Lock, 
@@ -38,7 +39,10 @@ import {
   Shield,
   Send,
   Loader2,
-  RefreshCw
+  RefreshCw,
+  History,
+  Clock,
+  Activity
 } from 'lucide-react';
 
 interface SuperAdminModalProps {
@@ -74,8 +78,31 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
   const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
-  const [activeTab, setActiveTab] = useState<'info' | 'home' | 'dg' | 'projets' | 'actualites' | 'engagements' | 'chiffres' | 'securite' | 'export'>('info');
+  const [activeTab, setActiveTab] = useState<'info' | 'home' | 'dg' | 'projets' | 'actualites' | 'engagements' | 'chiffres' | 'activites' | 'securite' | 'export'>('info');
   const [saveSuccessMessage, setSaveSuccessMessage] = useState('');
+
+  // Historique d'activité Firestore
+  const [activityLogs, setActivityLogs] = useState<ActivityLogItem[]>([]);
+  const [loadingActivities, setLoadingActivities] = useState(false);
+
+  // Charger les activités depuis Firestore quand l'onglet est sélectionné
+  const loadActivities = async () => {
+    setLoadingActivities(true);
+    try {
+      const logs = await fetchRecentActivities(40);
+      setActivityLogs(logs);
+    } catch (err) {
+      console.warn('Erreur chargement logs Firestore:', err);
+    } finally {
+      setLoadingActivities(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAdminAuthenticated && activeTab === 'activites') {
+      loadActivities();
+    }
+  }, [isAdminAuthenticated, activeTab]);
 
   // Mode Récupération de mot de passe
   const [authView, setAuthView] = useState<'login' | 'recovery'>('login');
@@ -239,6 +266,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
     updateAdminPassword(settingNewPassword);
     setSettingNewPassword('');
     setSettingConfirmPassword('');
+    logActivity('Modification Mot de passe', 'securite', 'Le mot de passe administrateur a été mis à jour.');
     showNotification('Nouveau mot de passe administrateur enregistré avec succès !');
   };
 
@@ -249,6 +277,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
 
   const handleSaveInfo = (e: React.FormEvent) => {
     e.preventDefault();
+    logActivity('Mise à jour coordonnées & présentation', 'info', 'Coordonnées de l’entreprise ou textes officiels enregistrés.');
     showNotification('Modifications enregistrées immédiatement sur l’ensemble du site !');
   };
 
@@ -257,6 +286,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
     if (file) {
       try {
         await uploadDgPhoto(file);
+        logActivity('Mise à jour photo DG', 'dg', 'Le portrait officiel du Directeur Général a été modifié.');
         showNotification('Portrait officiel du Directeur Général mis à jour !');
       } catch (err: any) {
         alert(err?.message || 'Erreur lors du chargement de la photo');
@@ -332,6 +362,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
         description: projectFormData.description,
         image: projectFormData.image || '/projects/chantier_default.jpg',
       });
+      logActivity('Ajout de chantier', 'projets', `Nouveau chantier créé : "${projectFormData.title}" (${projectFormData.category})`);
       showNotification('Nouveau chantier ajouté au catalogue !');
     } else if (editingProjectId) {
       updateProject(editingProjectId, {
@@ -342,6 +373,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
         description: projectFormData.description,
         image: projectFormData.image,
       });
+      logActivity('Mise à jour chantier', 'projets', `Chantier modifié : "${projectFormData.title}"`);
       showNotification('Chantier mis à jour avec succès !');
     }
     setEditingProjectId(null);
@@ -387,6 +419,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
         content: newsFormData.content,
         image: newsFormData.image || '/projects/chantier_default.jpg',
       });
+      logActivity('Publication actualité', 'actualites', `Nouvelle publication : "${newsFormData.title}"`);
       showNotification('Nouvelle publication ajoutée aux actualités !');
     } else if (editingNewsId) {
       updateNewsItem(editingNewsId, {
@@ -397,6 +430,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
         content: newsFormData.content,
         image: newsFormData.image,
       });
+      logActivity('Mise à jour actualité', 'actualites', `Actualité modifiée : "${newsFormData.title}"`);
       showNotification('Publication mise à jour !');
     }
     setEditingNewsId(null);
@@ -811,13 +845,23 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
               </button>
 
               <button
+                onClick={() => { setActiveTab('activites'); setEditingProjectId(null); setEditingNewsId(null); }}
+                className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeTab === 'activites' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <History className="w-3.5 h-3.5" />
+                <span>8. Historique d'activité</span>
+              </button>
+
+              <button
                 onClick={() => { setActiveTab('securite'); setEditingProjectId(null); setEditingNewsId(null); }}
                 className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
                   activeTab === 'securite' ? 'border-[#FAB005] text-[#FAB005]' : 'border-transparent text-slate-400 hover:text-slate-200'
                 }`}
               >
                 <Lock className="w-3.5 h-3.5" />
-                <span>8. Sécurité & Mot de passe</span>
+                <span>9. Sécurité & Mot de passe</span>
               </button>
 
               <button
@@ -827,7 +871,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 }`}
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>9. Sauvegarde</span>
+                <span>10. Sauvegarde</span>
               </button>
             </div>
 
@@ -1614,7 +1658,105 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 </form>
               )}
 
-              {/* ONGLET 8 : SÉCURITÉ & MOT DE PASSE */}
+              {/* ONGLET 8 : HISTORIQUE D'ACTIVITÉ (FIRESTORE) */}
+              {activeTab === 'activites' && (
+                <div className="space-y-6 max-w-3xl mx-auto">
+                  <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+                      <div>
+                        <h5 className="text-sm font-bold uppercase tracking-wider text-[#FAB005] flex items-center gap-2">
+                          <History className="w-4 h-4" />
+                          <span>Historique des modifications du site (Firestore)</span>
+                        </h5>
+                        <p className="text-xs text-slate-400 mt-1">
+                          Consultez en direct les dernières modifications, publications de chantiers et actualités enregistrées.
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={loadActivities}
+                        disabled={loadingActivities}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 transition-colors border border-slate-700 cursor-pointer self-start sm:self-auto disabled:opacity-50"
+                      >
+                        <RefreshCw className={`w-3.5 h-3.5 text-[#FAB005] ${loadingActivities ? 'animate-spin' : ''}`} />
+                        <span>Actualiser</span>
+                      </button>
+                    </div>
+
+                    {loadingActivities ? (
+                      <div className="py-12 flex flex-col items-center justify-center gap-3 text-slate-400">
+                        <Loader2 className="w-6 h-6 animate-spin text-[#FAB005]" />
+                        <span className="text-xs">Chargement de l'historique depuis Firestore...</span>
+                      </div>
+                    ) : activityLogs.length === 0 ? (
+                      <div className="py-10 text-center space-y-2">
+                        <Clock className="w-8 h-8 text-slate-600 mx-auto" />
+                        <p className="text-xs text-slate-400">Aucune activité enregistrée pour le moment.</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {activityLogs.map((log, idx) => {
+                          const dateObj = new Date(log.timestamp);
+                          const dateStr = !isNaN(dateObj.getTime())
+                            ? dateObj.toLocaleDateString('fr-FR', {
+                                day: '2-digit',
+                                month: 'short',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })
+                            : log.timestamp;
+
+                          return (
+                            <div 
+                              key={log.id || `log-${idx}`}
+                              className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3 hover:border-slate-700/80 transition-colors"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAB005]/10 border border-[#FAB005]/20 flex items-center justify-center shrink-0 mt-0.5 text-[#FAB005]">
+                                {log.category === 'projets' ? (
+                                  <Building className="w-4 h-4" />
+                                ) : log.category === 'actualites' ? (
+                                  <Newspaper className="w-4 h-4" />
+                                ) : log.category === 'dg' ? (
+                                  <User className="w-4 h-4" />
+                                ) : log.category === 'securite' ? (
+                                  <Lock className="w-4 h-4" />
+                                ) : (
+                                  <Activity className="w-4 h-4" />
+                                )}
+                              </div>
+
+                              <div className="flex-1 min-w-0">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-xs font-bold text-white">{log.action}</span>
+                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-[#FAB005] border border-slate-700">
+                                      {log.category.toUpperCase()}
+                                    </span>
+                                  </div>
+                                  <span className="text-[11px] text-slate-400 font-mono shrink-0">
+                                    {dateStr}
+                                  </span>
+                                </div>
+                                <p className="text-xs text-slate-300 leading-relaxed break-words">
+                                  {log.details}
+                                </p>
+                                <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-slate-500">
+                                  <span>Effectué par :</span>
+                                  <span className="text-slate-400 font-medium">{log.author || 'SuperAdmin ES-BTP'}</span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* ONGLET 9 : SÉCURITÉ & MOT DE PASSE */}
               {activeTab === 'securite' && (
                 <div className="space-y-6 max-w-2xl mx-auto">
                   <div className="bg-white/5 border border-slate-800 rounded-xl p-5 space-y-4">
