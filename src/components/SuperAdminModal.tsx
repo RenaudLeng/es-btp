@@ -265,27 +265,24 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-[#07111E]/85 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 bg-[#07111E]/90 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
       <div 
-        className="w-full max-w-4xl max-h-[96vh] sm:max-h-[92vh] flex flex-col bg-[#0B1320] text-white rounded-2xl border border-slate-700/80 shadow-2xl overflow-hidden my-auto"
+        className={`w-full ${isAdminAuthenticated ? 'max-w-5xl max-h-[92vh]' : 'max-w-md max-h-[96vh]'} flex flex-col bg-[#0B1320] text-white rounded-2xl border border-slate-700 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden my-auto`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* En-tête de la modale */}
-        <div className="px-5 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#0B1320] via-[#122238] to-[#0B1320] border-b border-slate-700 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#FAB005]/20 border border-[#FAB005]/40 flex items-center justify-center text-[#FAB005] shrink-0">
+        <div className="px-5 py-3.5 bg-gradient-to-r from-[#0B1320] via-[#122238] to-[#0B1320] border-b border-slate-700 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-[#FAB005]/20 border border-[#FAB005]/40 flex items-center justify-center text-[#FAB005] shrink-0">
               {isAdminAuthenticated ? <Unlock className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-black font-heading tracking-wide text-white flex flex-wrap items-center gap-2">
-                <span>Espace SuperAdmin ES-BTP · Édition Complète Sans Coder</span>
+              <h3 className="text-sm sm:text-base font-black font-heading tracking-wide text-white flex items-center gap-2">
+                <span>Espace SuperAdmin ES-BTP</span>
                 <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#FAB005]/15 text-[#FAB005] border border-[#FAB005]/30">
                   {isAdminAuthenticated ? 'En ligne' : 'Verrouillé'}
                 </span>
               </h3>
-              <p className="text-[11px] sm:text-xs text-slate-400 hidden sm:block">
-                Vous avez la main totale sur les textes, slogans, photos, chantiers et actualités.
-              </p>
             </div>
           </div>
 
@@ -319,13 +316,13 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
 
         {/* Écran d'authentification avec arrière-plan de chantier & design immersif */}
         {!isAdminAuthenticated ? (
-          <div className="relative min-h-[500px] flex-1 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          <div className="relative flex-1 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
             {/* Arrière-plan de chantier haute qualité avec filtres et dégradés */}
             <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
               <img
                 src={chantierHeroBg}
                 alt="Chantier de construction ES-BTP Gabon"
-                className="w-full h-full object-cover object-center scale-105 filter brightness-[0.45] contrast-110 saturate-125"
+                className="w-full h-full object-cover object-center scale-105 filter brightness-[0.38] contrast-110 saturate-125"
               />
               {/* Superposition sombre & dégradés de protection de contraste */}
               <div className="absolute inset-0 bg-gradient-to-b from-[#07111E]/95 via-[#07111E]/90 to-[#0B1320]/98 backdrop-blur-[2px]" />
@@ -335,13 +332,13 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
             </div>
 
             {/* Carte centrale d'authentification optimisée pour tenir à l'écran sans coupure */}
-            <div className="relative z-10 w-full max-w-lg bg-[#0B1320]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl p-5 sm:p-7 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] ring-1 ring-white/10 my-auto">
+            <div className="relative z-10 w-full bg-[#0B1320]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl p-5 sm:p-6 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] ring-1 ring-white/10 my-auto">
               
               {/* Badge supérieur & icône */}
               <div className="flex flex-col items-center text-center mb-4">
                 <div className="relative mb-2.5">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FAB005] to-[#c98e03] p-0.5 shadow-lg shadow-[#FAB005]/20 flex items-center justify-center">
-                    <div className="w-full h-full bg-[#0B1320] rounded-[10px] flex items-center justify-center">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FAB005] to-[#c98e03] p-0.5 shadow-lg shadow-[#FAB005]/20 flex items-center justify-center">
+                    <div className="w-full h-full bg-[#0B1320] rounded-[9px] flex items-center justify-center">
                       <Lock className="w-5 h-5 text-[#FAB005]" />
                     </div>
                   </div>
@@ -353,12 +350,9 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#FAB005] font-bold mb-0.5">
                   Espace Direction & Édition
                 </span>
-                <h4 className="text-lg sm:text-xl font-black font-heading text-white tracking-tight mb-1">
+                <h4 className="text-base sm:text-lg font-black font-heading text-white tracking-tight">
                   Accès SuperAdmin Direction Générale
                 </h4>
-                <p className="text-xs text-slate-300 max-w-md leading-relaxed">
-                  Saisissez le mot de passe secret pour modifier librement tous les textes, photos, chantiers et chiffres de votre site ES-BTP.
-                </p>
               </div>
 
               {/* Formulaire de connexion */}
@@ -379,7 +373,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                         if (authError) setAuthError('');
                       }}
                       placeholder="Entrez le mot de passe secret..."
-                      className="w-full pl-10 pr-11 py-3 rounded-xl bg-slate-900 border-2 border-slate-700 focus:border-[#FAB005] focus:bg-slate-900 focus:outline-hidden text-sm text-white placeholder-slate-500 font-mono tracking-wider shadow-inner transition-colors"
+                      className="w-full pl-10 pr-11 py-2.5 rounded-xl bg-slate-900 border-2 border-slate-700 focus:border-[#FAB005] focus:bg-slate-900 focus:outline-hidden text-sm text-white placeholder-slate-500 font-mono tracking-wider shadow-inner transition-colors"
                       autoFocus
                     />
                     <button
@@ -404,7 +398,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                 {/* BOUTON DE VALIDATION HAUTE VISIBILITÉ */}
                 <button
                   type="submit"
-                  className="w-full py-3.5 px-5 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] active:bg-[#c98e03] text-[#08121E] font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 shadow-xl shadow-[#FAB005]/25 hover:shadow-[#FAB005]/40 hover:-translate-y-0.5 active:translate-y-0 font-heading cursor-pointer flex items-center justify-center gap-2 border-2 border-[#ffc229]"
+                  className="w-full py-3 px-4 rounded-xl bg-[#FAB005] hover:bg-[#e09e04] active:bg-[#c98e03] text-[#08121E] font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 shadow-xl shadow-[#FAB005]/25 hover:shadow-[#FAB005]/40 hover:-translate-y-0.5 active:translate-y-0 font-heading cursor-pointer flex items-center justify-center gap-2 border-2 border-[#ffc229]"
                 >
                   <Unlock className="w-4 h-4 text-[#08121E] stroke-[2.5]" />
                   <span>Valider et ouvrir le panneau d'administration</span>
@@ -450,13 +444,13 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
 
                   {/* Panneau déroulant : Logique de mot de passe perdu & assistance */}
                   {showForgotHelp && (
-                    <div className="p-3.5 rounded-xl bg-slate-900/95 border border-slate-700/80 text-left text-xs space-y-2 text-slate-300 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="p-3 rounded-xl bg-slate-900/95 border border-slate-700 text-left text-xs space-y-2 text-slate-300 animate-in fade-in slide-in-from-top-2 duration-200">
                       <div className="flex items-center gap-2 text-[#FAB005] font-bold text-xs">
                         <Shield className="w-4 h-4" />
                         <span>Procédure de récupération & codes valides</span>
                       </div>
                       <p className="text-[11px] text-slate-400 leading-relaxed">
-                        Le code maître configuré pour votre direction est :
+                        Le code maître officiel est :
                       </p>
                       
                       <div className="flex items-center justify-between p-2 rounded-lg bg-black/50 border border-slate-700 font-mono text-xs">
@@ -481,13 +475,13 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                       </div>
 
                       <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-[11px]">
-                        <span className="text-slate-400">Assistance technique Webmaster :</span>
+                        <span className="text-slate-400">Assistance Webmaster :</span>
                         <a
                           href="mailto:arleys4u@gmail.com?subject=Demande%20assistance%20SuperAdmin%20ES-BTP"
                           className="inline-flex items-center gap-1.5 text-[#FAB005] hover:underline font-semibold"
                         >
                           <Mail className="w-3.5 h-3.5" />
-                          <span>arleys4u@gmail.com (Renaud LENG)</span>
+                          <span>arleys4u@gmail.com</span>
                         </a>
                       </div>
                     </div>
@@ -496,7 +490,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
               </form>
 
               {/* Mention de sécurité */}
-              <div className="mt-4 pt-2.5 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-mono">
+              <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-mono">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Session chiffrée SSL · ES-BTP Gabon</span>
               </div>
