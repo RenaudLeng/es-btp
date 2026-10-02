@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useSiteData } from '../context/SiteDataContext';
 import { useDgPhoto } from '../context/DgPhotoContext';
+import { auth } from '../lib/firebase';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import { sendContactMessage } from '../services/contactService';
 import chantierHeroBg from '../assets/images/chantier_gabon_live_1790106446872.jpg';
 import { 
@@ -125,7 +127,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
     }
   };
 
-  // 1. Envoi du code de récupération par email
+  // 1. Envoi du lien officiel de réinitialisation Firebase Auth + Code de secours
   const handleRequestRecoveryCode = async (e: React.FormEvent) => {
     e.preventDefault();
     setRecoveryMessage(null);
@@ -136,32 +138,46 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
     }
 
     setRecoveryLoading(true);
-    // Génère un code de sécurité à 6 chiffres
+    // Génère un code de sécurité à 6 chiffres pour session immédiate
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     setGeneratedCode(code);
 
+    let firebaseSuccess = false;
+    let firebaseErrorMsg = '';
+
+    // A. Envoi officiel via Firebase Auth sendPasswordResetEmail
     try {
-      // Envoi de la notification par le service de contact
+      await sendPasswordResetEmail(auth, email);
+      firebaseSuccess = true;
+    } catch (err: any) {
+      console.warn('Firebase Auth sendPasswordResetEmail:', err);
+      firebaseErrorMsg = err?.message || 'Erreur Firebase Auth';
+    }
+
+    // B. Envoi de notification de secours via contactService
+    try {
       await sendContactMessage({
-        nom: 'Système Sécurité ES-BTP',
+        nom: 'Sécurité SuperAdmin ES-BTP',
         email: email,
         telephone: '+241 011 74 20 00',
-        typeProjet: 'Récupération Mot de Passe SuperAdmin',
-        message: `Code de vérification sécurisé pour réinitialiser le mot de passe SuperAdmin ES-BTP : [ ${code} ]\nCe code est valable pour cette session. Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email.`
+        typeProjet: 'Réinitialisation Mot de Passe Firebase SuperAdmin',
+        message: `Demande de réinitialisation du mot de passe SuperAdmin ES-BTP.\nEmail cible : ${email}\nCode de secours session immédiate : [ ${code} ]\nLien Firebase : ${firebaseSuccess ? 'Envoyé avec succès par Firebase Auth' : 'Erreur envoi direct Firebase: ' + firebaseErrorMsg}`
       });
+    } catch (notifErr) {
+      console.warn('Erreur notification fallback', notifErr);
+    }
 
-      setRecoveryLoading(false);
-      setRecoveryStep('verify');
+    setRecoveryLoading(false);
+    setRecoveryStep('verify');
+
+    if (firebaseSuccess) {
       setRecoveryMessage({
-        text: `Un code de vérification à 6 chiffres vous a été envoyé.`,
+        text: `E-mail officiel de réinitialisation Firebase envoyé à ${email} ! Vous pouvez également utiliser le code instantané à 6 chiffres reçu.`,
         type: 'success',
       });
-    } catch {
-      setRecoveryLoading(false);
-      // Mode tolérant
-      setRecoveryStep('verify');
+    } else {
       setRecoveryMessage({
-        text: `Code généré. Si vous ne recevez pas l'email, le code de secours direct est : ${code}`,
+        text: `Demande prise en compte pour ${email}. Utilisez le code de secours de session : ${code}`,
         type: 'success',
       });
     }
@@ -546,7 +562,7 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                       Récupération Direction
                     </h4>
                     <p className="text-xs text-slate-400">
-                      {recoveryStep === 'request' && 'Recevez votre code de vérification'}
+                      {recoveryStep === 'request' && 'Envoi du lien sécurisé Firebase Auth'}
                       {recoveryStep === 'verify' && 'Entrez le code de sécurité reçu'}
                       {recoveryStep === 'new_password' && 'Définissez votre nouveau mot de passe'}
                     </p>
@@ -567,12 +583,12 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                     </div>
                   )}
 
-                  {/* ÉTAPE 1 : Demande de code */}
+                  {/* ÉTAPE 1 : Demande de réinitialisation Firebase */}
                   {recoveryStep === 'request' && (
                     <form onSubmit={handleRequestRecoveryCode} className="space-y-3">
                       <div className="space-y-1">
                         <label className="text-xs text-slate-300 block">
-                          Email de direction ou administrateur
+                          Adresse email de l'administrateur
                         </label>
                         <div className="relative">
                           <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
@@ -586,6 +602,9 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                             autoFocus
                           />
                         </div>
+                        <p className="text-[11px] text-slate-500">
+                          Un e-mail de réinitialisation sécurisé Firebase Auth sera envoyé à cette adresse.
+                        </p>
                       </div>
 
                       <button
@@ -596,12 +615,12 @@ export const SuperAdminModal: React.FC<SuperAdminModalProps> = ({ isOpen, onClos
                         {recoveryLoading ? (
                           <>
                             <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                            <span>Envoi en cours...</span>
+                            <span>Envoi Firebase en cours...</span>
                           </>
                         ) : (
                           <>
                             <Send className="w-3.5 h-3.5" />
-                            <span>Envoyer le code</span>
+                            <span>Envoyer l'e-mail de récupération Firebase</span>
                           </>
                         )}
                       </button>

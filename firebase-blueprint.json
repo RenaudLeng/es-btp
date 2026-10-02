@@ -1,0 +1,32 @@
+{
+  "entities": {
+    "AdminProfile": {
+      "title": "AdminProfile",
+      "description": "Profil administrateur pour l'accès SuperAdmin ES-BTP Gabon",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email de l'administrateur"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["superadmin", "direction"],
+          "description": "Rôle administrateur"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Date de dernière modification"
+        }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/admins/{adminId}": {
+      "schema": "AdminProfile",
+      "description": "Collection des administrateurs autorisés"
+    }
+  }
+}
